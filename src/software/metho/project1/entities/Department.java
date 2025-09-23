@@ -1,4 +1,4 @@
 package software.metho.project1.entities;
 
-public class Department {
-}
+public enum Department { COMPUTER_SCIENCE, ELECTRICAL_ENGINEERING, 
+INFORMATION_TECHNOLOGY, MATH, BUISINESS_ANALYTICS }
