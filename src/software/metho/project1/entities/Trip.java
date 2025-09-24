@@ -47,7 +47,7 @@ public class Trip {
     public static void main(String[] args) {
         Date begin = new Date(2025, 10, 15);
         Date end = new Date(2025, 10, 15);
-        Vehichle v = new Vehichle("58718D", new Date(2017, 1, 31), Make.TOYOTA, 64390);
+        Vehicle v = new Vehicle("58718D", new Date(2017, 1, 31), Make.TOYOTA, 64390);
         Booking b = new Booking(begin, end, Employee.KAUR, v);
 
         Trip trip = new Trip(b, 64390, 64500);
