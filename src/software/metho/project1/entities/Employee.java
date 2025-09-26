@@ -8,7 +8,7 @@ public enum Employee {
     KAUR(Department.INFORMATION_TECHNOLOGY),
     TAYLOR(Department.MATH),
     RAMESH(Department.MATH),
-    CERAVOLO(Department.BUISINESS_ANALYTICS),
+    CERAVOLO(Department.BUISINESS_ANALYTICS);
 
     private Department dept;
     

@@ -22,6 +22,13 @@ public class Vehicle implements Comparable<Vehicle> {
     public Vehicle(String plate) {
         this.plate = plate;
     }
+    public Make getMake() {
+        return make;
+    }
+
+    public Date getObtained() {
+        return obtained;
+    }
 
     @Override
     public int compareTo(Vehicle vehicle) {
