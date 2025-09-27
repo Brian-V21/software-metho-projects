@@ -1,3 +1,4 @@
+import software.metho.project1.Frontend;
 /* Project 1
 Main class, only library classes we can have are Scanner,
 StringTokenizer, Calendar, DecimalFormat
@@ -7,8 +8,8 @@ StringTokenizer, Calendar, DecimalFormat
  @Override when needed (ToString, equals, compareTo)
  */
 
-public class Main {
+public class RunProject1 {
     public static void main(String[] args) {
-
+        new Frontend().run();
     }
 }
