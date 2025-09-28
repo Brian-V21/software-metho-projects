@@ -117,7 +117,51 @@ public class Frontend {
                         break;
                     case "B":
                         //code book a vehicle
+                        if (tokens.length < 6) {
+                            System.out.println("Invalid input for booking");
+                            break;
+                        }
+
+                        String bookPlate = tokens[1];
+                        String startDateStr = tokens[2];
+                        String endDateStr = tokens[3];
+                        String empStr = tokens[4].toUpperCase();
+
+                        Vehicle vehicleToBook = fleet.findVehicle(bookPlate);
+                        if (vehicleToBook == null) {
+                            System.out.println("Vehicle not found in fleet");
+                            break;
+                        }
+
+                        Date startDate;
+                        Date endDate;
+                        try {
+                            startDate = Date.fromString(startDateStr);
+                            endDate = Date.fromString(endDateStr);
+                            if (!startDate.isValid() || !endDate.isValid() || endDate.compareTo(startDate) <= 0) {
+                                System.out.println("Invalid booking Dates");
+                                break;
+                            }
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("invalud input for booking dates");
+                            break;
+                        }
+                        
+                        Employee emp;
+                        try {
+                            emp = Employee.valueOf(empStr);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid employee");
+                            break;
+                        }
+                        
+                        Booking newBooking = new Booking(startDate, endDate, emp, vehicleToBook);
+                        bookings.add(new Trip(newBooking, vehicleToBook.getMileage(), vehicleToBook.getMileage()));
+                        System.out.println("Booking added for vehicle: " + vehicleToBook);
+                        
                         break;
+                    
+                        
                     case "C":
                         //code for cancel existing booking
                         if (tokens.length < 3) {
@@ -125,7 +169,28 @@ public class Frontend {
                         break;
                         }
 
-                        String cancelDateString = tokens[1];
+                        String cancelDateStr = tokens[1];
+                        String cancelPlate = tokens[2];
+                        Vehicle cancelVehicle = new Vehicle(cancelPlate);
+                        
+                        Date cancelDate;
+                        try {
+                            cancelDate = Date.fromString(cancelDateStr);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Invalid date for canceling booking");
+                            break;
+                        }
+                        
+                        Booking bookingToCancel = bookings.getBooking(cancelDate, cancelVehicle);
+                        if (bookingToCancel == null) {
+                            System.out.println("No booking found to cancel");
+                            break;
+                        }
+
+                        bookings.remove(bookingToCancel);
+                        System.out.println("Booking canceled: " + bookingToCancel);
+                        break;
+
                     case "R":
                         if (tokens.length < 4) {
                             System.out.println("Invalid input for returning vehicle");
