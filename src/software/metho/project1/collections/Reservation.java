@@ -11,21 +11,35 @@ public class Reservation {
     private Booking[] bookings;
     private int size;
     private static final int CAPACITY = 4;
-    private static final int UNDEFINED = -1;
+    private static final int NOT_FOUND = -1;
 
+
+    /**
+     * Construct an empty list with an initial capacity
+     */
     public Reservation() {
         this.bookings = new Booking[CAPACITY];
         this.size = 0;
     }
 
+    /**
+     * Searcges for a booking within the list
+     * 
+     * @param booking the booking to look for
+     * @return the index if found, or UNDEFINED if not in the list
+     */
     private int findBooking(Booking booking) {
         for (int i = 0; i < size; i++) {
             if(bookings[i].equals(booking)) {
                 return i;
             }
         }
-        return UNDEFINED;
+        return NOT_FOUND;
     }
+
+    /**
+     * Resizes the array by increasing its capacity by 4.
+     */
     private void grow () {
         Booking[] newArray = new Booking[bookings.length + CAPACITY];
         for (int i = 0; i < size; i++) {
@@ -34,23 +48,45 @@ public class Reservation {
         bookings = newArray;
     }
 
-    public void addB(Booking booking) {
+    /**
+     * Adds a new booking to the end of the list.
+     * 
+     * @param booking the booking that is added
+     */
+    public void add(Booking booking) {
         if (size == bookings.length) {
             grow();
         }
         bookings[size++] = booking;
     }
-    public void removeB(Booking booking) {
+
+    /**
+     * Removes a booking from the list. Overwrites booking with the last element of the list.
+     * 
+     * @param booking the booking that is removed.
+     */
+    public void remove(Booking booking) {
         int index = findBooking(booking);
-        if (index != UNDEFINED) {
+        if (index != NOT_FOUND) {
             bookings[index] = bookings[size - 1];
             bookings[size - 1] = null;
             size--;
         }
     }
+
+    /**
+     * Checks whether a given booking exists.
+     * 
+     * @param booking the booking being checked
+     * @return true if the booking is in the list, otherwise false
+     */
     public boolean contains(Booking booking) {
-        return findBooking(booking) != UNDEFINED;
+        return findBooking(booking) != NOT_FOUND;
     }
+
+    /**
+     * Prints the list of bookings ordered by plate numbers, then beginning date.
+     */
     public void printByVehicle(){
         for (int i = 0; i < size - 1; i++) {
             int minIndex = 1;
@@ -71,6 +107,10 @@ public class Reservation {
         }
     }
    
+
+    /**
+     * Prints the list of bookings ordered by department, then employee.
+     */
     public void printByDept(){
         for (int i = 0; i < size - 1; i++) {
             int minIndex = 1;
@@ -91,6 +131,9 @@ public class Reservation {
          }
     }
 
+    /**
+     * Testbed main() for testing/debugging purposes.
+     */
     public static void main(String[] args) {
         Date d1 = new Date(2025, 10, 25);
         Date d2 = new Date(2025, 10, 30);
@@ -98,7 +141,7 @@ public class Reservation {
         Booking b1 = new Booking(d1, d2, Employee.KAUR, v1);
 
         Reservation r = new Reservation();
-        r.addB(b1);
+        r.add(b1);
         r.printByVehicle();
 
     }

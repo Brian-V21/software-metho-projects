@@ -2,6 +2,8 @@ package software.metho.project1.collections;
 
 import software.metho.project1.entities.Trip;
 
+import software.metho.project1.entities.*;
+
 public class TripList {
     private Node last;
 
@@ -55,6 +57,19 @@ public class TripList {
             System.out.println(curr.data);
             curr = curr.next;
         } while (curr != last);
+    }
+
+public static void main(String[] args) {
+    TripList list = new TripList();
+    Date d1 = new Date(2025, 10, 25);
+    Date d2 = new Date(2025, 10, 28);
+    Vehicle v = new Vehicle("58719D", new Date(2017, 1, 31), Make.TOYOTA, 87120);
+    Booking b = new Booking(d1, d2, Employee.KAUR, v);
+    Trip t = new Trip(b, 87120, 87200);
+
+    list.add(t);
+    list.print();
+
     }
 
 }
