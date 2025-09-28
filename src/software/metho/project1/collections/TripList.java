@@ -59,6 +59,20 @@ public class TripList {
         } while (curr != last);
     }
 
+    public boolean hasBookingForVehicle(Vehicle vehicle) {
+        if (last == null)
+        return false;
+
+        Node curr = last.next;
+        do {
+            if (curr.data.getBooking().getVehicle().equals(vehicle)) {
+                return true;
+            }
+            curr = curr.next;
+        } while (curr != last.next);
+        return false;
+    }
+
 public static void main(String[] args) {
     TripList list = new TripList();
     Date d1 = new Date(2025, 10, 25);
