@@ -89,7 +89,21 @@ public class TripList {
         return null;
     }
 
+    public boolean isEarliestEndingDate(Booking targetBooking) {
+        if (last == null)
+        return false;
 
+        Date targetEndDate = targetBooking.getEnd();
+        Node curr = last.next;
+        do {
+            Booking booking = curr.data.getBooking();
+            if (booking.getEnd().compareTo(targetEndDate) < 0) {
+                return false;
+            }
+            curr = curr.next;
+        } while (curr != last.next);
+        return true;
+    }
 
 public static void main(String[] args) {
     TripList list = new TripList();
