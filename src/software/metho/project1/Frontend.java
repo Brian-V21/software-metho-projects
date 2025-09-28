@@ -120,7 +120,12 @@ public class Frontend {
                         break;
                     case "C":
                         //code for cancel existing booking
+                        if (tokens.length < 3) {
+                            System.out.println("Invalid input for canceling booking");
                         break;
+                        }
+
+                        String cancelDateString = tokens[1];
                     case "R":
                         if (tokens.length < 4) {
                             System.out.println("Invalid input for returning vehicle");
@@ -199,5 +204,15 @@ public class Frontend {
 
         //Potential helpers we might need below
 
-        }
+
+
+
+    }
+    /**
+     * Testbed main for testing
+     */
+    public static void main(String[] args) {
+        Frontend frontend = new Frontend();
+        frontend.run();
+    }
 }
