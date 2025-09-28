@@ -32,16 +32,28 @@ public class Trip {
      */
     @Override
     public boolean equals(Object obj) {
-        
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Trip other = (Trip) obj;
+        return this.booking.equals(other.booking);
     }
 
     @Override
     public String toString() {
-        
+        return booking.getVehicle().getPlate() + " " +
+            booking.getBegin().toString() + " ~ " +
+            booking.getEnd().toString() + " " +
+            "original mileage: " + beginMileage + " " +
+            "current mileage: " + endMileage + " " +
+            "mileage used: " + (endMileage - beginMileage); 
     }
 
     /**
-     * Test Case for use once booking is done
+     * Test Case
      * 
      */
     public static void main(String[] args) {

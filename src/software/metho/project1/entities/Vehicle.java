@@ -23,6 +23,10 @@ public class Vehicle implements Comparable<Vehicle> {
         this.plate = plate;
     }
 
+    public String getPlate() {
+        return plate;
+    }
+
     public Make getMake() {
         return make;
     }
