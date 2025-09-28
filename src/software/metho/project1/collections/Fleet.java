@@ -90,4 +90,13 @@ public class Fleet {
             System.out.println(fleet[i]);
         }
     }
+
+    public Vehicle findVehicle(String plate) {
+        for (int i = 0; i < size; i++) {
+            if (fleet[i].getPlate().equalsIgnoreCase(plate)) {
+                return fleet[i];
+            }
+        }
+        return null;
+    }
 }

@@ -107,7 +107,7 @@ public class Frontend {
                             break;
                         }
                         //Need hasBookingForVehicle helper method in Booking
-                        if (bookings.HasBookingForVehicle(delVehicle)) {
+                        if (bookings.hasBookingForVehicle(delVehicle)) {
                             System.out.println("Cannot delete vehicle with existing booking");
                         }
 
