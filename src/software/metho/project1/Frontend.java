@@ -147,7 +147,7 @@ public class Frontend {
                             break;
                         }
 
-                        Booking bookingToReturn = bookings.getBooking(returnVehicle, dateReturned);
+                        Booking bookingToReturn = bookings.getBooking(dateReturned, returnVehicle);
                         if (bookingToReturn == null) {
                             System.out.println("No matching booking found for return");
                             break;
@@ -162,9 +162,10 @@ public class Frontend {
                             break;
                         }
 
+                        int beginMileage = bookingToReturn.getVehicle().getMileage();
                         bookingToReturn.getVehicle().setMileage(newMileage);
-                        Trip completedTrip = new Trip(bookingToReturn, bookingToReturn.getBeginMileage(), newMileage);
-                        completedTrips.add(bookingToReturn);
+                        Trip completedTrip = new Trip(bookingToReturn, beginMileage, newMileage);
+                        completedTrips.add(completedTrip);
                         bookings.remove(bookingToReturn);
 
                         System.out.println("Vehicle returned: " + bookingToReturn);
@@ -177,13 +178,13 @@ public class Frontend {
                         fleet.printByMake();
                         break;
                     case "PR":
-                        //Display List of bookings, ordered by license plate, then by beginning dates
+                        bookings.printByVehicle();
                         break;
                     case "PD":
-                        //Display list of bookings, ordered by department, then by employee
+                        bookings.printByDept();
                         break;
                     case "PT":
-                        //Display list of completed trips, sorted by ending date
+                        completedTrips.print();
                         break;
                     case "Q":
                         running = false;

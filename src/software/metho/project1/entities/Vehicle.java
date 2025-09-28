@@ -22,12 +22,21 @@ public class Vehicle implements Comparable<Vehicle> {
     public Vehicle(String plate) {
         this.plate = plate;
     }
+
     public Make getMake() {
         return make;
     }
 
     public Date getObtained() {
         return obtained;
+    }
+
+    public int getMileage(){
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
     }
 
     @Override

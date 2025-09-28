@@ -41,6 +41,11 @@ public class Booking {
         this.vehicle = vehicle;
     }
 
+    public Booking (Date end, Vehicle v) {
+        this.end = end;
+        this.vehicle = v;
+    }
+
     /**
      * 
      * @return the beginning date
