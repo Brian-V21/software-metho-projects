@@ -41,18 +41,34 @@ public class Booking {
         this.vehicle = vehicle;
     }
 
+    /**
+     * 
+     * @return the beginning date
+     */
     public Date getBegin() {
         return begin;
     }
 
+    /**
+     * 
+     * @return the end date
+     */
     public Date getEnd() {
         return end;
     }
 
+    /**
+     * 
+     * @return the employee
+     */
     public Employee getEmployee() {
         return employee;
     }
 
+    /**
+     * 
+     * @return the vehicle
+     */
     public Vehicle getVehicle() {
         return vehicle;
     }
