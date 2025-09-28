@@ -1,4 +1,6 @@
 package software.metho.project1.entities;
+import java.util.Calendar;
+
 //FOR DATE CLASS, need 4 invalid & 2 valid test cases...
 //for testing isValid() method.
 
@@ -69,7 +71,30 @@ public class Date implements Comparable<Date> {
     public String toString() {
         return month + "/" + day + "/" + year;
     }
+    //method for transforming String from user input to Date
+    public static Date fromString(String dateString) {
+        String[] parts = dateString.split("/");
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("Invalid date string: " + dateString);
+        } try {
+            int month = Integer.parseInt(parts[0]);
+            int day = Integer.parseInt(parts[1]);
+            int year = Integer.parseInt(parts[2]);
+            return new Date(year, month, day);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid date string: " + dateString);
+        }
+    }
+    //method for PastDate
+    public boolean isPastDate() {
+        Calendar today = Calendar.getInstance();
+        int todayYear = today.get(Calendar.YEAR);
+        int todayMonth = today.get(Calendar.MONTH);
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
 
+        Date currentDate = new Date(todayYear, todayMonth, todayDay);
+        return this.compareTo(currentDate) < 0;
+    }
     //Testbed for 4 invalid & 2 valid tests
     public static void main(String[] args) {
         //valid cases

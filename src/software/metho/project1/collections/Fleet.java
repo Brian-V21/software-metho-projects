@@ -38,7 +38,7 @@ public class Fleet {
         }
     }
 
-    private void add(Vehicle vehicle) {
+    public void add(Vehicle vehicle) {
         if (contains(vehicle)) {
             return;
         }
