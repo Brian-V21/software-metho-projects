@@ -1,8 +1,8 @@
 package software.metho.project1.entities;
 import java.util.Calendar;
-
-//FOR DATE CLASS, need 4 invalid & 2 valid test cases...
-//for testing isValid() method.
+/**
+ * *@author Brian V;
+ */
 
 public class Date implements Comparable<Date> {
     private int year;
@@ -18,13 +18,21 @@ public class Date implements Comparable<Date> {
     public static final int[] DAYS_IN_MONTHS = {
             // placed 0 so index runs 1-12 ([1] = JAN through till [12] = DEC
             0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
+    /**
+     * Constructor for Daet
+     * @param year year of the date
+     * @param month month of the date
+     * @param day day of the date
+     */
     public Date(int year, int month, int day) {
         this.year = year;
         this.month = month;
         this.day = day;
     }
-
+    /**
+     *
+     * @return if date is a leap year
+     */
     public boolean isLeap() {
         if (this.year % QUADRENNIAL != 0) {// if not div by 4 then false
             return false;
@@ -36,8 +44,10 @@ public class Date implements Comparable<Date> {
             return false;
         }
     }
-
-    //check if date is calid
+    /**
+     *
+     * @return if date input is a valid date
+     */
     public boolean isValid() {
         //Check year and months
         if (this.year <= 0) return false;
@@ -50,7 +60,19 @@ public class Date implements Comparable<Date> {
         // Checking days
         return (this.day >= 1 && this.day <=maxDays);
     }
+    /**
+     *
+     * @return if date is before current date
+     */
+    public boolean isPastDate() {
+        Calendar today = Calendar.getInstance();
+        int todayYear = today.get(Calendar.YEAR);
+        int todayMonth = today.get(Calendar.MONTH);
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
 
+        Date currentDate = new Date(todayYear, todayMonth, todayDay);
+        return this.compareTo(currentDate) < 0;
+    }
     @Override
     public int compareTo(Date date) {
         if (this.year != date.year) return this.year - date.year;
@@ -71,7 +93,12 @@ public class Date implements Comparable<Date> {
     public String toString() {
         return month + "/" + day + "/" + year;
     }
-    //method for transforming String from user input to Date
+
+    /**
+     *
+     * @param dateString date in String form
+     * @return dateString into Date type
+     */
     public static Date fromString(String dateString) {
         String[] parts = dateString.split("/");
         if (parts.length != 3) {
@@ -85,16 +112,7 @@ public class Date implements Comparable<Date> {
             throw new IllegalArgumentException("Invalid date string: " + dateString);
         }
     }
-    //method for PastDate
-    public boolean isPastDate() {
-        Calendar today = Calendar.getInstance();
-        int todayYear = today.get(Calendar.YEAR);
-        int todayMonth = today.get(Calendar.MONTH);
-        int todayDay = today.get(Calendar.DAY_OF_MONTH);
 
-        Date currentDate = new Date(todayYear, todayMonth, todayDay);
-        return this.compareTo(currentDate) < 0;
-    }
     //Testbed for 4 invalid & 2 valid tests
     public static void main(String[] args) {
         //valid cases

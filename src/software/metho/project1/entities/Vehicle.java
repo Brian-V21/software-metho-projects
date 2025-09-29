@@ -1,44 +1,79 @@
 package software.metho.project1.entities;
-//Design test cases for compareTO() method...
-//One test case each--> return -1, return 1, & return 0
 
+/**
+ * *@author Brian V;
+ */
 public class Vehicle implements Comparable<Vehicle> {
     private String plate; //License plate number
     private Date obtained; // date class, when got
     private Make make; // Make = enum class
     private int mileage; // current reading of odometer
 
+    /**
+     * Default constructor for Vehicle
+     */
     public Vehicle() {
         //default constructor
     }
 
+    /**
+     * Constructor for Vehicle
+     * @param plate license plate of vehicle
+     * @param obtained date vehicle was obtained
+     * @param make make of the vehicle
+     * @param mileage amount of miles on the vehicle
+     */
     public Vehicle(String plate, Date obtained, Make make, int mileage) {
         this.plate = plate;
         this.obtained = obtained;
         this.make = make;
         this.mileage = mileage; //odometer reading
     }
-    //constructor for vehicle with plate only
+
+    /**
+     * Constrcutor with only plate for Vehicle
+     * @param plate license plate of vehicle
+     */
     public Vehicle(String plate) {
         this.plate = plate;
     }
 
+    /**
+     *
+     * @return license plate of vehicle
+     */
     public String getPlate() {
         return plate;
     }
 
+    /**
+     *
+     * @return make of vehicle
+     */
     public Make getMake() {
         return make;
     }
 
+    /**
+     *
+     * @return date vehicle was obtained
+     */
     public Date getObtained() {
         return obtained;
     }
 
+    /**
+     *
+     * @return miles on vehicle
+     */
     public int getMileage(){
         return mileage;
     }
 
+    /**
+     *
+     * @param mileage set miles of vehicle to another int
+     */
     public void setMileage(int mileage) {
         this.mileage = mileage;
     }

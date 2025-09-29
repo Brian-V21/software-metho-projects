@@ -1,5 +1,8 @@
 package software.metho.project1.collections;
 import software.metho.project1.entities.Vehicle;
+/**
+ * *@author Brian V;
+ */
 
 public class Fleet {
     private static final int CAPACITY = 4;
@@ -7,17 +10,29 @@ public class Fleet {
     private Vehicle[] fleet;
     private int size;
 
+    /**
+     * Constructor for Fleet with vehicle and size of collection in fleet
+     */
     public Fleet() {
         this.fleet = new Vehicle[CAPACITY];
         this.size = 0;
     }
 
+    /**
+     *
+     * @param fleet collection of vehicles in fleet
+     * @param size number of vehicles in fleet
+     */
     public Fleet(Vehicle[] fleet, int size) {
         this.fleet = fleet;
         this.size = size;
     }
 
-    //Search for a vehicle in fleet and return index or NOT_FOUND
+    /**
+     *
+     * @param vehicle Vehicle Object
+     * @return Search for a vehicle in fleet and return index or NOT_FOUND
+     */
     private int find(Vehicle vehicle) {
         for (int i = 0; i < size; i++) {
             if (fleet[i].equals(vehicle)) {
@@ -27,7 +42,9 @@ public class Fleet {
         return NOT_FOUND;
     }
 
-    //Resize CAPACITY of FLEET
+    /**
+     * Resize CAPACITY of FLEET
+     */
     private void grow() {
         if (this.size == this.fleet.length) {
             Vehicle[] newFleet = new Vehicle[this.fleet.length + 4];
@@ -38,6 +55,10 @@ public class Fleet {
         }
     }
 
+    /**
+     * add vehicle to fleet collection
+     * @param vehicle Vehicle Object
+     */
     public void add(Vehicle vehicle) {
         if (contains(vehicle)) {
             return;
@@ -50,6 +71,10 @@ public class Fleet {
 
     }
 
+    /**
+     * remove vehicle from fleet collection
+     * @param vehicle Vehicle Object
+     */
     public void remove(Vehicle vehicle) {
         int index = find(vehicle);
         if (index == NOT_FOUND) return;
@@ -61,10 +86,18 @@ public class Fleet {
         size--;
     }
 
+    /**
+     *
+     * @param vehicle Vehicle Object
+     * @return if vehicle is contained in fleet
+     */
     public boolean contains(Vehicle vehicle) {
         return find(vehicle) != NOT_FOUND;
     }
 
+    /**
+     * print collection by make then date
+     */
     public void printByMake() {
 
         for (int i = 0; i < size - 1; i++) {
@@ -91,6 +124,11 @@ public class Fleet {
         }
     }
 
+    /**
+     *
+     * @param plate license plate of vehicle
+     * @return the vehicle of index in fleet
+     */
     public Vehicle findVehicle(String plate) {
         for (int i = 0; i < size; i++) {
             if (fleet[i].getPlate().equalsIgnoreCase(plate)) {

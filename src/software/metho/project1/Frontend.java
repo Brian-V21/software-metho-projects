@@ -1,11 +1,12 @@
 package software.metho.project1;
-
+/**
+ * *@author Brian V and Travis F;
+ */
 import software.metho.project1.collections.Fleet;
-import software.metho.project1.collections.Reservation;
 import software.metho.project1.collections.TripList;
 import software.metho.project1.entities.*;
-
 import java.util.Scanner;
+
 
 /*
 Main class, only library classes we can have are Scanner,
