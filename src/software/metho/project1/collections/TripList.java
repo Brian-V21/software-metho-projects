@@ -145,6 +145,114 @@ public class TripList {
         return false;
     }
 
+    /**
+     * Prints the list of bookings ordered by plate numbers, then beginning date.
+     */
+    public void printByVehicle() {
+        if (last == null) {
+            System.out.println("No bookings in the system.");
+            return;
+        }
+
+        Node printedNodes = null; // We'll track which trips have been printed by repeated traversal
+        Node start = last.next;
+
+        boolean done = false;
+        while (!done) {
+            Node curr = last.next;
+            Trip minTrip = null;
+
+            // Find the trip with the minimum vehicle plate that hasn't been printed yet
+            do {
+                if ((minTrip == null || curr.data.getBooking().getVehicle().getPlate()
+                        .compareTo(minTrip.getBooking().getVehicle().getPlate()) < 0)) {
+                    minTrip = curr.data;
+                }
+                curr = curr.next;
+            } while (curr != last.next);
+
+            // Print all trips with that vehicle plate
+            curr = last.next;
+            do {
+                if (curr.data.getBooking().getVehicle().getPlate()
+                        .equals(minTrip.getBooking().getVehicle().getPlate())) {
+                    System.out.println(curr.data);
+                }
+                curr = curr.next;
+            } while (curr != last.next);
+
+            // Remove all printed trips from consideration by marking them as null
+            curr = last.next;
+            do {
+                if (curr.data.getBooking().getVehicle().getPlate()
+                        .equals(minTrip.getBooking().getVehicle().getPlate())) {
+                    curr.data = null;
+                }
+                curr = curr.next;
+            } while (curr != last.next);
+
+            // Check if all trips are printed
+            done = true;
+            curr = last.next;
+            do {
+                if (curr.data != null) {
+                    done = false;
+                    break;
+                }
+                curr = curr.next;
+            } while (curr != last.next);
+        }
+
+        // Restore nulls to original trips if necessary
+    }
+
+
+
+    /**
+     * Prints the list of bookings ordered by department, then employee.
+     */
+    public void printByDept() {
+        if (last == null) {
+            System.out.println("No bookings in the system.");
+            return;
+        }
+
+        boolean printedAll = false;
+
+        while (!printedAll) {
+            Node curr = last.next;
+            Trip minTrip = null;
+
+            // Step 1: Find trip with smallest employee name (or enum order)
+            do {
+                if (curr.data != null && (minTrip == null ||
+                        curr.data.getBooking().getEmployee().name()
+                                .compareTo(minTrip.getBooking().getEmployee().name()) < 0)) {
+                    minTrip = curr.data;
+                }
+                curr = curr.next;
+            } while (curr != last.next);
+
+            if (minTrip == null) {
+                printedAll = true;
+                break;
+            }
+
+            // Step 2: Print all trips with that employee
+            curr = last.next;
+            do {
+                if (curr.data != null &&
+                        curr.data.getBooking().getEmployee()
+                                .equals(minTrip.getBooking().getEmployee())) {
+                    System.out.println(curr.data);
+                    // Mark as printed
+                    curr.data = null;
+                }
+                curr = curr.next;
+            } while (curr != last.next);
+        }
+    }
+
 
 public static void main(String[] args) {
     TripList list = new TripList();

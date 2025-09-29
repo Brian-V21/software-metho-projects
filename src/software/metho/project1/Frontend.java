@@ -1,6 +1,7 @@
 package software.metho.project1;
 
 import software.metho.project1.collections.Fleet;
+import software.metho.project1.collections.Reservation;
 import software.metho.project1.collections.TripList;
 import software.metho.project1.entities.*;
 
@@ -20,8 +21,8 @@ single cmd, multi cmds including empty lines
 * */
 public class Frontend {
     private Fleet fleet;
-    private TripList bookings;
     private TripList completedTrips;
+    private TripList bookings;
 
     public Frontend(Fleet fleet, TripList bookings, TripList completedTrips) {
         this.fleet = fleet;
