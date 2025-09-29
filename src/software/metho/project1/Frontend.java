@@ -3,8 +3,11 @@ package software.metho.project1;
  * *@author Brian V and Travis F;
  */
 import software.metho.project1.collections.Fleet;
+import software.metho.project1.collections.Reservation;
 import software.metho.project1.collections.TripList;
 import software.metho.project1.entities.*;
+
+import javax.sound.midi.SysexMessage;
 import java.util.Scanner;
 
 
@@ -23,9 +26,9 @@ single cmd, multi cmds including empty lines
 public class Frontend {
     private Fleet fleet;
     private TripList completedTrips;
-    private TripList bookings;
+    private Reservation bookings;
 
-    public Frontend(Fleet fleet, TripList bookings, TripList completedTrips) {
+    public Frontend(Fleet fleet, Reservation bookings, TripList completedTrips) {
         this.fleet = fleet;
         this.bookings = bookings;
         this.completedTrips = completedTrips;
@@ -33,7 +36,7 @@ public class Frontend {
 
     public Frontend() {
         this.fleet = new Fleet();
-        this.bookings = new TripList();
+        this.bookings = new Reservation();
         this.completedTrips = new TripList();
     }
 
@@ -43,6 +46,7 @@ public class Frontend {
 
             boolean running = true;
             while (running) {
+
                 String line = input.nextLine().trim(); //trim extra spaces
                 if (line.isEmpty()) continue; //running with empty inputs
 
@@ -52,52 +56,64 @@ public class Frontend {
                 switch (type) {
                     case "A":
                         if (tokens.length < 5) {
-                            System.out.println("Invalid input for adding vehicle");
+                            System.out.println("Invalid input!");
                             break;
                         }
-                        //separating tokens to param of vehicles
+
                         String plate = tokens[1];
                         String dateString = tokens[2];
-                        Date dateObtained;
                         String makeString = tokens[3].toUpperCase();
-                        int mileage = Integer.parseInt(tokens[4]);
+                        int mileage;
+
+                        try {
+                            mileage = Integer.parseInt(tokens[4]);
+                        } catch (NumberFormatException e) {
+                            System.out.println(tokens[4] + " - invalid mileage.");
+                            break;
+                        }
 
                         Make make;
                         try {
                             make = Make.valueOf(makeString);
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Invalid input for make");
+                            System.out.println(tokens[3] + " - invalid make.");
                             break;
                         }
 
                         if (mileage <= 0) {
-                            System.out.println("Invalid input for mileage");
+                            System.out.println(tokens[4] + " - invalid mileage.");
                             break;
                         }
 
+                        Date dateObtained;
                         try {
                             dateObtained = Date.fromString(dateString);
-                            if (!dateObtained.isValid() || !dateObtained.isPastDate()) {
-                                System.out.println("Invalid input for date");
+                            if (!dateObtained.isValid()) {
+                                System.out.println(dateString + " - invalid calendar date.");
+                                break;
+                            }
+                            if (!dateObtained.isPastDate()) {
+                                System.out.println(dateString + " - is today or a future date");
                                 break;
                             }
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Invalid input for date");
+                            System.out.println(dateString + " - invalid calendar date.");
                             break;
                         }
 
-                        Vehicle v = new Vehicle( plate, dateObtained, make, mileage);
+                        Vehicle v = new Vehicle(plate, dateObtained, make, mileage);
                         if (fleet.contains(v)) {
-                            System.out.println("Vehicle already exists in fleet");
+                            System.out.println(v + " is already in the fleet.");
                             break;
                         }
 
                         fleet.add(v);
-                        System.out.println("Vehicle added: " + v);
+                        System.out.println(v + " has been added to the fleet.");
                         break;
+
                     case "D":
                         if (tokens.length < 2) {
-                            System.out.println("Invalid input for adding vehicle");
+                            System.out.println("Invalid input!");
                             break;
                         }
 
@@ -105,22 +121,20 @@ public class Frontend {
                         Vehicle delVehicle = new Vehicle(plate2);
 
                         if (!fleet.contains(delVehicle)) {
-                            System.out.println("Vehicle not found in fleet");
+                            System.out.println(plate2 + " is not in the fleet.");
                             break;
                         }
-                        //Need hasBookingForVehicle helper method in Booking
-                        if (bookings.hasBookingForVehicle(delVehicle)) {
-                            System.out.println("Cannot delete vehicle with existing booking");
-                        }
 
+                        // cannot delete if there’s an active booking
+                        if (bookings.hasBookingForVehicle(delVehicle)) {
+                            System.out.println(delVehicle + " cannot be deleted, booked.");
+                            break;
+                        }
                         fleet.remove(delVehicle);
-                        System.out.println("Vehicle removed: " + delVehicle);
-                        //code remove vehicle
                         break;
                     case "B":
-                        //code book a vehicle
-                        if (tokens.length < 6) {
-                            System.out.println("Invalid input for booking");
+                        if (tokens.length < 5) {
+                            System.out.println("Invalid input!");
                             break;
                         }
 
@@ -129,73 +143,85 @@ public class Frontend {
                         String endDateStr = tokens[3];
                         String empStr = tokens[4].toUpperCase();
 
+                        // check vehicle exists
                         Vehicle vehicleToBook = fleet.findVehicle(bookPlate);
                         if (vehicleToBook == null) {
-                            System.out.println("Vehicle not found in fleet");
+                            System.out.println(bookPlate + " is not in the fleet.");
                             break;
                         }
 
-                        Date startDate;
-                        Date endDate;
+                        // parse dates
+                        Date startDate, endDate;
                         try {
                             startDate = Date.fromString(startDateStr);
                             endDate = Date.fromString(endDateStr);
-                            if (!startDate.isValid() || !endDate.isValid() || endDate.compareTo(startDate) <= 0) {
-                                System.out.println("Invalid booking Dates");
+
+                            if (!startDate.isValid()) {
+                                System.out.println(startDateStr + " is not a valid date.");
+                                break;
+                            }
+                            if (!endDate.isValid()) {
+                                System.out.println(endDateStr + " is not a valid date.");
+                                break;
+                            }
+                            if (endDate.compareTo(startDate) <= 0) {
+                                System.out.println("Invalid booking period.");
                                 break;
                             }
                         } catch (IllegalArgumentException e) {
-                            System.out.println("invalud input for booking dates");
+                            System.out.println("Invalid date input.");
                             break;
                         }
-                        
+
+                        // check employee
                         Employee emp;
                         try {
                             emp = Employee.valueOf(empStr);
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Invalid employee");
+                            System.out.println(empStr + " is not a valid employee.");
                             break;
                         }
-                        
+
+                        // create booking
                         Booking newBooking = new Booking(startDate, endDate, emp, vehicleToBook);
-                        bookings.add(new Trip(newBooking, vehicleToBook.getMileage(), vehicleToBook.getMileage()));
-                        System.out.println("Booking added for vehicle: " + vehicleToBook);
-                        
+                        bookings.add(newBooking);
+
+                        System.out.println("Booking completed: " + newBooking);
                         break;
-                    
-                        
                     case "C":
-                        //code for cancel existing booking
                         if (tokens.length < 3) {
-                            System.out.println("Invalid input for canceling booking");
-                        break;
+                            System.out.println("Invalid input!");
+                            break;
                         }
 
                         String cancelDateStr = tokens[1];
                         String cancelPlate = tokens[2];
                         Vehicle cancelVehicle = new Vehicle(cancelPlate);
-                        
+
                         Date cancelDate;
                         try {
                             cancelDate = Date.fromString(cancelDateStr);
+                            if (!cancelDate.isValid()) {
+                                System.out.println(cancelDateStr + " is not a valid date.");
+                                break;
+                            }
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Invalid date for canceling booking");
+                            System.out.println("Invalid date input.");
                             break;
                         }
-                        
+
                         Booking bookingToCancel = bookings.getBooking(cancelDate, cancelVehicle);
                         if (bookingToCancel == null) {
-                            System.out.println("No booking found to cancel");
+                            System.out.println("No booking found.");
                             break;
                         }
 
                         bookings.remove(bookingToCancel);
                         System.out.println("Booking canceled: " + bookingToCancel);
                         break;
-
                     case "R":
                         if (tokens.length < 4) {
-                            System.out.println("Invalid input for returning vehicle");
+                            System.out.println("Invalid input!");
                             break;
                         }
 
@@ -206,7 +232,7 @@ public class Frontend {
                         try {
                             newMileage = Integer.parseInt(tokens[3]);
                         } catch (NumberFormatException e) {
-                            System.out.println("Invalid input for return mileage");
+                            System.out.println("Mileage invalid.");
                             break;
                         }
 
@@ -214,23 +240,26 @@ public class Frontend {
                         Date dateReturned;
                         try {
                             dateReturned = Date.fromString(returnDateString);
+                            if (!dateReturned.isValid()) {
+                                System.out.println(returnDateString + " is not a valid date.");
+                                break;
+                            }
                         } catch (IllegalArgumentException e) {
-                            System.out.println("Invalid input for date return");
+                            System.out.println("Invalid date input.");
                             break;
                         }
 
                         Booking bookingToReturn = bookings.getBooking(dateReturned, returnVehicle);
                         if (bookingToReturn == null) {
-                            System.out.println("No matching booking found for return");
+                            System.out.println("No booking found.");
                             break;
                         }
                         if (!bookings.isEarliestEndingDate(bookingToReturn)) {
-                            System.out.println("Ending date is not the earliest ending date");
+                            System.out.println("Return not allowed: earlier bookings exist.");
                             break;
                         }
-
                         if (newMileage <= bookingToReturn.getVehicle().getMileage()) {
-                            System.out.println("Not valid milage for return");
+                            System.out.println("Mileage invalid.");
                             break;
                         }
 
@@ -241,28 +270,36 @@ public class Frontend {
                         bookings.remove(bookingToReturn);
 
                         System.out.println("Vehicle returned: " + bookingToReturn);
-                        //return the vehicle
                         break;
-                /*P cmds-> display info, sorted w/ diff keys, if keys
-                for sorting are same, order of display for those lines
-                don't matter*/
                     case "PF":
+                        System.out.println("*List of vehicles in the fleet, ordered by make then date obtained.");
                         fleet.printByMake();
+                        System.out.println("*end of list.");
+                        System.out.println();
                         break;
                     case "PR":
+                        System.out.println("*List of reservations ordered by license plate then beginning date.");
                         bookings.printByVehicle();
+                        System.out.println("*end of list.");
+                        System.out.println();
                         break;
                     case "PD":
+                        System.out.println("*List of reservations ordered by Department then employee.");
                         bookings.printByDept();
+                        System.out.println("*end of list.");
+                        System.out.println();
                         break;
                     case "PT":
+                        System.out.println("*List of completed trips ordered by ending date.");
                         completedTrips.print();
+                        System.out.println("*end of list.");
+                        System.out.println();
                         break;
                     case "Q":
                         running = false;
                         break;
                     default:
-                        System.out.println("Invalid command!");
+                        System.out.println(type + " - invalid command!");
                 }
             }
 
@@ -270,10 +307,6 @@ public class Frontend {
         input.close();
 
         //Potential helpers we might need below
-
-
-
-
     }
     /**
      * Testbed main for testing

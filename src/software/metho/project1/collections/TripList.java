@@ -63,56 +63,6 @@ public class TripList {
         } while (curr != last);
     }
 
-    /**
-     * Helper functions for frontend
-     */
-
-    public boolean hasBookingForVehicle(Vehicle vehicle) {
-        if (last == null)
-        return false;
-
-        Node curr = last.next;
-        do {
-            if (curr.data.getBooking().getVehicle().equals(vehicle)) {
-                return true;
-            }
-            curr = curr.next;
-        } while (curr != last.next);
-        return false;
-    }
-
-    public Booking getBooking(Date endDate, Vehicle vehicle) {
-        if (last == null)
-        return null;
-
-        Node curr = last.next;
-        do {
-            Booking booking = curr.data.getBooking();
-            if (booking.getVehicle().equals(vehicle) && booking.getEnd().equals(endDate)) {
-                return booking;
-            }
-            curr = curr.next;
-        } while (curr != last.next);
-    
-        return null;
-    }
-
-    public boolean isEarliestEndingDate(Booking targetBooking) {
-        if (last == null)
-        return false;
-
-        Date targetEndDate = targetBooking.getEnd();
-        Node curr = last.next;
-        do {
-            Booking booking = curr.data.getBooking();
-            if (booking.getEnd().compareTo(targetEndDate) < 0) {
-                return false;
-            }
-            curr = curr.next;
-        } while (curr != last.next);
-        return true;
-    }
-
     public boolean remove(Booking booking) {
         if (last == null)
         return false;

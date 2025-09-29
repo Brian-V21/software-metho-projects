@@ -24,13 +24,13 @@ public class Reservation {
 
     /**
      * Searcges for a booking within the list
-     * 
+     *
      * @param booking the booking to look for
      * @return the index if found, or UNDEFINED if not in the list
      */
     private int find(Booking booking) {
         for (int i = 0; i < size; i++) {
-            if(bookings[i].equals(booking)) {
+            if (bookings[i].equals(booking)) {
                 return i;
             }
         }
@@ -40,7 +40,7 @@ public class Reservation {
     /**
      * Resizes the array by increasing its capacity by 4.
      */
-    private void grow () {
+    private void grow() {
         Booking[] newArray = new Booking[bookings.length + CAPACITY];
         for (int i = 0; i < size; i++) {
             newArray[i] = bookings[i];
@@ -50,7 +50,7 @@ public class Reservation {
 
     /**
      * Adds a new booking to the end of the list.
-     * 
+     *
      * @param booking the booking that is added
      */
     public void add(Booking booking) {
@@ -62,7 +62,7 @@ public class Reservation {
 
     /**
      * Removes a booking from the list. Overwrites booking with the last element of the list.
-     * 
+     *
      * @param booking the booking that is removed.
      */
     public void remove(Booking booking) {
@@ -76,7 +76,7 @@ public class Reservation {
 
     /**
      * Checks whether a given booking exists.
-     * 
+     *
      * @param booking the booking being checked
      * @return true if the booking is in the list, otherwise false
      */
@@ -87,13 +87,13 @@ public class Reservation {
     /**
      * Prints the list of bookings ordered by plate numbers, then beginning date.
      */
-    public void printByVehicle(){
+    public void printByVehicle() {
         for (int i = 0; i < size - 1; i++) {
             int minIndex = 1;
             for (int j = i + 1; j < size; j++) {
                 String plateMin = bookings[minIndex].getVehicle().getPlate();
                 String plateJ = bookings[j].getVehicle().getPlate();
-            
+
                 if (plateJ.compareTo(plateMin) < 0 || (plateJ.equals(plateMin) && bookings[j].getBegin().compareTo(bookings[minIndex].getBegin()) < 0)) {
                     minIndex = j;
                 }
@@ -106,31 +106,31 @@ public class Reservation {
             System.out.println(bookings[i]);
         }
     }
-   
+
 
     /**
      * Prints the list of bookings ordered by department, then employee.
      */
-    public void printByDept(){
+    public void printByDept() {
         for (int i = 0; i < size - 1; i++) {
             int minIndex = 1;
             for (int j = i + 1; j < size; j++) {
                 Department deptMin = bookings[minIndex].getEmployee().getDept();
-                 Department deptJ = bookings[j].getEmployee().getDept();
+                Department deptJ = bookings[j].getEmployee().getDept();
 
                 if (deptJ.name().compareTo(deptMin.name()) < 0 || (deptJ.name().equals(deptMin.name()) && bookings[j].getEmployee().name().compareTo(bookings[minIndex].getEmployee().name()) < 0)) {
-                        minIndex = j;
+                    minIndex = j;
                 }
             }
             Booking temp = bookings[i];
             bookings[i] = bookings[minIndex];
-            bookings[minIndex] = temp;    
-         }
-         for (int i = 0; i < size; i++) {
+            bookings[minIndex] = temp;
+        }
+        for (int i = 0; i < size; i++) {
             System.out.println(bookings[i]);
-         }
+        }
     }
-    
+
     /**
      * Testbed main() for testing/debugging purposes.
      */
@@ -146,4 +146,43 @@ public class Reservation {
 
     }
 
+    /**
+     * Helper functions for frontend
+     */
+
+    //Transform Reservation to Booking;
+    public boolean hasBookingForVehicle(Vehicle vehicle) {
+        for (int i = 0; i < size; i++) {
+            if (bookings[i].getVehicle().equals(vehicle)) return true;
+        }
+        return false;
+    }
+    public Booking getBooking(Date endDate, Vehicle vehicle) {
+        for (int i = 0; i < size; i++) {
+            Booking booking = bookings[i];
+            if (booking.getVehicle().equals(vehicle) &&
+                    booking.getEnd().equals(endDate)) {
+                return booking;
+            }
+        }
+        return null;
+    }
+    public boolean isEarliestEndingDate(Booking targetBooking) {
+        if (targetBooking == null) return false;
+
+        Vehicle targetVehicle = targetBooking.getVehicle();
+        Date targetEnd = targetBooking.getEnd();
+
+        for (int i = 0; i < size; i++) {
+            Booking b = bookings[i];
+            if (b.getVehicle().equals(targetVehicle) &&
+                    b.getEnd().compareTo(targetEnd) < 0) {
+                return false;
+            }
+        }
+        return true;
+    }
 }
+
+
+

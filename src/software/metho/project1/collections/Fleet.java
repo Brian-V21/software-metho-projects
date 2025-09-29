@@ -76,14 +76,19 @@ public class Fleet {
      * @param vehicle Vehicle Object
      */
     public void remove(Vehicle vehicle) {
-        int index = find(vehicle);
-        if (index == NOT_FOUND) return;
-
-        for (int i = index; i < size - 1; i++) {
-                fleet[i] = fleet[i + 1];
+        int idx = find(vehicle);
+        if (idx == NOT_FOUND) {
+            System.out.println("Vehicle not found in fleet");
+            return;
         }
+
+        Vehicle removed = fleet[idx]; // save before overwriting
+
+        fleet[idx] = fleet[size - 1];
         fleet[size - 1] = null;
         size--;
+
+        System.out.println(removed + " has been removed from the fleet.");
     }
 
     /**
