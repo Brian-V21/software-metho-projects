@@ -28,7 +28,7 @@ public class Reservation {
      * @param booking the booking to look for
      * @return the index if found, or UNDEFINED if not in the list
      */
-    private int findBooking(Booking booking) {
+    private int find(Booking booking) {
         for (int i = 0; i < size; i++) {
             if(bookings[i].equals(booking)) {
                 return i;
@@ -66,7 +66,7 @@ public class Reservation {
      * @param booking the booking that is removed.
      */
     public void remove(Booking booking) {
-        int index = findBooking(booking);
+        int index = find(booking);
         if (index != NOT_FOUND) {
             bookings[index] = bookings[size - 1];
             bookings[size - 1] = null;
@@ -81,7 +81,7 @@ public class Reservation {
      * @return true if the booking is in the list, otherwise false
      */
     public boolean contains(Booking booking) {
-        return findBooking(booking) != NOT_FOUND;
+        return find(booking) != NOT_FOUND;
     }
 
     /**
@@ -130,7 +130,7 @@ public class Reservation {
             System.out.println(bookings[i]);
          }
     }
-
+    
     /**
      * Testbed main() for testing/debugging purposes.
      */

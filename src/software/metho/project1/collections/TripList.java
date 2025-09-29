@@ -6,6 +6,7 @@ import software.metho.project1.entities.*;
 
 public class TripList {
     private Node last;
+    private int size;
 
     private static class Node{
         Trip data;
@@ -23,6 +24,7 @@ public class TripList {
         if (last == null) {
             last = newNode;
             last.next = last; //circular
+            size++;
             return;
         }
 
@@ -36,6 +38,7 @@ public class TripList {
                 if (curr == last.next) {
                     last.next = newNode;
                 }
+                size++;
                 return;
             }
             prev = curr;
@@ -45,6 +48,7 @@ public class TripList {
         newNode.next = last.next;
         last.next = newNode;
         last = newNode;
+        size++;
     }
     public void print() {
         if (last == null) {
@@ -58,6 +62,10 @@ public class TripList {
             curr = curr.next;
         } while (curr != last);
     }
+
+    /**
+     * Helper functions for frontend
+     */
 
     public boolean hasBookingForVehicle(Vehicle vehicle) {
         if (last == null)
@@ -104,6 +112,39 @@ public class TripList {
         } while (curr != last.next);
         return true;
     }
+
+    public boolean remove(Booking booking) {
+        if (last == null)
+        return false;
+
+        Node curr = last.next;
+        Node prev = last;
+
+        do {
+            if (curr.data.getBooking().equals(booking)) {
+                if (curr == last && curr == last.next) {
+                    last = null;
+                }
+                else if (curr == last) {
+                    prev.next = curr.next;
+                    last = prev;
+                }
+                else {
+                    prev.next = curr.next;
+                }
+                /**
+                 * might need size here unsure
+                 */
+                size--;
+                return true;
+            }
+            prev = curr;
+            curr = curr.next;
+        } while (curr != last.next);
+
+        return false;
+    }
+
 
 public static void main(String[] args) {
     TripList list = new TripList();
