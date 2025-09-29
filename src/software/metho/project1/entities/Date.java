@@ -19,7 +19,7 @@ public class Date implements Comparable<Date> {
             // placed 0 so index runs 1-12 ([1] = JAN through till [12] = DEC
             0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
     /**
-     * Constructor for Daet
+     * Constructor for Date
      * @param year year of the date
      * @param month month of the date
      * @param day day of the date
@@ -67,7 +67,7 @@ public class Date implements Comparable<Date> {
     public boolean isPastDate() {
         Calendar today = Calendar.getInstance();
         int todayYear = today.get(Calendar.YEAR);
-        int todayMonth = today.get(Calendar.MONTH);
+        int todayMonth = today.get(Calendar.MONTH) + 1;
         int todayDay = today.get(Calendar.DAY_OF_MONTH);
 
         Date currentDate = new Date(todayYear, todayMonth, todayDay);

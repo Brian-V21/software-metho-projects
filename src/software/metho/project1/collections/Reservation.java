@@ -157,6 +157,11 @@ public class Reservation {
         }
         return false;
     }
+    /**
+     * @param endDate
+     * @param vehicle
+     * @return
+     */
     public Booking getBooking(Date endDate, Vehicle vehicle) {
         for (int i = 0; i < size; i++) {
             Booking booking = bookings[i];
@@ -181,6 +186,10 @@ public class Reservation {
             }
         }
         return true;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
     }
 }
 

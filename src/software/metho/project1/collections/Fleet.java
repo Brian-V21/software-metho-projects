@@ -142,4 +142,8 @@ public class Fleet {
         }
         return null;
     }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
 }

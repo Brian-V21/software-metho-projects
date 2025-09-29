@@ -28,6 +28,8 @@ public class Frontend {
     private TripList completedTrips;
     private Reservation bookings;
 
+    private int size;
+
     public Frontend(Fleet fleet, Reservation bookings, TripList completedTrips) {
         this.fleet = fleet;
         this.bookings = bookings;
@@ -138,9 +140,9 @@ public class Frontend {
                             break;
                         }
 
-                        String bookPlate = tokens[1];
-                        String startDateStr = tokens[2];
-                        String endDateStr = tokens[3];
+                        String startDateStr = tokens[1];
+                        String endDateStr = tokens[2];
+                        String bookPlate = tokens[3];
                         String empStr = tokens[4].toUpperCase();
 
                         // check vehicle exists
@@ -236,11 +238,10 @@ public class Frontend {
                             break;
                         }
 
-                        Vehicle returnVehicle = new Vehicle(returnPlate);
-                        Date dateReturned;
+                        Date returnDate;
                         try {
-                            dateReturned = Date.fromString(returnDateString);
-                            if (!dateReturned.isValid()) {
+                            returnDate = Date.fromString(returnDateString);
+                            if (!returnDate.isValid()) {
                                 System.out.println(returnDateString + " is not a valid date.");
                                 break;
                             }
@@ -249,9 +250,16 @@ public class Frontend {
                             break;
                         }
 
-                        Booking bookingToReturn = bookings.getBooking(dateReturned, returnVehicle);
+                        Vehicle returnVehicle = fleet.findVehicle(returnPlate);
+                        if (returnVehicle == null) {
+                            System.out.println("Vehicle not found in fleet.");
+                            break;
+                        }
+
+                        Booking bookingToReturn = bookings.getBooking(returnDate, returnVehicle);
                         if (bookingToReturn == null) {
                             System.out.println("No booking found.");
+                            bookings.printByVehicle();
                             break;
                         }
                         if (!bookings.isEarliestEndingDate(bookingToReturn)) {
@@ -272,28 +280,44 @@ public class Frontend {
                         System.out.println("Vehicle returned: " + bookingToReturn);
                         break;
                     case "PF":
+                        if (fleet.isEmpty()) {
+                            System.out.println("There is no vehicle in the fleet");
+                        } else {
                         System.out.println("*List of vehicles in the fleet, ordered by make then date obtained.");
                         fleet.printByMake();
                         System.out.println("*end of list.");
                         System.out.println();
+                        }
                         break;
                     case "PR":
+                        if (bookings.isEmpty()) {
+                            System.out.println("There is no booking record");
+                        } else {
                         System.out.println("*List of reservations ordered by license plate then beginning date.");
                         bookings.printByVehicle();
                         System.out.println("*end of list.");
                         System.out.println();
+                        }
                         break;
                     case "PD":
+                        if (bookings.isEmpty()) {
+                            System.out.println("There is no booking record");
+                        } else {
                         System.out.println("*List of reservations ordered by Department then employee.");
                         bookings.printByDept();
                         System.out.println("*end of list.");
                         System.out.println();
+                        }
                         break;
                     case "PT":
+                        if (size == 0) {
+                            System.out.println("There is no archived trips");
+                        } else {
                         System.out.println("*List of completed trips ordered by ending date.");
                         completedTrips.print();
                         System.out.println("*end of list.");
                         System.out.println();
+                        }
                         break;
                     case "Q":
                         running = false;

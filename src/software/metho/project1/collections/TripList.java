@@ -1,7 +1,5 @@
 package software.metho.project1.collections;
 
-import software.metho.project1.entities.Trip;
-
 import software.metho.project1.entities.*;
 
 public class TripList {
@@ -201,6 +199,10 @@ public class TripList {
                 curr = curr.next;
             } while (curr != last.next);
         }
+    }
+
+      public boolean isEmpty() {
+        return size == 0;
     }
 
 
