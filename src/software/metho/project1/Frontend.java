@@ -233,14 +233,7 @@ public class Frontend {
 
                     String returnDateString = tokens[1];
                     String returnPlate = tokens[2];
-                    int newMileage;
-
-                    try {
-                        newMileage = Integer.parseInt(tokens[3]);
-                    } catch (NumberFormatException e) {
-                        System.out.println( + "Mileage invalid."));
-                        break;
-                    }
+                    int newMileage = -1;
 
                     Date returnDate;
                     try {
@@ -259,6 +252,12 @@ public class Frontend {
                         System.out.println("Vehicle not found in fleet.");
                         break;
                     }
+                    try {
+                        newMileage = Integer.parseInt(tokens[3]);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid mileage - current mileage: " + returnVehicle.getMileage() + " entered mileage: " + tokens[3]);
+                        break;
+                    }
 
                     Booking bookingToReturn = bookings.getBooking(returnDate, returnVehicle);
                     if (bookingToReturn == null) {
@@ -270,9 +269,10 @@ public class Frontend {
                         break;
                     }
                     if (newMileage <= bookingToReturn.getVehicle().getMileage()) {
-                        System.out.println("Mileage invalid.");
+                        System.out.println(newMileage + " Mileage invalid.");
                         break;
                     }
+
 
                     int beginMileage = bookingToReturn.getVehicle().getMileage();
                     bookingToReturn.getVehicle().setMileage(newMileage);
