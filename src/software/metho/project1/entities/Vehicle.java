@@ -1,7 +1,7 @@
 package software.metho.project1.entities;
 
 /**
- * *@author Brian V;
+ * *@author Brian V and Travis F;
  */
 public class Vehicle implements Comparable<Vehicle> {
     private String plate; //License plate number
@@ -39,7 +39,7 @@ public class Vehicle implements Comparable<Vehicle> {
     }
 
     /**
-     *
+     * Gets the license plate of the vehcle.
      * @return license plate of vehicle
      */
     public String getPlate() {
@@ -47,7 +47,7 @@ public class Vehicle implements Comparable<Vehicle> {
     }
 
     /**
-     *
+     * Gets the make of the vehicle.
      * @return make of vehicle
      */
     public Make getMake() {
@@ -55,7 +55,7 @@ public class Vehicle implements Comparable<Vehicle> {
     }
 
     /**
-     *
+     * Gets the acquisition date of the vehicle.
      * @return date vehicle was obtained
      */
     public Date getObtained() {
@@ -63,7 +63,7 @@ public class Vehicle implements Comparable<Vehicle> {
     }
 
     /**
-     *
+     * Gets the current mileage of the vehicle.
      * @return miles on vehicle
      */
     public int getMileage(){
@@ -71,13 +71,21 @@ public class Vehicle implements Comparable<Vehicle> {
     }
 
     /**
-     *
+     * Updates the vehicles mileage
      * @param mileage set miles of vehicle to another int
      */
     public void setMileage(int mileage) {
         this.mileage = mileage;
     }
 
+    /**
+     * Compares this vehicle to another by license plate.
+     * Returns a negative value if this plate comes before the other,
+     * a positive value if it comes after, and a 0 if they are the same.
+     * 
+     * @param vehicle the vehicle to compare with
+     * @return -1, 0, or 1 depending on the order of the license plates.
+     */
     @Override
     public int compareTo(Vehicle vehicle) {
         if (this.plate.compareTo(vehicle.plate) > 0)
@@ -87,6 +95,14 @@ public class Vehicle implements Comparable<Vehicle> {
         return 0;
     }
 
+    /**
+     * Determines if this vehicle is equal to another object.
+     * Vehicles are considered equal if they have the same license plate,
+     * regardless of make, date obtained, or mileage.
+     * 
+     * @param obj the object to compare
+     * @return true if the obj is a Vehicle with the same plate, otherwise false
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Vehicle) {
@@ -96,12 +112,16 @@ public class Vehicle implements Comparable<Vehicle> {
         return false;
     }
 
+    /**
+     * Returns a string representation of the vehicle.
+     * @return a formatted string of vehicle details.
+     */
     @Override
     public String toString() {
         return plate + ":" + make + ":" + obtained + " [mileage:" + mileage + "]";
     }
 
-    //Testbed for 3 instances of compareTo with -1, 0, & 1
+    //Testbed main() for 3 instances of compareTo with -1, 0, & 1
     public static void main (String[]args){
         Date d1 = new Date(2021, 6, 21);
         Date d2 = new Date(2024, 2, 3);
