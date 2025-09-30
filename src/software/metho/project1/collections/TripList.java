@@ -118,6 +118,9 @@ public class TripList {
     }
 
 
+/**
+ * Testbed main()
+ */    
 public static void main(String[] args) {
     TripList list = new TripList();
     Date d1 = new Date(2025, 10, 25);
