@@ -35,6 +35,7 @@ public class Booking {
         this.vehicle = v;
     }
 
+
     /**
      * Returns the start date
      * 

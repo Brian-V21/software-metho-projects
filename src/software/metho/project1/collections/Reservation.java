@@ -200,9 +200,20 @@ public class Reservation {
         return size == 0;
     }
 
-    public boolean isAvailable(Vehicle v, Date start, Date end) {
-        Booking b = getBooking(start, v);
-        return b == null;
+    public boolean isAvailable(Vehicle v, Date startDate, Date endDate) {
+        for (int i = 0; i < size; i++) {
+            Booking b = bookings[i];
+
+            if(b.getVehicle().equals(v)) {
+                Date bstart = b.getBegin();
+                Date bend = b.getEnd();
+
+                if(!(endDate.compareTo(bstart) < 0 || startDate.compareTo(bend) > 0)) {
+                    return false;
+                }
+            }
+            }
+        return true;
     }
 
     public boolean isEmpAvailable(Employee emp, Date startDate, Date endDate) {
@@ -219,6 +230,7 @@ public class Reservation {
         }
     return true;
     }
+
 }
 
 

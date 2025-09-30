@@ -7,7 +7,7 @@ public class TripList {
     private int size;
 
     /**
-     * Node represends an element in the circular Linked list
+     * Node represents an element in the circular Linked list
      */
     private static class Node{
         Trip data;

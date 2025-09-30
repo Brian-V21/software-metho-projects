@@ -191,12 +191,12 @@ public class Frontend {
                     try {
                         emp = Employee.valueOf(empStr);
                     } catch (IllegalArgumentException e) {
-                        System.out.println(empStr + " is not a valid employee.");
+                        System.out.println(empStr + " not an eligible employee to book.");
                         break;
                     }
 
                     if (!bookings.isAvailable(vehicleToBook, startDate, endDate)) {
-                        System.out.println(vehicleToBook.getPlate() + " - booking with " + startDate + " ~ " + endDate + " is not available.");
+                        System.out.println(vehicleToBook.getPlate() + " - booking with " + startDate + " ~ " + endDate + " not available.");
                         break;
                     }
 
@@ -207,8 +207,7 @@ public class Frontend {
                     // create booking
                     Booking newBooking = new Booking(startDate, endDate, emp, vehicleToBook);
                     bookings.add(newBooking);
-
-                    System.out.println("Booking completed: " + newBooking);
+                    System.out.println(newBooking + " booked.");
                     break;
                 case "C":
                     if (tokens.length < 3) {
@@ -234,7 +233,7 @@ public class Frontend {
 
                     Booking bookingToCancel = bookings.getBooking(cancelDate, cancelVehicle);
                     if (bookingToCancel == null) {
-                        System.out.println(bookingToCancel + "No booking to cancel");
+                        System.out.println("No booking to cancel");
                         break;
                     }
 
