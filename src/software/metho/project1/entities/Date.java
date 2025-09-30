@@ -91,6 +91,10 @@ public class Date implements Comparable<Date> {
         return this.compareTo(currentDate) < 0;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isFutureDate() {
         Calendar today = Calendar.getInstance();
         int todayYear = today.get(Calendar.YEAR);
@@ -164,6 +168,10 @@ public class Date implements Comparable<Date> {
         }
     }
 
+    /**
+     *
+     * @return Totals the days based on the date given
+     */
     private int toDayCount() {
     int days = 0;
 
