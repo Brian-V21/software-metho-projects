@@ -29,6 +29,21 @@ public class Date implements Comparable<Date> {
         this.month = month;
         this.day = day;
     }
+
+    public int getYear() {
+        return year;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+
+
     /**
      *
      * @return if date is a leap year
@@ -112,6 +127,40 @@ public class Date implements Comparable<Date> {
             throw new IllegalArgumentException("Invalid date string: " + dateString);
         }
     }
+
+    private int toDayCount() {
+    int days = 0;
+
+    // Add days for all full years before this.year
+    for (int y = 0; y < year; y++) {
+        days += (new Date(y, 1, 1).isLeap()) ? 366 : 365;
+    }
+
+    // Add days for all full months before this.month in current year
+    for (int m = 1; m < month; m++) {
+        if (m == FEB && isLeap()) {
+            days += 29;
+        } else {
+            days += DAYS_IN_MONTHS[m];
+        }
+    }
+
+    // Add days in the current month
+    days += day;
+
+    return days;
+}
+
+/**
+ * Returns the absolute number of days between this date and another.
+ */
+public int daysBetween(Date other) {
+    return Math.abs(this.toDayCount() - other.toDayCount());
+}
+
+
+
+
 
     //Testbed for 4 invalid & 2 valid tests
     public static void main(String[] args) {

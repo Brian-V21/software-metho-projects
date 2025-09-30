@@ -95,15 +95,14 @@ public class TripList {
 
     /**
      * Prints the list of bookings ordered by plate numbers, then beginning date.
-     */
+     
     public void printByVehicle() {
         if (last == null) {
             System.out.println("No bookings in the system.");
             return;
         }
 
-        Node printedNodes = null; // We'll track which trips have been printed by repeated traversal
-        Node start = last.next;
+        
 
         boolean done = false;
         while (!done) {
@@ -158,7 +157,7 @@ public class TripList {
 
     /**
      * Prints the list of bookings ordered by department, then employee.
-     */
+     
     public void printByDept() {
         if (last == null) {
             System.out.println("No bookings in the system.");
@@ -199,7 +198,7 @@ public class TripList {
                 curr = curr.next;
             } while (curr != last.next);
         }
-    }
+    }*/
 
       public boolean isEmpty() {
         return size == 0;

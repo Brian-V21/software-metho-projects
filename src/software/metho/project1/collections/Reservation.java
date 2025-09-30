@@ -157,14 +157,10 @@ public class Reservation {
         }
         return false;
     }
-    /**
-     * @param endDate
-     * @param vehicle
-     * @return
-     */
     public Booking getBooking(Date endDate, Vehicle vehicle) {
         for (int i = 0; i < size; i++) {
             Booking booking = bookings[i];
+
             if (booking.getVehicle().equals(vehicle) &&
                     booking.getEnd().equals(endDate)) {
                 return booking;

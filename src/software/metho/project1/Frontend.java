@@ -7,7 +7,7 @@ import software.metho.project1.collections.Reservation;
 import software.metho.project1.collections.TripList;
 import software.metho.project1.entities.*;
 
-import javax.sound.midi.SysexMessage;
+
 import java.util.Scanner;
 
 
@@ -28,7 +28,7 @@ public class Frontend {
     private TripList completedTrips;
     private Reservation bookings;
 
-    private int size;
+
 
     public Frontend(Fleet fleet, Reservation bookings, TripList completedTrips) {
         this.fleet = fleet;
@@ -166,7 +166,7 @@ public class Frontend {
                                 System.out.println(endDateStr + " is not a valid date.");
                                 break;
                             }
-                            if (endDate.compareTo(startDate) <= 0) {
+                            if (endDate.compareTo(startDate) < 0) {
                                 System.out.println("Invalid booking period.");
                                 break;
                             }
@@ -259,7 +259,6 @@ public class Frontend {
                         Booking bookingToReturn = bookings.getBooking(returnDate, returnVehicle);
                         if (bookingToReturn == null) {
                             System.out.println("No booking found.");
-                            bookings.printByVehicle();
                             break;
                         }
                         if (!bookings.isEarliestEndingDate(bookingToReturn)) {
@@ -310,7 +309,7 @@ public class Frontend {
                         }
                         break;
                     case "PT":
-                        if (size == 0) {
+                        if (completedTrips.isEmpty()) {
                             System.out.println("There is no archived trips");
                         } else {
                         System.out.println("*List of completed trips ordered by ending date.");

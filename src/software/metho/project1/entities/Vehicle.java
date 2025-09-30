@@ -118,4 +118,5 @@ public class Vehicle implements Comparable<Vehicle> {
         System.out.println("v1 comparing to v3: " + v1.compareTo(v3));
 
     }
+
 }

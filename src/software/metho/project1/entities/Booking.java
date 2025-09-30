@@ -22,12 +22,19 @@ public class Booking {
         this.vehicle = vehicle;
     }
 
+    /**
+     * Constructs a Booking object with only an end date and vehcle.
+     * 
+     * @param end End date of the booking
+     * @param v Vehicle associated with the booking
+     */
     public Booking (Date end, Vehicle v) {
         this.end = end;
         this.vehicle = v;
     }
 
     /**
+     * Returns the start date
      * 
      * @return the beginning date
      */
@@ -36,6 +43,7 @@ public class Booking {
     }
 
     /**
+     * Returns the end date
      * 
      * @return the end date
      */
@@ -44,6 +52,7 @@ public class Booking {
     }
 
     /**
+     * Returns the employee of this booking
      * 
      * @return the employee
      */
@@ -52,6 +61,7 @@ public class Booking {
     }
 
     /**
+     * Returns the vehicle associated with this booking
      * 
      * @return the vehicle
      */
@@ -59,6 +69,13 @@ public class Booking {
         return vehicle;
     }
 
+    /**
+     * Compares a booking to another object.
+     * Two bookings are considered equal if they involve the same vehicle and have the same start and end dates
+     * 
+     * @param obj Object to compare
+     * @return true if the object is a booking with the same vehicle and dates, otherwise false.
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -68,9 +85,15 @@ public class Booking {
         Booking other = (Booking) obj;
         return this.vehicle.equals(other.vehicle) 
             && this.begin.equals(other.begin) 
-            && this.end.equals(other.end);
+            && this.end.equals(other.end)
+            && this.employee.equals(other.employee);
     }
 
+    /**
+     * Returns a string
+     * 
+     * @return String describing the vehicle, booking period, and employee.
+     */
     @Override
     public String toString() {
         return vehicle.toString() + " [beginning " + begin.toString() +
@@ -78,6 +101,9 @@ public class Booking {
 
     }
 
+    /**
+     * Testbed main() for Booking
+     */
     public static void main(String[] args) {
         Date d1 = new Date(2025, 10 , 31);
         Date d2 = new Date(2025, 11, 2);
