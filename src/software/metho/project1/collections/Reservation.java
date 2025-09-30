@@ -133,10 +133,10 @@ public class Reservation {
         Department currdept = null;
         for (int i = 0; i < size; i++) {
             Department department = bookings[i].getEmployee().getDept();
-                if (currdept != department) {
-                    currdept = department;
-                    System.out.println("--" + department + "--");
-                }
+            if (currdept != department) {
+                currdept = department;
+                System.out.println("--" + department + "--");
+            }
         }
     }
 
@@ -167,6 +167,7 @@ public class Reservation {
         }
         return false;
     }
+
     public Booking getBooking(Date endDate, Vehicle vehicle) {
         for (int i = 0; i < size; i++) {
             Booking booking = bookings[i];
@@ -178,6 +179,7 @@ public class Reservation {
         }
         return null;
     }
+
     public boolean isEarliestEndingDate(Booking targetBooking) {
         if (targetBooking == null) return false;
 
@@ -196,6 +198,26 @@ public class Reservation {
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public boolean isAvailable(Vehicle v, Date start, Date end) {
+        Booking b = getBooking(start, v);
+        return b == null;
+    }
+
+    public boolean isEmpAvailable(Employee emp, Date startDate, Date endDate) {
+        for (int i = 0; i < size; i++) {
+            Booking b = bookings[i];
+            if (b.getEmployee() == emp) {
+                Date bstart = b.getBegin();
+                Date bend = b.getEnd();
+
+                if (!(endDate.compareTo(bstart) < 0 || startDate.compareTo(bend) > 0)) {
+                    return false;
+                }
+            }
+        }
+    return true;
     }
 }
 

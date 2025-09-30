@@ -195,6 +195,15 @@ public class Frontend {
                         break;
                     }
 
+                    if (!bookings.isAvailable(vehicleToBook, startDate, endDate)) {
+                        System.out.println(vehicleToBook.getPlate() + " - booking with " + startDate + " ~ " + endDate + " is not available.");
+                        break;
+                    }
+
+                    if (!bookings.isEmpAvailable(emp, startDate, endDate)) {
+                        System.out.println(emp + " - has an existing booking conflicting with the beginning date " + startDate);
+                        break;
+                    }
                     // create booking
                     Booking newBooking = new Booking(startDate, endDate, emp, vehicleToBook);
                     bookings.add(newBooking);
