@@ -1,9 +1,9 @@
 package software.metho.project1.entities;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
+
 
 /**
- * *@author Brian V;
+ * *@author Brian V and Travis F;
  */
 
 public class Date implements Comparable<Date> {
@@ -31,24 +31,28 @@ public class Date implements Comparable<Date> {
         this.month = month;
         this.day = day;
     }
-
+    /**
+     * @return the year
+     */
     public int getYear() {
         return year;
     }
-
+    /**
+     * @return the month
+     */
     public int getMonth() {
         return month;
     }
-
+    /**
+     * @return the day
+     */
     public int getDay() {
         return day;
     }
 
-
-
     /**
-     *
-     * @return if date is a leap year
+     * Determines whether this date falls in a leap year
+     * @return true if the year is a leap year, otherwise false
      */
     public boolean isLeap() {
         if (this.year % QUADRENNIAL != 0) {// if not div by 4 then false
@@ -62,8 +66,8 @@ public class Date implements Comparable<Date> {
         }
     }
     /**
-     *
-     * @return if date input is a valid date
+     *Validates whether the year, month and day form a valid date
+     * @return true if the date is valid, otherwise false
      */
     public boolean isValid() {
         //Check year and months
@@ -78,8 +82,8 @@ public class Date implements Comparable<Date> {
         return (this.day >= 1 && this.day <=maxDays);
     }
     /**
-     *
-     * @return if date is before current date
+     * Checks whether this date is before the current system date.
+     * @return true if this date is in the past, otherwise false
      */
     public boolean isPastDate() {
         Calendar today = Calendar.getInstance();
@@ -90,7 +94,10 @@ public class Date implements Comparable<Date> {
         Date currentDate = new Date(todayYear, todayMonth, todayDay);
         return this.compareTo(currentDate) < 0;
     }
-
+    /**
+     * Checks whether this date is after the current system date.
+     * @return true if this date is in the future, otherwise false
+     */
     public boolean isFutureDate() {
         Calendar today = Calendar.getInstance();
         int todayYear = today.get(Calendar.YEAR);
@@ -100,7 +107,10 @@ public class Date implements Comparable<Date> {
         Date currentDate = new Date(todayYear, todayMonth, todayDay);
         return this.compareTo(currentDate) > 0;
     }
-
+    /**
+     * Checks whether this date is more than 3 months beyond today.
+     * @return true if this date is more than 3 months into the future
+     */
     public boolean beyondDate() {
         Calendar today = Calendar.getInstance();
         today.add(Calendar.MONTH, 3);
@@ -111,6 +121,11 @@ public class Date implements Comparable<Date> {
         Date threemonthsDate = new Date(todayYear, todayMonth, todayDay);
         return this.compareTo(threemonthsDate) > 0;
     }
+    /**
+     * Determines whether the duration between this date and another date is atleast 7 days.
+     * @param endDate the end date
+     * @return true if the duration is 7 or more days, otherwise false
+     */
     public boolean durationExceedsWeek (Date endDate) {
         Calendar begin = Calendar.getInstance();
         begin.set(this.getYear(), this.getMonth() - 1, this.getDay());
@@ -124,13 +139,22 @@ public class Date implements Comparable<Date> {
         return days >= 7;
     }
 
+    /**
+     * Compares this date to another date
+     * @param date the other date
+     * @return a negative integer if this date is before, zero if it is equal, or a positive integer if it is after.
+     */
     @Override
     public int compareTo(Date date) {
         if (this.year != date.year) return this.year - date.year;
         if (this.month != date.month) return this.month - date.month;
         return this.day - date.day;
     }
-
+    /**
+     * Test equality between this date and another object
+     * @param obj the object to compare
+     * @return true if the object is a Date with the same year, month, and day
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Date) {
@@ -139,16 +163,20 @@ public class Date implements Comparable<Date> {
         }
         return false;
     }
-
+    /**
+     * Returns this date as a string in the format MM/DD/YYYY
+     * @return string representation of this date.
+     */
     @Override
     public String toString() {
         return month + "/" + day + "/" + year;
     }
 
     /**
-     *
+     * Parses a date string formated as MM/DD/YYYY
      * @param dateString date in String form
      * @return dateString into Date type
+     * @throws IllegalArguementExeption if the string is invalid or not numeric
      */
     public static Date fromString(String dateString) {
         String[] parts = dateString.split("/");
@@ -163,7 +191,10 @@ public class Date implements Comparable<Date> {
             throw new IllegalArgumentException("Invalid date string: " + dateString);
         }
     }
-
+    /**
+     * Converts this date to an absolute day count, counting all days fron year 0.
+     * @return the day count representation of this date.
+     */
     private int toDayCount() {
     int days = 0;
 
@@ -171,7 +202,6 @@ public class Date implements Comparable<Date> {
     for (int y = 0; y < year; y++) {
         days += (new Date(y, 1, 1).isLeap()) ? 366 : 365;
     }
-
     // Add days for all full months before this.month in current year
     for (int m = 1; m < month; m++) {
         if (m == FEB && isLeap()) {
@@ -180,7 +210,6 @@ public class Date implements Comparable<Date> {
             days += DAYS_IN_MONTHS[m];
         }
     }
-
     // Add days in the current month
     days += day;
 
@@ -189,6 +218,8 @@ public class Date implements Comparable<Date> {
 
 /**
  * Returns the absolute number of days between this date and another.
+ * @param other the other date
+ * @return the number of days between the two dates
  */
 public int daysBetween(Date other) {
     return Math.abs(this.toDayCount() - other.toDayCount());
@@ -198,7 +229,7 @@ public int daysBetween(Date other) {
 
 
 
-    //Testbed for 4 invalid & 2 valid tests
+    //Testbed main() for 4 invalid & 2 valid tests
     public static void main(String[] args) {
         //valid cases
         Date d1 = new Date(2024, 2,29);// Leap yr
