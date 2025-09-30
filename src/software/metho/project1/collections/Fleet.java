@@ -19,7 +19,7 @@ public class Fleet {
     }
 
     /**
-     *
+     * Constructs a Fleet with a given array of vehicles and size.
      * @param fleet collection of vehicles in fleet
      * @param size number of vehicles in fleet
      */
@@ -29,7 +29,7 @@ public class Fleet {
     }
 
     /**
-     *
+     * Finds the index of a vehicle in the fleet.
      * @param vehicle Vehicle Object
      * @return Search for a vehicle in fleet and return index or NOT_FOUND
      */
@@ -56,7 +56,8 @@ public class Fleet {
     }
 
     /**
-     * add vehicle to fleet collection
+     * Add vehicle to fleet collection
+     * If the vehicle already exists, nothing happens
      * @param vehicle Vehicle Object
      */
     public void add(Vehicle vehicle) {
@@ -72,7 +73,8 @@ public class Fleet {
     }
 
     /**
-     * remove vehicle from fleet collection
+     * Remove vehicle from fleet collection
+     * The vehicle at the removed index is replaces with the last vehicle
      * @param vehicle Vehicle Object
      */
     public void remove(Vehicle vehicle) {
@@ -92,7 +94,7 @@ public class Fleet {
     }
 
     /**
-     *
+     * Checks if a given vehicle exists in the fleet.
      * @param vehicle Vehicle Object
      * @return if vehicle is contained in fleet
      */
@@ -101,7 +103,7 @@ public class Fleet {
     }
 
     /**
-     * print collection by make then date
+     * Print collection by make then date
      */
     public void printByMake() {
 
@@ -130,9 +132,9 @@ public class Fleet {
     }
 
     /**
-     *
+     * Finds a vehicle in the fleet by its license plate.
      * @param plate license plate of vehicle
-     * @return the vehicle of index in fleet
+     * @return the vehicle of index in fleet or null if not found
      */
     public Vehicle findVehicle(String plate) {
         for (int i = 0; i < size; i++) {
@@ -143,6 +145,10 @@ public class Fleet {
         return null;
     }
 
+    /**
+     * Checks if the fleet is empty
+     * @return true if there are no vehicles in the fleet, otherwise false
+     */
     public boolean isEmpty() {
         return size == 0;
     }
