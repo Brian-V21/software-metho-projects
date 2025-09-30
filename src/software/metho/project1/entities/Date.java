@@ -29,23 +29,30 @@ public class Date implements Comparable<Date> {
         this.month = month;
         this.day = day;
     }
-
+    /**
+     * 
+     * @return the year
+     */
     public int getYear() {
         return year;
     }
-
+    /**
+     * 
+     * @return the month
+     */
     public int getMonth() {
         return month;
     }
-
+     /**
+     * 
+     * @return the day
+     */
     public int getDay() {
         return day;
     }
 
-
-
     /**
-     *
+     * Determines whether this date's year is a leap year
      * @return if date is a leap year
      */
     public boolean isLeap() {
@@ -60,7 +67,7 @@ public class Date implements Comparable<Date> {
         }
     }
     /**
-     *
+     * Validates whether this Date object represents a real calendar date.
      * @return if date input is a valid date
      */
     public boolean isValid() {
@@ -76,7 +83,7 @@ public class Date implements Comparable<Date> {
         return (this.day >= 1 && this.day <=maxDays);
     }
     /**
-     *
+     * Checks if this date is before today's date
      * @return if date is before current date
      */
     public boolean isPastDate() {
@@ -88,6 +95,10 @@ public class Date implements Comparable<Date> {
         Date currentDate = new Date(todayYear, todayMonth, todayDay);
         return this.compareTo(currentDate) < 0;
     }
+
+    /**
+     * Compares this date to another chronologically
+     */
     @Override
     public int compareTo(Date date) {
         if (this.year != date.year) return this.year - date.year;
@@ -95,6 +106,9 @@ public class Date implements Comparable<Date> {
         return this.day - date.day;
     }
 
+    /**
+     * Two dates are equal if year, month and day match.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Date) {
@@ -104,13 +118,17 @@ public class Date implements Comparable<Date> {
         return false;
     }
 
+    /**
+     * Returns string in format M/D/YYYY.
+     */
     @Override
     public String toString() {
         return month + "/" + day + "/" + year;
     }
 
     /**
-     *
+     * Parses a string in M/D/YYYY format into a Date.
+     * 
      * @param dateString date in String form
      * @return dateString into Date type
      */
@@ -127,40 +145,6 @@ public class Date implements Comparable<Date> {
             throw new IllegalArgumentException("Invalid date string: " + dateString);
         }
     }
-
-    private int toDayCount() {
-    int days = 0;
-
-    // Add days for all full years before this.year
-    for (int y = 0; y < year; y++) {
-        days += (new Date(y, 1, 1).isLeap()) ? 366 : 365;
-    }
-
-    // Add days for all full months before this.month in current year
-    for (int m = 1; m < month; m++) {
-        if (m == FEB && isLeap()) {
-            days += 29;
-        } else {
-            days += DAYS_IN_MONTHS[m];
-        }
-    }
-
-    // Add days in the current month
-    days += day;
-
-    return days;
-}
-
-/**
- * Returns the absolute number of days between this date and another.
- */
-public int daysBetween(Date other) {
-    return Math.abs(this.toDayCount() - other.toDayCount());
-}
-
-
-
-
 
     //Testbed for 4 invalid & 2 valid tests
     public static void main(String[] args) {
