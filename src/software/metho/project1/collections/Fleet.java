@@ -1,7 +1,7 @@
 package software.metho.project1.collections;
 import software.metho.project1.entities.Vehicle;
 /**
- * *@author Brian V;
+ * *@author Brian V and Travis F;
  */
 
 public class Fleet {
