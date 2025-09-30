@@ -1,5 +1,7 @@
 package software.metho.project1.entities;
 import java.util.Calendar;
+import java.util.concurrent.TimeUnit;
+
 /**
  * *@author Brian V;
  */
@@ -88,6 +90,40 @@ public class Date implements Comparable<Date> {
         Date currentDate = new Date(todayYear, todayMonth, todayDay);
         return this.compareTo(currentDate) < 0;
     }
+
+    public boolean isFutureDate() {
+        Calendar today = Calendar.getInstance();
+        int todayYear = today.get(Calendar.YEAR);
+        int todayMonth = today.get(Calendar.MONTH) + 1;
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
+
+        Date currentDate = new Date(todayYear, todayMonth, todayDay);
+        return this.compareTo(currentDate) > 0;
+    }
+
+    public boolean beyondDate() {
+        Calendar today = Calendar.getInstance();
+        today.add(Calendar.MONTH, 3);
+        int todayYear = today.get(Calendar.YEAR);
+        int todayMonth = today.get(Calendar.MONTH) + 1;
+        int todayDay = today.get(Calendar.DAY_OF_MONTH);
+
+        Date threemonthsDate = new Date(todayYear, todayMonth, todayDay);
+        return this.compareTo(threemonthsDate) > 0;
+    }
+    public boolean durationExceedsWeek (Date endDate) {
+        Calendar begin = Calendar.getInstance();
+        begin.set(this.getYear(), this.getMonth() - 1, this.getDay());
+
+        Calendar end = Calendar.getInstance();
+        end.set(endDate.getYear(), endDate.getMonth() - 1, endDate.getDay());
+
+        long duration = end.getTimeInMillis() - begin.getTimeInMillis();
+        long days = duration / (1000 * 60 * 60 * 24);
+
+        return days >= 7;
+    }
+
     @Override
     public int compareTo(Date date) {
         if (this.year != date.year) return this.year - date.year;

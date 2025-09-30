@@ -129,7 +129,17 @@ public class Reservation {
         for (int i = 0; i < size; i++) {
             System.out.println(bookings[i]);
         }
+        //Group them into each department
+        Department currdept = null;
+        for (int i = 0; i < size; i++) {
+            Department department = bookings[i].getEmployee().getDept();
+                if (currdept != department) {
+                    currdept = department;
+                    System.out.println("--" + department + "--");
+                }
+        }
     }
+
 
     /**
      * Testbed main() for testing/debugging purposes.
