@@ -1,7 +1,7 @@
 package software.metho.project1.entities;
 import java.util.Calendar;
 /**
- * *@author Brian V;
+ * *@author Brian V and Travis F;
  */
 
 public class Date implements Comparable<Date> {

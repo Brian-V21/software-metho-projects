@@ -1,5 +1,7 @@
 package software.metho.project1.entities;
-
+/**
+ * *@author Brian V and Travis F;
+ */
 public enum Employee {
     PATEL(Department.COMPUTER_SCIENCE), 
     LIM(Department.ELECTRICAL_ENGINEERING),
