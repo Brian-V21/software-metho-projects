@@ -72,7 +72,7 @@ public class TripList {
         do {
             System.out.println(curr.data);
             curr = curr.next;
-        } while (curr != last);
+        } while (curr != last.next);
     }
 
     /**

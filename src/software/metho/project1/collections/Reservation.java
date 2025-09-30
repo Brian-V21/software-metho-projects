@@ -89,7 +89,7 @@ public class Reservation {
      */
     public void printByVehicle() {
         for (int i = 0; i < size - 1; i++) {
-            int minIndex = 1;
+            int minIndex = i;
             for (int j = i + 1; j < size; j++) {
                 String plateMin = bookings[minIndex].getVehicle().getPlate();
                 String plateJ = bookings[j].getVehicle().getPlate();
@@ -113,7 +113,7 @@ public class Reservation {
      */
     public void printByDept() {
         for (int i = 0; i < size - 1; i++) {
-            int minIndex = 1;
+            int minIndex = i;
             for (int j = i + 1; j < size; j++) {
                 Department deptMin = bookings[minIndex].getEmployee().getDept();
                 Department deptJ = bookings[j].getEmployee().getDept();
@@ -126,9 +126,7 @@ public class Reservation {
             bookings[i] = bookings[minIndex];
             bookings[minIndex] = temp;
         }
-        for (int i = 0; i < size; i++) {
-            System.out.println(bookings[i]);
-        }
+
         //Group them into each department
         Department currdept = null;
         for (int i = 0; i < size; i++) {
@@ -137,6 +135,7 @@ public class Reservation {
                 currdept = department;
                 System.out.println("--" + department + "--");
             }
+            System.out.println(bookings[i]);
         }
     }
 

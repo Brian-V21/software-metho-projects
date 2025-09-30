@@ -6,23 +6,8 @@ import software.metho.project1.collections.Fleet;
 import software.metho.project1.collections.Reservation;
 import software.metho.project1.collections.TripList;
 import software.metho.project1.entities.*;
-
-
 import java.util.Scanner;
 
-
-/*
-Main class, only library classes we can have are Scanner,
-StringTokenizer, Calendar, DecimalFormat
-Handle invalid cmds
-System.in/system.out only in user interface, testbed main(), & print()
- */
-
-/*
-process cmd lines entered on terminal,
-an instance of this class can process
-single cmd, multi cmds including empty lines
-* */
 public class Frontend {
     private Fleet fleet;
     private TripList completedTrips;
@@ -253,7 +238,7 @@ public class Frontend {
                     try {
                         newMileage = Integer.parseInt(tokens[3]);
                     } catch (NumberFormatException e) {
-                        System.out.println("Mileage invalid.");
+                        System.out.println( + "Mileage invalid."));
                         break;
                     }
 
@@ -277,11 +262,11 @@ public class Frontend {
 
                     Booking bookingToReturn = bookings.getBooking(returnDate, returnVehicle);
                     if (bookingToReturn == null) {
-                        System.out.println("No booking found.");
+                        System.out.println(returnVehicle.getPlate() + " booked with ending date " + returnDate + " - cannot find booking");
                         break;
                     }
                     if (!bookings.isEarliestEndingDate(bookingToReturn)) {
-                        System.out.println("Return not allowed: earlier bookings exist.");
+                        System.out.println(bookingToReturn.getVehicle().getPlate() + " booked with ending date " + bookingToReturn.getEnd() + " - returning not in order of ending date");
                         break;
                     }
                     if (newMileage <= bookingToReturn.getVehicle().getMileage()) {
@@ -295,7 +280,7 @@ public class Frontend {
                     completedTrips.add(completedTrip);
                     bookings.remove(bookingToReturn);
 
-                    System.out.println("Vehicle returned: " + bookingToReturn);
+                    System.out.println("Trip completed: " + bookingToReturn);
                     break;
                 case "PF":
                     if (fleet.isEmpty()) {
