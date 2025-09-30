@@ -13,20 +13,30 @@ public class Frontend {
     private TripList completedTrips;
     private Reservation bookings;
 
-
-
+    /**
+     * Constrcutor for Frontend
+     * @param fleet parameter for fleet collections
+     * @param bookings parameter for bookings collections
+     * @param completedTrips parameter for TripList collection
+     */
     public Frontend(Fleet fleet, Reservation bookings, TripList completedTrips) {
         this.fleet = fleet;
         this.bookings = bookings;
         this.completedTrips = completedTrips;
     }
 
+    /**
+     * Default constructor
+     */
     public Frontend() {
         this.fleet = new Fleet();
         this.bookings = new Reservation();
         this.completedTrips = new TripList();
     }
 
+    /**
+     * runs the command line for vehicle management system=
+     */
     public void run(){
         System.out.println("Vehicle Management System is running.");
         Scanner input = new Scanner(System.in); //user input

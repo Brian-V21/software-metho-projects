@@ -1,6 +1,5 @@
 package software.metho.project1.entities;
 import java.util.Calendar;
-import java.util.concurrent.TimeUnit;
 
 /**
  * *@author Brian V;
@@ -32,19 +31,29 @@ public class Date implements Comparable<Date> {
         this.day = day;
     }
 
+    /**
+     *
+     * @return year from date
+     */
     public int getYear() {
         return year;
     }
 
+    /**
+     *
+     * @return month from date
+     */
     public int getMonth() {
         return month;
     }
 
+    /**
+     *
+     * @return day from date
+     */
     public int getDay() {
         return day;
     }
-
-
 
     /**
      *
@@ -93,7 +102,7 @@ public class Date implements Comparable<Date> {
 
     /**
      *
-     * @return
+     * @return if date is future date when comparing to present
      */
     public boolean isFutureDate() {
         Calendar today = Calendar.getInstance();
@@ -105,6 +114,10 @@ public class Date implements Comparable<Date> {
         return this.compareTo(currentDate) > 0;
     }
 
+    /**
+     *
+     * @return if date is beyond 3 months
+     */
     public boolean beyondDate() {
         Calendar today = Calendar.getInstance();
         today.add(Calendar.MONTH, 3);

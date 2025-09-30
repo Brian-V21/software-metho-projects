@@ -1,6 +1,9 @@
 package software.metho.project1.collections;
-
 import software.metho.project1.entities.*;
+
+/**
+ * @author Travis F
+ */
 
 public class TripList {
     private Node last;
@@ -82,7 +85,7 @@ public class TripList {
      */
     public boolean remove(Booking booking) {
         if (last == null)
-        return false;
+            return false;
 
         Node curr = last.next;
         Node prev = last;
