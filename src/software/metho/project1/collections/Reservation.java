@@ -6,7 +6,9 @@ import software.metho.project1.entities.Vehicle;
 
 import software.metho.project1.entities.Date;
 import software.metho.project1.entities.Make;
-
+/**
+ * @author Brian V and Travis F
+ */
 public class Reservation {
     private Booking[] bookings;
     private int size;
@@ -159,14 +161,23 @@ public class Reservation {
      * Helper functions for frontend
      */
 
-    //Transform Reservation to Booking;
+    /**
+     * Checks whether a given vehicle already has an associated booking
+     * @param vehicle the vehicle to check
+     * @return true if a booking exists, false otherwise.
+     */
     public boolean hasBookingForVehicle(Vehicle vehicle) {
         for (int i = 0; i < size; i++) {
             if (bookings[i].getVehicle().equals(vehicle)) return true;
         }
         return false;
     }
-
+    /**
+     * Retrieves the booking matching a given vehicle and end date.
+     * @param endDate the booking's end date
+     * @param vehicle the vehicle associated with the booking
+     * @return the booking if found, otherwise false
+     */
     public Booking getBooking(Date endDate, Vehicle vehicle) {
         for (int i = 0; i < size; i++) {
             Booking booking = bookings[i];
@@ -178,7 +189,11 @@ public class Reservation {
         }
         return null;
     }
-
+    /**
+     * Checks if the given booking is the earliest ending booking for its vehicle
+     * @param targetBooking the booking to check
+     * @return true if it is the earliest ending booking, otherwise false
+     */
     public boolean isEarliestEndingDate(Booking targetBooking) {
         if (targetBooking == null) return false;
 
@@ -194,11 +209,20 @@ public class Reservation {
         }
         return true;
     }
-
+    /**
+     * Checks if the Reservation is empty
+     * @return true if there are no bookings, otherwise false
+     */
     public boolean isEmpty() {
         return size == 0;
     }
-
+    /**
+     * Checks whether a vehicle is available in the given date range.
+     * @param v the vehicle
+     * @param startDate the requested start date
+     * @param endDate the requested end date
+     * @return if the vehicle is available, otherwise false
+     */
     public boolean isAvailable(Vehicle v, Date startDate, Date endDate) {
         for (int i = 0; i < size; i++) {
             Booking b = bookings[i];
@@ -214,7 +238,13 @@ public class Reservation {
             }
         return true;
     }
-
+    /**
+     * Checks whether an employee is availible in the given data range
+     * @param emp the employee
+     * @param startDate the requested start date
+     * @param endDate the requested end date
+     * @return true if the employee is available, otherwise false
+     */
     public boolean isEmpAvailable(Employee emp, Date startDate, Date endDate) {
         for (int i = 0; i < size; i++) {
             Booking b = bookings[i];
