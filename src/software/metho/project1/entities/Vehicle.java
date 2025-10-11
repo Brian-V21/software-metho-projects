@@ -89,7 +89,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      */
     public abstract double surcharge(int mileageUsed, boolean surcharge); {
 
-    }=
+    }
 
     /**
      * Updates the vehicles mileage
@@ -139,7 +139,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      */
     @Override
     public String toString() {
-        return plate + ":" + make + ":" + obtained + " [mileage:" + mileage + "] " + "[" + campus + "]"-;
+        return plate + ":" + make + ":" + obtained + " [mileage:" + mileage + "] " + "[" + campus + "]";
     }
 
     //Testbed main() for 3 instances of compareTo with -1, 0, & 1
