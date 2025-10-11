@@ -5,7 +5,7 @@ import software.metho.project1.entities.*;
  * @author Travis F
  */
 
-public class TripList {
+public class TripList  extends List<Trip>{
     private Node last;
     private int size;
 

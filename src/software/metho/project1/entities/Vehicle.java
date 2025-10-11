@@ -3,11 +3,12 @@ package software.metho.project1.entities;
 /**
  * *@author Brian V and Travis F;
  */
-public class Vehicle implements Comparable<Vehicle> {
-    private String plate; //License plate number
-    private Date obtained; // date class, when got
-    private Make make; // Make = enum class
-    private int mileage; // current reading of odometer
+public abstract class Vehicle implements Comparable<Vehicle> {
+    protected String plate; //License plate number
+    protected Date obtained; // date class, when got
+    protected Make make; // Make = enum class
+    protected int mileage; // current reading of odometer
+    protected Campus campus;
 
     /**
      * Default constructor for Vehicle
@@ -23,11 +24,12 @@ public class Vehicle implements Comparable<Vehicle> {
      * @param make make of the vehicle
      * @param mileage amount of miles on the vehicle
      */
-    public Vehicle(String plate, Date obtained, Make make, int mileage) {
+    public Vehicle(String plate, Date obtained, Make make, int mileage, Campus campus) {
         this.plate = plate;
         this.obtained = obtained;
         this.make = make;
         this.mileage = mileage; //odometer reading
+        this.campus = campus;
     }
 
     /**
@@ -69,6 +71,25 @@ public class Vehicle implements Comparable<Vehicle> {
     public int getMileage(){
         return mileage;
     }
+
+    /**
+     *
+     * @param mileageUsed amount of miles used
+     * @return charge per mile
+     */
+    public abstract double charge(int mileageUsed) {
+
+    }
+
+    /**
+     *
+     * @param mileageUsed amount of miles used
+     * @param surcharge whether there is a surcharge or not for vehicle
+     * @return charge and whether surcharge is implemented
+     */
+    public abstract double surcharge(int mileageUsed, boolean surcharge); {
+
+    }=
 
     /**
      * Updates the vehicles mileage
@@ -118,7 +139,7 @@ public class Vehicle implements Comparable<Vehicle> {
      */
     @Override
     public String toString() {
-        return plate + ":" + make + ":" + obtained + " [mileage:" + mileage + "]";
+        return plate + ":" + make + ":" + obtained + " [mileage:" + mileage + "] " + "[" + campus + "]"-;
     }
 
     //Testbed main() for 3 instances of compareTo with -1, 0, & 1

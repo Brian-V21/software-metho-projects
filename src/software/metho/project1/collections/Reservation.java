@@ -9,7 +9,7 @@ import software.metho.project1.entities.Make;
 /**
  * @author Brian V and Travis F
  */
-public class Reservation {
+public class Reservation extends List<Booking{
     private Booking[] bookings;
     private int size;
     private static final int CAPACITY = 4;
