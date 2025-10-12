@@ -1,6 +1,9 @@
 package software.metho.project1.collections;
 import java.util.Iterator;
+
+/** 
 import java.util.ListIterator;
+*/
 
 public class List<E> implements Iterable<E> {
     private E[] objects;
@@ -30,6 +33,7 @@ public class List<E> implements Iterable<E> {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private void grow() {
         if (this.size == this.objects.length) {
             E[] newObject = (E[]) new Object[this.objects.length + 4];
@@ -77,6 +81,7 @@ public class List<E> implements Iterable<E> {
         return size;
     }
 
+    @Override
     public Iterator<E> iterator() {
         return new ListIter();
     }

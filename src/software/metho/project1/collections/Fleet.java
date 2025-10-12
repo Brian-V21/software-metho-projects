@@ -50,10 +50,18 @@ public class Fleet extends List<Vehicle>{
                 Vehicle minVehicle = get(minIndex);
                 Vehicle currVehicle = get(j);
 
-                if (currVehicle.getMake().compareTo(minVehicle.getMake()) < 0) {
+                int cmpCity = minVehicle.getCampus().getCity().compareTo(currVehicle.getCampus().getCity());
+                if (cmpCity > 0) {
                     minIndex = j;
-                } else if (currVehicle.getMake().compareTo(minVehicle.getMake()) == 0 && currVehicle.getObtained().compareTo(minVehicle.getObtained()) < 0) {
-                    minIndex = j;
+                } else if (cmpCity == 0) {
+                    int cmpMake = minVehicle.getMake().compareTo(currVehicle.getMake());
+                    if (cmpMake > 0) {
+                        minIndex = j;
+                    } else if (cmpMake == 0) {
+                        if (minVehicle.getObtained().compareTo(currVehicle.getObtained()) > 0) {
+                            minIndex = j;
+                        }
+                    }
                 }
             }
             //if not in correct spot, swap vehicle indexes
@@ -87,16 +95,25 @@ public class Fleet extends List<Vehicle>{
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().trim();
             if (line.isEmpty()) continue;
-
+            
+            Scanner lineScanner = null;
             try {
-                Scanner lineScanner = new Scanner(line);
+                lineScanner = new Scanner(line);
                 String plate = lineScanner.next();
                 String obtainedStr = lineScanner.next();
                 String makeStr = lineScanner.next();
                 int mileage = lineScanner.nextInt();
                 String campusStr = lineScanner.next();
 
-                //parse date
+                if (!Vehicle.isValidPlate(plate)) {
+                    continue;
+                }
+
+                Date obtained = Date.fromString(obtainedStr);
+                Make make = Make.valueOf(makeStr.toUpperCase());
+                Campus campus = Campus.fromString(campusStr);
+
+                /**parse date
                 String[] dateParts = obtainedStr.split("/");
                 int month = Integer.parseInt(dateParts[0]);
                 int day = Integer.parseInt(dateParts[1]);
@@ -106,7 +123,7 @@ public class Fleet extends List<Vehicle>{
                 //Campus & make
                 Make make = Make.valueOf(makeStr.toUpperCase());
                 Campus campus = Campus.valueOf(campusStr.toUpperCase());
-
+                */
                 //vehicle
                 Vehicle vehicle;
                 char typeChar = Character.toUpperCase(plate.charAt(plate.length() -1));
@@ -127,6 +144,9 @@ public class Fleet extends List<Vehicle>{
                 count++;
             } catch (Exception e) {
                 System.out.println("Skipping invalid input: " + line);
+            } finally {
+                if (lineScanner != null)
+                    lineScanner.close();
             }
         }
         System.out.println(count + " vehicles loaded into fleet");
