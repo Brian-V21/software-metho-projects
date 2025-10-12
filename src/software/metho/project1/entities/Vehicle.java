@@ -39,6 +39,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     public Vehicle(String plate) {
         this.plate = plate;
     }
+    
 
     /**
      * Gets the license plate of the vehcle.
@@ -72,14 +73,31 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return mileage;
     }
 
+    public Campus getCampus() {
+        return campus;
+    }
+
+    public void setCampus(Campus c) {
+        this.campus = c;
+    }
+     /**
+     * Updates the vehicles mileage
+     * @param mileage set miles of vehicle to another int
+     */
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }
+
+    }
+
     /**
      *
      * @param mileageUsed amount of miles used
      * @return charge per mile
      */
-    public abstract double charge(int mileageUsed) {
+    public abstract double charge(int mileageUsed);
 
-    }
+
 
     /**
      *
@@ -87,17 +105,13 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      * @param surcharge whether there is a surcharge or not for vehicle
      * @return charge and whether surcharge is implemented
      */
-    public abstract double surcharge(int mileageUsed, boolean surcharge); {
-
-    }
+    public abstract double surcharge(int mileageUsed, boolean surcharge); 
 
     /**
-     * Updates the vehicles mileage
-     * @param mileage set miles of vehicle to another int
+     * @return lowercase type name of ("sedan", "utility", "truck") for toString formatting
      */
-    public void setMileage(int mileage) {
-        this.mileage = mileage;
-    }
+    protected abstract String typeName();
+   
 
     /**
      * Compares this vehicle to another by license plate.
@@ -133,13 +147,41 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return false;
     }
 
+    @Override
+    public int hashCode() {
+        return plate == null ? 0 : plate.hashCode();
+    }
+
+
     /**
      * Returns a string representation of the vehicle.
      * @return a formatted string of vehicle details.
      */
     @Override
     public String toString() {
-        return plate + ":" + make + ":" + obtained + " [mileage:" + mileage + "] " + "[" + campus + "]";
+        return plate + "[" + make + ":" + typeName() + "] " + obtained + " " +  " [mileage:" + mileage + "] " + "[" + format(campus.name()) + ":" + campus.city() + "]";
+    }
+
+    /**
+     * Title helper function for enum names (EX. BUSCH -> Busch)
+     */
+    private static String format(String enumName) {
+        String lower = enumName.toLowerCase();
+        return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
+    }
+
+    public static boolean isValidPlate(String plate) {
+        if (plate == null || plate.length() != 6) {
+            for (int i = 0; i < 5; i++)
+            if (!Character.isDigit(plate.charAt(i)))
+                return false;
+            char t = plate.charAt(5);
+                return t == 'S' || t == 'D' || t == 'X';
+        }
+    }
+
+    public static char typeCode(String plate){
+        return plate.charAt(5);
     }
 
     //Testbed main() for 3 instances of compareTo with -1, 0, & 1
@@ -159,5 +201,3 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         System.out.println("v1 comparing to v3: " + v1.compareTo(v3));
 
     }
-
-}
