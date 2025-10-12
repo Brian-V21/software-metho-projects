@@ -10,4 +10,16 @@ public enum Campus {
     public String getCity() {
         return city;
     }
+
+    public static Campus fromString(String s) {
+        String t = s.trim().toUpperCase();
+        switch (t) {
+            case "BUSCH": return BUSCH;
+            case "LIVINGSTON": return LIVINGSTON;
+            case "COOK": return COOK;
+            case "NEWARK": return NEWARK;
+            case "CAMDEN": return CAMDEN;
+            default: throw new IllegalArgumentException(s + " - invalid campus.");
+        }
+    }
 }
