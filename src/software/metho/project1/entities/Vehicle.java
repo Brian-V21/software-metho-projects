@@ -88,7 +88,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         this.mileage = mileage;
     }
 
-    }
+    
 
     /**
      *
@@ -159,7 +159,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      */
     @Override
     public String toString() {
-        return plate + "[" + make + ":" + typeName() + "] " + obtained + " " +  " [mileage:" + mileage + "] " + "[" + format(campus.name()) + ":" + campus.city() + "]";
+        return plate + "[" + make + ":" + typeName() + "] " + obtained + " " +  " [mileage:" + mileage + "] " + "[" + format(campus.name()) + ":" + campus.getCity() + "]";
     }
 
     /**
@@ -172,18 +172,22 @@ public abstract class Vehicle implements Comparable<Vehicle> {
 
     public static boolean isValidPlate(String plate) {
         if (plate == null || plate.length() != 6) {
-            for (int i = 0; i < 5; i++)
-            if (!Character.isDigit(plate.charAt(i)))
+            return false;
+    }
+        for (int i = 0; i < 5; i++) {
+            if (!Character.isDigit(plate.charAt(i))) {
                 return false;
-            char t = plate.charAt(5);
-                return t == 'S' || t == 'D' || t == 'X';
+            }
         }
+        char t = plate.charAt(5);
+        return t == 'S' || t == 'D' || t == 'X';
     }
 
     public static char typeCode(String plate){
         return plate.charAt(5);
     }
-
+}
+    /* 
     //Testbed main() for 3 instances of compareTo with -1, 0, & 1
     public static void main (String[]args){
         Date d1 = new Date(2021, 6, 21);
@@ -201,3 +205,4 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         System.out.println("v1 comparing to v3: " + v1.compareTo(v3));
 
     }
+    */
