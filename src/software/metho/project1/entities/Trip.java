@@ -7,6 +7,7 @@ public class Trip {
     private Booking booking;
     private int beginMileage;
     private int endMileage;
+    private boolean surcharge;
 
 
     /**
@@ -16,10 +17,11 @@ public class Trip {
      * @param beginMileage the vehicle's mileage at the start of the trip
      * @param endMileage the vehicle's mileage at the end of the trip
      */
-    public Trip(Booking booking, int beginMileage, int endMileage) {
+    public Trip(Booking booking, int beginMileage, int endMileage, boolean surcharge) {
         this.booking = booking;
         this.beginMileage = beginMileage;
         this.endMileage = endMileage;
+        this.surcharge = surcharge;
     }
 
     /**
@@ -44,6 +46,33 @@ public class Trip {
         return endMileage;
     }
 
+    public boolean isSurcharge() {
+        return surcharge;
+    }
+
+    public int milesUsed() {
+        return endMileage - beginMileage;
+    }
+
+    public Campus getPickupCampus() {
+        return booking.getPickup();
+    }
+
+    public Campus getDropoffCampus() {
+        return booking.getDropoff();
+    }
+
+    public double getCharge() {
+        return booking.getVehicle().charge(milesUsed());
+    }
+
+    public double getSurchargeAmount() {
+        return booking.getVehicle().surcharge(milesUsed(), surcharge);
+    }
+
+    public double getTotalCost() {
+        return getCharge() + getSurchargeAmount();
+    }
 
     /**
      * Will return to this once booking is completed
@@ -71,18 +100,21 @@ public class Trip {
      */
     @Override
     public String toString() {
-        return booking.getVehicle().getPlate() + " " +
+        String dropoffLabel = getDropoffCampus() + (surcharge ? "**" : "");
+        return "Trip completed: " + booking.getVehicle().getPlate() + " " +
             booking.getBegin().toString() + " ~ " +
             booking.getEnd().toString() + " " +
             "original mileage: " + beginMileage + " " +
             "current mileage: " + endMileage + " " +
-            "mileage used: " + (endMileage - beginMileage); 
+            "mileage used: " + (milesUsed() + " " + 
+            "[dropped off: " + dropoffLabel + "] " +
+            "[picked up: " + getPickupCampus() + "]"); 
     }
 
     /**
      * testbed main()
      * Test Case
-     */
+     
     public static void main(String[] args) {
         Date begin = new Date(2025, 10, 15);
         Date end = new Date(2025, 10, 15);
@@ -92,5 +124,5 @@ public class Trip {
         Trip trip = new Trip(b, 64390, 64500);
         System.out.println(trip.toString());
     }
-
+    */
 }

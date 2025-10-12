@@ -187,43 +187,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return plate.charAt(5);
     }
 
-public static void main(String[] args) {
-    // Test isValidPlate()
-    System.out.println("Valid Plates:");
-    System.out.println("58718D -> " + Vehicle.isValidPlate("58718D")); // true
-    System.out.println("12345S -> " + Vehicle.isValidPlate("12345S")); // true
-
-    System.out.println("\nInvalid Plates:");
-    System.out.println("ABCDE1 -> " + Vehicle.isValidPlate("ABCDE1")); // false
-    System.out.println("1234D -> " + Vehicle.isValidPlate("1234D"));   // false
-    System.out.println("12345Z -> " + Vehicle.isValidPlate("12345Z")); // false
-    System.out.println("null -> " + Vehicle.isValidPlate(null));       // false
-
-    // CompareTo test using anonymous subclass
-    Date d1 = new Date(2022, 6, 21);
-    Date d2 = new Date(2024, 2, 3);
-
-    Vehicle v1 = new Vehicle("12345S", d1, Make.FORD, 50000, Campus.BUSCH) {
-        @Override public double charge(int m) { return 0; }
-        @Override public double surcharge(int m, boolean s) { return 0; }
-        @Override protected String typeName() { return "sedan"; }
-    };
-    Vehicle v2 = new Vehicle("23456S", d2, Make.HONDA, 51000, Campus.COOK) {
-        @Override public double charge(int m) { return 0; }
-        @Override public double surcharge(int m, boolean s) { return 0; }
-        @Override protected String typeName() { return "sedan"; }
-    };
-
-    System.out.println("\nCompareTo tests:");
-    System.out.println("v1 vs v2 -> " + v1.compareTo(v2)); // expected -1
-    System.out.println("v2 vs v1 -> " + v2.compareTo(v1)); // expected 1
-    System.out.println("v1 vs v1 -> " + v1.compareTo(v1)); // expected 0
-}
-
-
-
-
-
+    
 }
     /* 
     //Testbed main() for 3 instances of compareTo with -1, 0, & 1
