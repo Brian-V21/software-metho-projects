@@ -63,6 +63,9 @@ public class Frontend {
                 case "PD": handlePD(); break;
                 case "PT": handlePT(); break;
                 case "PC": handlePC(); break;
+                case "Q" :
+                    running = false;
+                    break;
                 default: System.out.println(t[0] + " - invalid command!");
             }
         }
