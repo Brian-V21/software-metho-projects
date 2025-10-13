@@ -1,4 +1,7 @@
 package software.metho.project1.entities;
+
+import software.metho.project1.util.Date;
+
 /**
  * *@author Brian V and Travis F;
  */

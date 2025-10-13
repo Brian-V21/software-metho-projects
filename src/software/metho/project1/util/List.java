@@ -1,4 +1,4 @@
-package software.metho.project1.collections;
+package software.metho.project1.util;
 import java.util.Iterator;
 
 /** 

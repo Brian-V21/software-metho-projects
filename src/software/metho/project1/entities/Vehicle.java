@@ -1,5 +1,7 @@
 package software.metho.project1.entities;
 
+import software.metho.project1.util.Date;
+
 /**
  * *@author Brian V and Travis F;
  */
@@ -57,7 +59,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return make;
     }
 
-    /**
+    /**=
      * Gets the acquisition date of the vehicle.
      * @return date vehicle was obtained
      */

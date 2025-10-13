@@ -1,5 +1,7 @@
 package software.metho.project1.entities;
 
+import software.metho.project1.util.Date;
+
 public class Sedan extends Vehicle {
     private static final double PER_MILE = 1.79;
     private static final double SUR_PER_MILE = 0.25;

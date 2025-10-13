@@ -1,15 +1,15 @@
 package software.metho.project1.collections;
 import software.metho.project1.entities.Booking;
-import software.metho.project1.entities.Department;
 import software.metho.project1.entities.Employee;
 import software.metho.project1.entities.Vehicle;
 
-import software.metho.project1.entities.Date;
-import software.metho.project1.entities.Make;
+import software.metho.project1.util.Date;
+import software.metho.project1.util.List;
+
 /**
  * @author Brian V and Travis F
  */
-public class Reservation extends List<Booking>{
+public class Reservation extends List<Booking> {
 
     public Reservation() {
         super();
