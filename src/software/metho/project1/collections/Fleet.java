@@ -92,6 +92,11 @@ public class Fleet extends List<Vehicle> {
         return null;
     }
 
+    /**
+     * Getting input from a files and converting to Vehicle Type
+     * @param scanner input from user
+     * @return number of vehicles loaded
+     */
     public int load(Scanner scanner) {
         int count = 0;
         while (scanner.hasNextLine()) {

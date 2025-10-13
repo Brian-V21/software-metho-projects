@@ -46,36 +46,64 @@ public class Trip {
         return endMileage;
     }
 
+    /**
+     * Checks if there is a surcharge
+     * @return false/true of surcharge
+     */
     public boolean isSurcharge() {
         return surcharge;
     }
 
+    /**
+     *
+     * @return total miles used based of ending mileage minus beginning mileage
+     */
     public int milesUsed() {
         return endMileage - beginMileage;
     }
 
+    /**
+     *
+     * @return location of where vehicle is getting picked up
+     */
     public Campus getPickupCampus() {
         return booking.getPickup();
     }
 
+    /**
+     *
+     * @return location of where vehicle was dropped off
+     */
     public Campus getDropoffCampus() {
         return booking.getDropoff();
     }
 
+    /**
+     *
+     * @return charge price based off miles used
+     */
     public double getCharge() {
         return booking.getVehicle().charge(milesUsed());
     }
 
+    /**
+     *
+     * @return the amount of surcharge based off miles used and if there was a surcharge
+     */
     public double getSurchargeAmount() {
         return booking.getVehicle().surcharge(milesUsed(), surcharge);
     }
 
+    /**
+     *
+     * @return total cost of use based off the regular charge amount plus surcharge if any
+     */
     public double getTotalCost() {
         return getCharge() + getSurchargeAmount();
     }
 
     /**
-     * Will return to this once booking is completed
+     *
      * Compares if two trips are equal to one another
      * 
      * @param obj the object to compare to

@@ -115,7 +115,7 @@ public class TripList  extends List<Trip> {
 
     /**
      * Removes the trip associated with the booking
-     * @param booking the booking whos trip should be removed
+     * @param booking the booking whose trip should be removed
      * @return true if the trip was found and removed, otherwise false
      */
     public boolean remove(Booking booking) {
@@ -159,7 +159,9 @@ public class TripList  extends List<Trip> {
         return false;
     }
 
-
+    /**
+     * Print charges based off department and displays total charge per department
+     */
     public void printCharges() {
         if (this.isEmpty()) {
             System.out.println("There is no archived trips");

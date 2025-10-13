@@ -75,10 +75,18 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return mileage;
     }
 
+    /**
+     * Get Campus of the vehicle
+     * @return Campus location of vehicle
+     */
     public Campus getCampus() {
         return campus;
     }
 
+    /**
+     * Sets the campus of the vehicle
+     * @param c set campus to a new Campus
+     */
     public void setCampus(Campus c) {
         this.campus = c;
     }
@@ -172,6 +180,11 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return Character.toUpperCase(lower.charAt(0)) + lower.substring(1);
     }
 
+    /**
+     * To check if plate is a valid input
+     * @param plate String license plate of vehicle
+     * @return if the String for plate is a valid plate
+     */
     public static boolean isValidPlate(String plate) {
         if (plate == null || plate.length() != 6) {
             return false;
@@ -185,6 +198,11 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return t == 'S' || t == 'D' || t == 'X';
     }
 
+    /**
+     * based on 3 distinct char, S, D and X
+     * @param plate the license plate of vehicle
+     * @return the last character of plate to get vehicle type (s=sedan, x=truck, or d=utility)
+     */
     public static char typeCode(String plate){
         return plate.charAt(5);
     }

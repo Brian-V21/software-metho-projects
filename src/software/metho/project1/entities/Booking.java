@@ -85,14 +85,26 @@ public class Booking {
         return vehicle;
     }
 
+    /**
+     *
+     * @return the pickup Campus location for booking
+     */
     public Campus getPickup() {
         return pickup;
     }
 
+    /**
+     *
+     * @return the drop off Campus location for booking
+     */
     public Campus getDropoff() {
         return dropoff;
     }
 
+    /**
+     *
+     * @param dropoff the campus drop off location that is being altered
+     */
     public void setDropoff(Campus dropoff) {
         this.dropoff = dropoff;
     }
@@ -137,6 +149,11 @@ public class Booking {
 
     }
 
+    /**
+     *
+     * @param c Campus object
+     * @return a formatted string for Campus for Booking
+     */
     private static String formatCampus(Campus c) {
         String s = c.name().toLowerCase();
         return s.substring(0, 1).toUpperCase() + s.substring(1);

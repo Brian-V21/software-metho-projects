@@ -20,7 +20,7 @@ public class Frontend {
 
     
     /**
-     * Constrcutor for Frontend
+     * Constructor for Frontend
      * @param fleet parameter for fleet collections
      * @param bookings parameter for bookings collections
      * @param completedTrips parameter for TripList collection
@@ -379,6 +379,9 @@ public class Frontend {
        
     }
 
+    /**
+     * Loads vehicle.txt file into fileScanner
+     */
     private void handleLoad() {
         try (Scanner fileScanner = new Scanner(new File("vehicles.txt"))) {
             int count = fleet.load(fileScanner);
@@ -388,6 +391,10 @@ public class Frontend {
         }
     }
 
+    /**
+     * adds a vehicle into fleet collection
+     * @param t user input from terminal
+     */
     private void handleAdd(String[] t) {
         if (t.length < 6) {
             System.out.println("Invalid input!"); 
@@ -468,6 +475,10 @@ public class Frontend {
             System.out.println(v + " has been added to the fleet.");
     }
 
+    /**
+     * Handles the deletion of a vehicle from fleet
+     * @param t user input from Terminal
+     */
     public void handleDelete(String[] t) {
         if (t.length < 2) {
             System.out.println("Invalid input!");
@@ -487,7 +498,11 @@ public class Frontend {
         }
         fleet.remove(vehicle);
     }
-    
+
+    /**
+     * Handles the adding another booking into bookings collection
+     * @param t user input from terminal
+     */
     private void handleBook(String[] t) {
         if (t.length < 6) {
             System.out.println("Invalid input!");
@@ -563,7 +578,11 @@ public class Frontend {
          bookings.add(b);
          System.out.println(b + " booked.");
     }
-    
+
+    /**
+     * Handles cancellation of a booking from bookings collection
+     * @param t user input from terminal
+     */
     private void handleCancel(String[] t) {
         if (t.length < 3) {
             System.out.println("Invalid input!");
@@ -594,6 +613,10 @@ public class Frontend {
         System.out.println("Booking canceled: " + b);
     }
 
+    /**
+     * Handles returning a vehicle after Trip has been completed
+     * @param t user input from terminal
+     */
     private void handleReturn(String[] t) {
         if (t.length < 4) {
             System.out.println( "Invalid input!");
@@ -653,6 +676,9 @@ public class Frontend {
         System.out.println(trip.toString());
     }
 
+    /**
+     * Displays list of vehicles in fleet collection based off city, make, then date obtained
+     */
     private void handlePF() {
         if (fleet.isEmpty()) {
             System.out.println("There is no vehicle in the fleet.");
@@ -665,19 +691,24 @@ public class Frontend {
         System.out.println();
     }
 
-
+    /**
+     * Displays list of reservations based off city, license plate, then beginning date
+     */
     private void handlePR() {
         if (bookings.isEmpty()) {
             System.out.println("There is no booking record.");
             return;
         }
-        System.out.println("*List reservations orderd by city, license plate, then beginning date.");
+        System.out.println("*List reservations ordered by city, license plate, then beginning date.");
         Sort.sortBookingsByLocationPlateBegin(bookings);
         bookings.printByVehicle();
         System.out.println("*end of list.");
         System.out.println();
     }
 
+    /**
+     * Display list of reservations based off department then employee
+     */
     private void handlePD() {
         if (bookings.isEmpty()) {
             System.out.println("There is no booking record.");
@@ -689,6 +720,9 @@ public class Frontend {
         System.out.println();
     }
 
+    /**
+     * Display list of completed trips based off ending date
+     */
     private void handlePT() {
         if (completedTrips.isEmpty()) {
             System.out.println("There is no archived trips.");
@@ -700,6 +734,9 @@ public class Frontend {
         System.out.println();
     }
 
+    /**
+     * Display cost based off department
+     */
     private void handlePC() {
         if (completedTrips.isEmpty()) {
             System.out.println("There is no archived trips.");
