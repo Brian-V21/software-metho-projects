@@ -428,7 +428,7 @@ public class Frontend {
             return;
         }
 
-        Date obtained;
+        Date obtained = null;
         try {
             obtained = Date.fromString(obtainedStr);
             if (!obtained.isValid()) {
@@ -442,7 +442,7 @@ public class Frontend {
         } catch (IllegalArgumentException e) {
             System.out.println(obtainedStr + " - invalid calendar date.");
         }
-
+        
         char type = Character.toUpperCase(plate.charAt(5));
         Vehicle v;
             switch(type) {
@@ -623,7 +623,91 @@ public class Frontend {
         }
 
         Booking b = bookings.getBooking(end, v);
+        if (b == null) {
+            System.out.println(v.getPlate() + " booked with ending date" + end + " - cannot find booking");
+            return;
+        }
+        if (!bookings.isEarliestEndingDate(b)) {
+            System.out.println(b.getVehicle().getPlate() + " booked with ending date " + b.getEnd() + " - returning not in order of ending date");
+            return;
+        }
+        if (newMileage <= v.getMileage()) {
+            System.out.println(newMileage + "Mileage invalid.");
+            return;
+        }
+
+        int beginMileage = v.getMileage();
+        v.setMileage(newMileage);
+
+        boolean surcharge = b.getPickup() != b.getDropoff();
+        Trip trip = new Trip(b, beginMileage, newMileage, surcharge);
+        completedTrips.add(trip);
+
+        if (b.getDropoff() != null)
+            v.setCampus(b.getDropoff());
+
+        bookings.remove(b);
+        System.out.println(trip.toString());
     }
+
+    private void handlePF() {
+        if (fleet.isEmpty()) {
+            System.out.println("There is no vehicle in the fleet.");
+            return;
+        }
+        System.out.println("*List of vehicles in the fleet, ordered by city, make, then date obtained.");
+        Sort.sortFleetByLocationMakeDate(fleet);
+        fleet.printByMake();
+        System.out.println("*end of list.");
+        System.out.println();
+    }
+
+
+    private void handlePR() {
+        if (bookings.isEmpty()) {
+            System.out.println("There is no booking record.");
+            return;
+        }
+        System.out.println("*List reservations orderd by city, license plate, then beginning date.");
+        Sort.sortBookingsByLocationPlateBegin(bookings);
+        bookings.printByVehicle();;
+        System.out.println("*end of list.");
+        System.out.println();
+    }
+
+    private void handlePD() {
+        if (bookings.isEmpty()) {
+            System.out.println("There is no booking record.");
+            return;
+        }
+        System.out.println("*List of reservatuibs irdered by Department then employee.");
+        bookings.printByDept();
+        System.out.println("*end of list.");
+        System.out.println();
+    }
+
+    private void handlePT() {
+        if (completedTrips.isEmpty()) {
+            System.out.println("There is no archived trips.");
+            return;
+        }
+        System.out.println("*List of completed trips ordered by ending date.");
+        completedTrips.print();
+        System.out.println("*end of list.");
+        System.out.println();
+    }
+
+    private void handlePC() {
+        if (completedTrips.isEmpty()) {
+            System.out.println("There is no archived trips.");
+            return;
+        }
+        System.out.println("*Cost report by department*");
+        completedTrips.printCharges();
+        System.out.println("*end of list.");
+        System.out.println();
+    }
+
 
     /**
      * Testbed main for testing
