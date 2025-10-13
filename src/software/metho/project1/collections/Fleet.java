@@ -142,8 +142,10 @@ public class Fleet extends List<Vehicle> {
                     default:
                         throw new IllegalArgumentException("Invalid vehicle type in plate: " + plate);
                  }
-                add(vehicle);
-                count++;
+                if (!contains(vehicle)) {
+                    super.add(vehicle);
+                    count++;
+                }      
             } catch (Exception e) {
                 System.out.println("Skipping invalid input: " + line);
             } finally {
@@ -151,7 +153,6 @@ public class Fleet extends List<Vehicle> {
                     lineScanner.close();
             }
         }
-        System.out.println(count + " vehicles loaded into fleet");
         return count;
     }
 }
