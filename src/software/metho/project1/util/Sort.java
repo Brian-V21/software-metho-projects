@@ -1,4 +1,4 @@
-package software.metho.project1.collections;
+package software.metho.project1.util;
 
 import software.metho.project1.collections.Fleet;
 import software.metho.project1.collections.Reservation;
