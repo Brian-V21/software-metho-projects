@@ -642,7 +642,7 @@ public class Frontend {
         int beginMileage = v.getMileage();
         v.setMileage(newMileage);
 
-        boolean surcharge = b.getPickup() != b.getDropoff();
+        boolean surcharge = (b.getDropoff() != null) && (b.getPickup() != b.getDropoff());
         Trip trip = new Trip(b, beginMileage, newMileage, surcharge);
         completedTrips.add(trip);
 
@@ -673,7 +673,7 @@ public class Frontend {
         }
         System.out.println("*List reservations orderd by city, license plate, then beginning date.");
         Sort.sortBookingsByLocationPlateBegin(bookings);
-        bookings.printByVehicle();;
+        bookings.printByVehicle();
         System.out.println("*end of list.");
         System.out.println();
     }
@@ -683,7 +683,7 @@ public class Frontend {
             System.out.println("There is no booking record.");
             return;
         }
-        System.out.println("*List of reservatuibs irdered by Department then employee.");
+        System.out.println("*List of reservations ordered by Department then employee.");
         bookings.printByDept();
         System.out.println("*end of list.");
         System.out.println();

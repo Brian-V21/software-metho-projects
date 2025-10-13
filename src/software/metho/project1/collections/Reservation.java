@@ -1,5 +1,6 @@
 package software.metho.project1.collections;
 import software.metho.project1.entities.Booking;
+import software.metho.project1.entities.Department;
 import software.metho.project1.entities.Employee;
 import software.metho.project1.entities.Vehicle;
 
@@ -125,8 +126,8 @@ public class Reservation extends List<Booking> {
                 Booking a = get(min);
                 Booking b = get(j);
 
-                String cityA = a.getVehicle().getCampus().getCity();
-                String cityB = b.getVehicle().getCampus().getCity();
+                String cityA = a.getPickup().getCity();
+                String cityB = b.getPickup().getCity();
 
                 int cmp = cityA.compareTo(cityB);
                 if (cmp > 0) {
@@ -213,7 +214,17 @@ public class Reservation extends List<Booking> {
                     set(min, tmp);
                 }
             }
+            Department currentDept = null;
+            for (int i = 0; i < n; i++) {
+                Booking b = get(i);
+                Department dept = b.getEmployee().getDept();
 
+                if (currentDept != dept) {
+                    currentDept = dept;
+                    System.out.println("--" + dept.displayName() + "--");
+                }
+                System.out.println(b);
+            }
     }
 
 
