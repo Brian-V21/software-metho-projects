@@ -6,6 +6,8 @@ import software.metho.project1.collections.Fleet;
 import software.metho.project1.collections.Reservation;
 import software.metho.project1.collections.TripList;
 import software.metho.project1.entities.*;
+import software.metho.project1.util.Date;
+
 import java.util.Scanner;
 
 public class Frontend {

@@ -1,4 +1,4 @@
-package software.metho.project1.entities;
+package software.metho.project1.util;
 import java.util.Calendar;
 
 /**
@@ -215,10 +215,6 @@ public int daysBetween(Date other) {
     return Math.abs(this.toDayCount() - other.toDayCount());
 }
 
-
-
-
-
     //Testbed for 4 invalid & 2 valid tests
     public static void main(String[] args) {
         //valid cases
@@ -233,7 +229,7 @@ public int daysBetween(Date other) {
         Date[] dates = {d1, d2, d3, d4, d5, d6};
 
         for (Date date : dates) {
-            System.out.println(date + " is it Valid? " + date.isValid() );
+            System.out.println(date + " is it Valid? " + date.isValid());
         }
     }
 }

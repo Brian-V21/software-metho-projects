@@ -1,5 +1,7 @@
 package software.metho.project1.collections;
 import software.metho.project1.entities.*;
+import software.metho.project1.util.Date;
+import software.metho.project1.util.List;
 
 import java.util.Scanner;
 
@@ -7,7 +9,7 @@ import java.util.Scanner;
  * *@author Brian V and Travis F;
  */
 
-public class Fleet extends List<Vehicle>{
+public class Fleet extends List<Vehicle> {
 
     /**
      * Constructor for Fleet with vehicle and size of collection in fleet

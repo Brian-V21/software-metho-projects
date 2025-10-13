@@ -1,5 +1,6 @@
 package software.metho.project1.collections;
 import software.metho.project1.entities.*;
+import software.metho.project1.util.List;
 
 import java.text.DecimalFormat;
 
@@ -7,7 +8,7 @@ import java.text.DecimalFormat;
  * @author Travis F
  */
 
-public class TripList  extends List<Trip>{
+public class TripList  extends List<Trip> {
    
    /** 
     private Node last;
