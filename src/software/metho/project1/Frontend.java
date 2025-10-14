@@ -294,12 +294,12 @@ public class Frontend {
         }
         Vehicle v = fleet.findVehicle(t[2]);
         if (v == null) {
-            System.out.println("No booking to cancel");
+            System.out.println(t[3] + ":" + t[1] + " ~ " + t[2] + " - Cannot find the booking");
             return;
         }
         Booking b = bookings.getBooking(end, v);
         if (b == null) {
-            System.out.println(b + " No booking to cancel");
+            System.out.println(v.getPlate() + " booked with ending date " + end + " - cannot find the booking.");
             return;
         }
         bookings.remove(b);
@@ -343,15 +343,19 @@ public class Frontend {
 
         Booking b = bookings.getBooking(end, v);
         if (b == null) {
-            System.out.println(v.getPlate() + " booked with ending date" + end + " - cannot find booking");
+            System.out.println(v.getPlate() + " booked with ending date " + end + " - cannot find booking");
             return;
         }
         if (!bookings.isEarliestEndingDate(b)) {
             System.out.println(b.getVehicle().getPlate() + " booked with ending date " + b.getEnd() + " - returning not in order of ending date");
             return;
         }
+        if (newMileage == 0) {
+            System.out.println(newMileage + " - invalid mileage");
+            return;
+        }
         if (newMileage <= v.getMileage()) {
-            System.out.println(newMileage + "Mileage invalid.");
+            System.out.println("Invalid mileage - current mileage: " + v.getMileage() + " entered mileage: " + newMileage);
             return;
         }
 
