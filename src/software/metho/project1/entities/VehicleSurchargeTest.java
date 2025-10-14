@@ -1,5 +1,7 @@
 package software.metho.project1.entities;
-
+/**
+ * *@author Brian V and Travis F;
+ */
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

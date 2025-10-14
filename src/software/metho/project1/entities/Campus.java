@@ -1,5 +1,7 @@
 package software.metho.project1.entities;
-
+/**
+ * *@author Brian V and Travis F;
+ */
 public enum Campus {
     BUSCH("New Brunswick"),  LIVINGSTON("New Brunswick"), COOK ("New Brunswick"), NEWARK("Newark"), CAMDEN("Camden");
     private final String city;

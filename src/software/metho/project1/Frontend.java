@@ -139,7 +139,7 @@ public class Frontend {
                 return;
             }
             if (!obtained.isPastDate()) {
-                System.out.println(obtainedStr + " - is today or a futre date.");
+                System.out.println(obtainedStr + " - is today or a futu=re date.");
                 return;
             }
         } catch (IllegalArgumentException e) {
@@ -299,7 +299,7 @@ public class Frontend {
         }
         Booking b = bookings.getBooking(end, v);
         if (b == null) {
-            System.out.println("No booking to cancel");
+            System.out.println(b + " No booking to cancel");
             return;
         }
         bookings.remove(b);

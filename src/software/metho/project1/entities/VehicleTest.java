@@ -1,5 +1,7 @@
 package software.metho.project1.entities;
-
+/**
+ * *@author Brian V and Travis F;
+ */
 import software.metho.project1.util.Date;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
