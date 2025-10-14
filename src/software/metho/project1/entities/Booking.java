@@ -1,5 +1,4 @@
 package software.metho.project1.entities;
-
 import software.metho.project1.util.Date;
 
 /**
@@ -17,11 +16,10 @@ public class Booking {
 
     /**
      * Constructs a Booking object
-     * 
      * @param begin     Start date of the Booking
      * @param end       End date of the Booking
      * @param employee  The employee who made the booking
-     * @param vehicle   The vehichle used
+     * @param vehicle   The vehicle used
      * @param dropoff   The intended drop-off Campus
      */
     public Booking (Date begin, Date end, Employee employee, Vehicle vehicle, Campus dropoff) {
@@ -34,8 +32,7 @@ public class Booking {
     }
 
     /**
-     * Constructs a Booking object with only an end date and vehcle.
-     * 
+     * Constructs a Booking object with only an end date and vehicle.
      * @param end End date of the booking
      * @param v Vehicle associated with the booking
      */
@@ -51,7 +48,6 @@ public class Booking {
 
     /**
      * Returns the start date
-     * 
      * @return the beginning date
      */
     public Date getBegin() {
@@ -60,7 +56,6 @@ public class Booking {
 
     /**
      * Returns the end date
-     * 
      * @return the end date
      */
     public Date getEnd() {
@@ -69,7 +64,6 @@ public class Booking {
 
     /**
      * Returns the employee of this booking
-     * 
      * @return the employee
      */
     public Employee getEmployee() {
@@ -78,7 +72,6 @@ public class Booking {
 
     /**
      * Returns the vehicle associated with this booking
-     * 
      * @return the vehicle
      */
     public Vehicle getVehicle() {
@@ -86,7 +79,6 @@ public class Booking {
     }
 
     /**
-     *
      * @return the pickup Campus location for booking
      */
     public Campus getPickup() {
@@ -94,7 +86,6 @@ public class Booking {
     }
 
     /**
-     *
      * @return the drop off Campus location for booking
      */
     public Campus getDropoff() {
@@ -146,11 +137,8 @@ public class Booking {
         String emp = employee == null ? "" : (" [" + employee.name() + "]");
         
         return plateMake + pickupStr + period + drop + emp;
-
     }
-
     /**
-     *
      * @param c Campus object
      * @return a formatted string for Campus for Booking
      */
@@ -158,23 +146,4 @@ public class Booking {
         String s = c.name().toLowerCase();
         return s.substring(0, 1).toUpperCase() + s.substring(1);
     }
-
-    
-
-
-
-
-
-    /**
-     * Testbed main() for Booking
-     
-    public static void main(String[] args) {
-        Date d1 = new Date(2025, 10 , 31);
-        Date d2 = new Date(2025, 11, 2);
-        Vehicle v = new Vehicle("67359S", d1, Make.FORD, 59644);
-        Booking b = new Booking(d1, d2, Employee.KAUR, v);
-        System.out.println(b);
-    }
-    */
-
 }

@@ -2,7 +2,7 @@ package software.metho.project1.util;
 import java.util.Calendar;
 
 /**
- * *@author Brian V;
+ * *@author Brian V & Travis F;
  */
 
 public class Date implements Comparable<Date> {
@@ -32,7 +32,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return year from date
      */
     public int getYear() {
@@ -40,7 +39,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return month from date
      */
     public int getMonth() {
@@ -48,7 +46,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return day from date
      */
     public int getDay() {
@@ -56,7 +53,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return true if date is a leap year
      */
     public boolean isLeap() {
@@ -70,8 +66,8 @@ public class Date implements Comparable<Date> {
             return false;
         }
     }
+
     /**
-     *
      * @return true if date input is a valid date
      */
     public boolean isValid() {
@@ -86,8 +82,8 @@ public class Date implements Comparable<Date> {
         // Checking days
         return (this.day >= 1 && this.day <=maxDays);
     }
+
     /**
-     *
      * @return true if date is before current date
      */
     public boolean isPastDate() {
@@ -101,7 +97,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return true if date is a future date when comparing to present date
      */
     public boolean isFutureDate() {
@@ -115,7 +110,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return true if date is beyond 3 months
      */
     public boolean beyondDate() {
@@ -130,7 +124,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @param endDate the date of when vehicle is returned
      * @return true if the end date exceeds maximum days allowed
      */
@@ -146,8 +139,8 @@ public class Date implements Comparable<Date> {
 
         return days >= 7;
     }
+
     /**
-     *
      * Compares two dates to each other based off year, month, and day
      * @param date the object to compare to
      * @return the difference between the 2 compared dates
@@ -158,6 +151,7 @@ public class Date implements Comparable<Date> {
         if (this.month != date.month) return this.month - date.month;
         return this.day - date.day;
     }
+
     /**
      * Compares if two dates are equal to one another
      * @param obj the date to compare to
@@ -182,7 +176,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @param dateString date in String form
      * @return dateString into Date type
      */
@@ -201,7 +194,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return Totals the days based on the date given
      */
     private int toDayCount() {

@@ -7,7 +7,7 @@ import software.metho.project1.entities.Campus;
 import software.metho.project1.util.*;
 import software.metho.project1.entities.Vehicle;
 
-public final class Sort {
+public final class  Sort {
 
     private Sort() { 
     }

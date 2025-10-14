@@ -9,10 +9,8 @@ public class Trip {
     private int endMileage;
     private boolean surcharge;
 
-
     /**
      * Constructs a trip with a given booking and mileage readings.
-     * 
      * @param booking the booking that initiated the trip
      * @param beginMileage the vehicle's mileage at the start of the trip
      * @param endMileage the vehicle's mileage at the end of the trip
@@ -31,6 +29,7 @@ public class Trip {
     public Booking getBooking() {
         return booking;
     }
+
     /**
      * Returns the mileage reading at the start of the trip
      * @return starting mileage.
@@ -38,6 +37,7 @@ public class Trip {
     public int getBeginMileage() {
         return beginMileage;
     }
+
     /**
      * Returns the mileage reading at the end of the trip
      * @return ending mileage
@@ -55,7 +55,6 @@ public class Trip {
     }
 
     /**
-     *
      * @return total miles used based of ending mileage minus beginning mileage
      */
     public int milesUsed() {
@@ -63,7 +62,6 @@ public class Trip {
     }
 
     /**
-     *
      * @return location of where vehicle is getting picked up
      */
     public Campus getPickupCampus() {
@@ -71,7 +69,6 @@ public class Trip {
     }
 
     /**
-     *
      * @return location of where vehicle was dropped off
      */
     public Campus getDropoffCampus() {
@@ -79,7 +76,6 @@ public class Trip {
     }
 
     /**
-     *
      * @return charge price based off miles used
      */
     public double getCharge() {
@@ -87,7 +83,6 @@ public class Trip {
     }
 
     /**
-     *
      * @return the amount of surcharge based off miles used and if there was a surcharge
      */
     public double getSurchargeAmount() {
@@ -95,7 +90,6 @@ public class Trip {
     }
 
     /**
-     *
      * @return total cost of use based off the regular charge amount plus surcharge if any
      */
     public double getTotalCost() {
@@ -103,9 +97,7 @@ public class Trip {
     }
 
     /**
-     *
      * Compares if two trips are equal to one another
-     * 
      * @param obj the object to compare to
      * @return true if the bookings are equal, otherwise false.
      */
@@ -123,7 +115,6 @@ public class Trip {
 
     /**
      * Returns a formatted string representing the trip.
-     * 
      * @return a readable summary of the trip
      */
     @Override
@@ -138,19 +129,4 @@ public class Trip {
             "[dropped off: " + dropoffLabel + "] " +
             "[picked up: " + getPickupCampus() + "]"); 
     }
-
-    /**
-     * testbed main()
-     * Test Case
-     
-    public static void main(String[] args) {
-        Date begin = new Date(2025, 10, 15);
-        Date end = new Date(2025, 10, 15);
-        Vehicle v = new Vehicle("58718D", new Date(2017, 1, 31), Make.TOYOTA, 64390);
-        Booking b = new Booking(begin, end, Employee.KAUR, v);
-
-        Trip trip = new Trip(b, 64390, 64500);
-        System.out.println(trip.toString());
-    }
-    */
 }

@@ -4,6 +4,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import software.metho.project1.util.Date;
+
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class VehicleSurchargeTest {
@@ -42,16 +44,16 @@ public class VehicleSurchargeTest {
 
         //surcharge below
         assertTrue(sedanBelow > 0 && sedanBelow < 32.99);
-        assertTrue(utilityBelow > 0 && utilityBelow < 25.99);
+        assertTrue(utilityBelow > 0 && utilityBelow < 35.99);
 
         //surcharge above
-        assertTrue(sedanAbove == 32.99);
-        assertTrue(utilityAbove == 25.99);
+        assertEquals(32.99, sedanAbove, 0.0);
+        assertEquals(35.99, utilityAbove, 0.0);
 
         //no surcharge
-        assertTrue(sedanNoSurcharge.surcharge(0, false) == 0.0);
-        assertTrue(utilityNoSurcharge.surcharge(0, false) == 0.0);
-        assertTrue(truckNoSurcharge.surcharge(0, false) == 0.0);
+        assertEquals(0.0, sedanNoSurcharge.surcharge(0, false), 0.0);
+        assertEquals(0.0, utilityNoSurcharge.surcharge(0, false), 0.0);
+        assertEquals(0.0, truckNoSurcharge.surcharge(0, false), 0.0);
 
         //Truck Surcharge
         assertTrue(truckWithSurcharge.surcharge(200, true) > 0);

@@ -41,7 +41,6 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     public Vehicle(String plate) {
         this.plate = plate;
     }
-    
 
     /**
      * Gets the license plate of the vehcle.
@@ -59,7 +58,7 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return make;
     }
 
-    /**=
+    /**
      * Gets the acquisition date of the vehicle.
      * @return date vehicle was obtained
      */
@@ -90,7 +89,8 @@ public abstract class Vehicle implements Comparable<Vehicle> {
     public void setCampus(Campus c) {
         this.campus = c;
     }
-     /**
+
+    /**
      * Updates the vehicles mileage
      * @param mileage set miles of vehicle to another int
      */
@@ -98,19 +98,13 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         this.mileage = mileage;
     }
 
-    
-
     /**
-     *
      * @param mileageUsed amount of miles used
      * @return charge per mile
      */
     public abstract double charge(int mileageUsed);
 
-
-
     /**
-     *
      * @param mileageUsed amount of miles used
      * @param surcharge whether there is a surcharge or not for vehicle
      * @return charge and whether surcharge is implemented
@@ -121,13 +115,11 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      * @return lowercase type name of ("sedan", "utility", "truck") for toString formatting
      */
     protected abstract String typeName();
-   
 
     /**
      * Compares this vehicle to another by license plate.
      * Returns a negative value if this plate comes before the other,
      * a positive value if it comes after, and a 0 if they are the same.
-     * 
      * @param vehicle the vehicle to compare with
      * @return -1, 0, or 1 depending on the order of the license plates.
      */
@@ -144,7 +136,6 @@ public abstract class Vehicle implements Comparable<Vehicle> {
      * Determines if this vehicle is equal to another object.
      * Vehicles are considered equal if they have the same license plate,
      * regardless of make, date obtained, or mileage.
-     * 
      * @param obj the object to compare
      * @return true if the obj is a Vehicle with the same plate, otherwise false
      */
@@ -157,6 +148,10 @@ public abstract class Vehicle implements Comparable<Vehicle> {
         return false;
     }
 
+    /**
+     *
+     * @return 0 if plate == null else plate.hashcode()
+     */
     @Override
     public int hashCode() {
         return plate == null ? 0 : plate.hashCode();
@@ -209,22 +204,3 @@ public abstract class Vehicle implements Comparable<Vehicle> {
 
     
 }
-    /* 
-    //Testbed main() for 3 instances of compareTo with -1, 0, & 1
-    public static void main (String[]args){
-        Date d1 = new Date(2021, 6, 21);
-        Date d2 = new Date(2024, 2, 3);
-
-        Vehicle v1 = new Vehicle("QWE123", d1, Make.FORD, 521);
-        Vehicle v2 = new Vehicle("ASD312", d2, Make.TOYOTA, 3312);
-        Vehicle v3 = new Vehicle("QWE123", d1, Make.HONDA, 9123);
-
-        //Test -1
-        System.out.println("v1 comparing to v2: " + v1.compareTo(v2));
-        //Test 1
-        System.out.println("v2 comparing to v1: " + v2.compareTo(v1));
-        //Test 0
-        System.out.println("v1 comparing to v3: " + v1.compareTo(v3));
-
-    }
-    */

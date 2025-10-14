@@ -10,13 +10,13 @@ public class DateTest {
     @org.junit.Before
     public void setUp() throws Exception {
         //valid cases
-        Date d1 = new Date(2024, 2,29);// Leap yr
-        Date d2 = new Date(2024, 9,15);
+         d1 = new Date(2024, 2,29);// Leap yr
+         d2 = new Date(2024, 9,15);
         //invalid cases
-        Date d3 = new Date(1940, 13,30);//test month
-        Date d4 = new Date(-12, 2,21);//test yr
-        Date d5 = new Date(2000, 6,50); //test day
-        Date d6 = new Date(2023, 2,29);//non leap yr for 29
+         d3 = new Date(1940, 13,30);//test month
+         d4 = new Date(-12, 2,21);//test yr
+         d5 = new Date(2000, 6,50); //test day
+         d6 = new Date(2023, 2,29);//non leap yr for 29
     }
 
     @org.junit.After
