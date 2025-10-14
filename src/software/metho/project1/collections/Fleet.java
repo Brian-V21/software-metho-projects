@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class Fleet extends List<Vehicle> {
 
     /**
-     * Constructor for Fleet with vehicle and size of collection in fleet
+     * Constructor for an empty Fleet
      */
     public Fleet() {
        super();
@@ -120,18 +120,6 @@ public class Fleet extends List<Vehicle> {
                 Make make = Make.valueOf(makeStr.toUpperCase());
                 Campus campus = Campus.fromString(campusStr);
 
-                /**parse date
-                String[] dateParts = obtainedStr.split("/");
-                int month = Integer.parseInt(dateParts[0]);
-                int day = Integer.parseInt(dateParts[1]);
-                int year = Integer.parseInt(dateParts[2]);
-                Date obtained = new Date(month, day, year);
-
-                //Campus & make
-                Make make = Make.valueOf(makeStr.toUpperCase());
-                Campus campus = Campus.valueOf(campusStr.toUpperCase());
-                */
-                //vehicle
                 Vehicle vehicle;
                 char typeChar = Character.toUpperCase(plate.charAt(plate.length() -1));
                 switch (typeChar) {
