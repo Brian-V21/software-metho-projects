@@ -8,15 +8,27 @@ INFORMATION_TECHNOLOGY("Information Technology"), MATH("Math"), BUISINESS_ANALYT
 
 private final String displayName;
 
-Department(String displayName) {
+    /**
+     * Constructor for Department
+     * @param displayName String for the Display name of Department
+     */
+    Department(String displayName) {
     this.displayName = displayName;
 }
 
-public String displayName() {
+    /**
+     *
+     * @return String for the display name of Department
+     */
+    public String displayName() {
     return displayName;
 }
 
-@Override
+    /**
+     *
+     * @return formatted String for the display name of Department
+     */
+    @Override
 public String toString() {
     return displayName;
 }

@@ -4,13 +4,25 @@ public enum Campus {
     BUSCH("New Brunswick"),  LIVINGSTON("New Brunswick"), COOK ("New Brunswick"), NEWARK("Newark"), CAMDEN("Camden");
     private final String city;
 
+    /**
+     * Constructor for Campus
+     * @param city String variable for the city name
+     */
     private Campus(String city) {
         this.city = city;
     }
+
+    /**
+     * @return String city from Campus
+     */
     public String getCity() {
         return city;
     }
 
+    /**
+     * @param s String variable for Campus
+     * @return Campus type variable from String input
+     */
     public static Campus fromString(String s) {
         String t = s.trim().toUpperCase();
         switch (t) {

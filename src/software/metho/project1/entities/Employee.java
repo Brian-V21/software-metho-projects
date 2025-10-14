@@ -13,11 +13,19 @@ public enum Employee {
     CERAVOLO(Department.BUISINESS_ANALYTICS);
 
     private Department dept;
-    
+
+    /**
+     * Constructor for Employee
+     * @param d variable for department
+     */
     private Employee(Department d) {
         this.dept = d;
     }
 
+    /**
+     *
+     * @return department of Employee
+     */
     public Department getDept() {
         return dept;
     }
