@@ -2,6 +2,10 @@ package software.metho.project1.entities;
 
 import software.metho.project1.util.Date;
 
+/**
+ * *@author Brian V and Travis F;
+ */
+
 public class Truck extends Vehicle {
     private static final double PER_MILE = 2.99;
     private static final double SUR_FLAT = 39.99;
