@@ -1,8 +1,8 @@
-package software.metho.project1.entities;
+package software.metho.project1.util;
 import java.util.Calendar;
 
 /**
- * *@author Brian V;
+ * *@author Brian V & Travis F;
  */
 
 public class Date implements Comparable<Date> {
@@ -32,7 +32,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return year from date
      */
     public int getYear() {
@@ -40,7 +39,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return month from date
      */
     public int getMonth() {
@@ -48,7 +46,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return day from date
      */
     public int getDay() {
@@ -56,8 +53,7 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
-     * @return if date is a leap year
+     * @return true if date is a leap year
      */
     public boolean isLeap() {
         if (this.year % QUADRENNIAL != 0) {// if not div by 4 then false
@@ -70,9 +66,9 @@ public class Date implements Comparable<Date> {
             return false;
         }
     }
+
     /**
-     *
-     * @return if date input is a valid date
+     * @return true if date input is a valid date
      */
     public boolean isValid() {
         //Check year and months
@@ -86,9 +82,9 @@ public class Date implements Comparable<Date> {
         // Checking days
         return (this.day >= 1 && this.day <=maxDays);
     }
+
     /**
-     *
-     * @return if date is before current date
+     * @return true if date is before current date
      */
     public boolean isPastDate() {
         Calendar today = Calendar.getInstance();
@@ -101,8 +97,7 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
-     * @return if date is future date when comparing to present
+     * @return true if date is a future date when comparing to present date
      */
     public boolean isFutureDate() {
         Calendar today = Calendar.getInstance();
@@ -115,8 +110,7 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
-     * @return if date is beyond 3 months
+     * @return true if date is beyond 3 months
      */
     public boolean beyondDate() {
         Calendar today = Calendar.getInstance();
@@ -128,6 +122,11 @@ public class Date implements Comparable<Date> {
         Date threemonthsDate = new Date(todayYear, todayMonth, todayDay);
         return this.compareTo(threemonthsDate) > 0;
     }
+
+    /**
+     * @param endDate the date of when vehicle is returned
+     * @return true if the end date exceeds maximum days allowed
+     */
     public boolean durationExceedsWeek (Date endDate) {
         Calendar begin = Calendar.getInstance();
         begin.set(this.getYear(), this.getMonth() - 1, this.getDay());
@@ -141,6 +140,11 @@ public class Date implements Comparable<Date> {
         return days >= 7;
     }
 
+    /**
+     * Compares two dates to each other based off year, month, and day
+     * @param date the object to compare to
+     * @return the difference between the 2 compared dates
+     */
     @Override
     public int compareTo(Date date) {
         if (this.year != date.year) return this.year - date.year;
@@ -148,6 +152,11 @@ public class Date implements Comparable<Date> {
         return this.day - date.day;
     }
 
+    /**
+     * Compares if two dates are equal to one another
+     * @param obj the date to compare to
+     * @return true if the dates are equal, otherwise false.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Date) {
@@ -157,13 +166,16 @@ public class Date implements Comparable<Date> {
         return false;
     }
 
+    /**
+     * formatted String for Date
+     * @return formatted String for representing Date
+     */
     @Override
     public String toString() {
         return month + "/" + day + "/" + year;
     }
 
     /**
-     *
      * @param dateString date in String form
      * @return dateString into Date type
      */
@@ -182,7 +194,6 @@ public class Date implements Comparable<Date> {
     }
 
     /**
-     *
      * @return Totals the days based on the date given
      */
     private int toDayCount() {
@@ -215,10 +226,6 @@ public int daysBetween(Date other) {
     return Math.abs(this.toDayCount() - other.toDayCount());
 }
 
-
-
-
-
     //Testbed for 4 invalid & 2 valid tests
     public static void main(String[] args) {
         //valid cases
@@ -233,7 +240,7 @@ public int daysBetween(Date other) {
         Date[] dates = {d1, d2, d3, d4, d5, d6};
 
         for (Date date : dates) {
-            System.out.println(date + " is it Valid? " + date.isValid() );
+            System.out.println(date + " is it Valid? " + date.isValid());
         }
     }
 }
