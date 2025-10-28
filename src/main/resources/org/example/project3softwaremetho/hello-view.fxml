@@ -20,7 +20,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
@@ -71,32 +70,24 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <DatePicker scaleZ="0.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1">
-                                 <GridPane.margin>
-                                    <Insets left="115.0" />
-                                 </GridPane.margin>
-                                 <padding>
-                                    <Insets bottom="5.0" left="50.0" right="35.0" top="5.0" />
-                                 </padding>
-                              </DatePicker>
-                              <TextField scaleX="0.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                              <ComboBox prefWidth="150.0" promptText="Employees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                              <ComboBox prefWidth="150.0" promptText="Campuses" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                              <TextField fx:id="plateTB" scaleX="0.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <ComboBox fx:id="employeesCB" prefWidth="150.0" promptText="Employees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="campusCB" prefWidth="150.0" promptText="Campuses" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
-                                    <RadioButton mnemonicParsing="false" text="CHEVY">
+                                    <RadioButton fx:id="chevyRB" mnemonicParsing="false" text="CHEVY">
                                        <toggleGroup>
                                           <ToggleGroup fx:id="make" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton mnemonicParsing="false" text="FORD" toggleGroup="$make" />
-                                    <RadioButton mnemonicParsing="false" text="HONDA" toggleGroup="$make" />
-                                    <RadioButton mnemonicParsing="false" text="TOYOTA" toggleGroup="$make" />
+                                    <RadioButton fx:id="fordRB" mnemonicParsing="false" text="FORD" toggleGroup="$make" />
+                                    <RadioButton fx:id="hondaRB" mnemonicParsing="false" text="HONDA" toggleGroup="$make" />
+                                    <RadioButton fx:id="toyotaRB" mnemonicParsing="false" text="TOYOTA" toggleGroup="$make" />
                                  </children>
                               </HBox>
                               <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <Button alignment="CENTER" mnemonicParsing="false" text="Add to Fleet">
+                                    <Button fx:id="addFleetB" alignment="CENTER" mnemonicParsing="false" text="Add to Fleet">
                                        <opaqueInsets>
                                           <Insets />
                                        </opaqueInsets>
@@ -104,7 +95,7 @@
                                           <Insets bottom="10.0" left="60.0" right="60.0" top="10.0" />
                                        </padding>
                                     </Button>
-                                    <Button mnemonicParsing="false" text="Remove from Fleet">
+                                    <Button fx:id="removeFleet" mnemonicParsing="false" text="Remove from Fleet">
                                        <padding>
                                           <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                                        </padding>
@@ -117,6 +108,7 @@
                                     <Insets top="10.0" />
                                  </GridPane.margin>
                               </HBox>
+                              <DatePicker fx:id="vehicleManageDP" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -184,30 +176,30 @@
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <ComboBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                              <ComboBox fx:id="employeesCB2" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </ComboBox>
-                              <ComboBox prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
+                              <ComboBox fx:id="campusCB2" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </ComboBox>
-                              <DatePicker prefWidth="350.0" GridPane.columnIndex="1">
+                              <DatePicker fx:id="vrBeginDP" prefWidth="350.0" GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </DatePicker>
-                              <DatePicker prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                              <DatePicker fx:id="vrEndDP" prefWidth="350.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
                               </DatePicker>
                               <HBox prefHeight="100.0" prefWidth="200.0" spacing="50.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                                  <children>
-                                    <ComboBox prefWidth="200.0" />
-                                    <Button mnemonicParsing="false" prefWidth="150.0" text="Load Text File" />
+                                    <ComboBox fx:id="vehicleCB" prefWidth="200.0" />
+                                    <Button fx:id="loadTextB" mnemonicParsing="false" prefWidth="150.0" text="Load Text File" />
                                  </children>
                                  <GridPane.margin>
                                     <Insets top="10.0" />
@@ -218,8 +210,8 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="25.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                                  <children>
-                                    <Button mnemonicParsing="false" prefWidth="150.0" text="Book Trip" />
-                                    <Button mnemonicParsing="false" prefWidth="150.0" text="Cancel Booking" />
+                                    <Button fx:id="bookTripB" mnemonicParsing="false" prefWidth="150.0" text="Book Trip" />
+                                    <Button fx:id="cancelTripB" mnemonicParsing="false" prefWidth="150.0" text="Cancel Trip Booking" />
                                  </children>
                                  <opaqueInsets>
                                     <Insets />
@@ -265,10 +257,10 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <DatePicker GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                              <ComboBox prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Button mnemonicParsing="false" prefWidth="150.0" text="Complete Trip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <DatePicker fx:id="endTrip2" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <ComboBox fx:id="vehicleCB2" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <TextField fx:id="newMileTB" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="completeTripB" mnemonicParsing="false" prefWidth="150.0" text="Complete Trip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>
@@ -281,13 +273,13 @@
                      <children>
                         <VBox alignment="CENTER" layoutX="125.0" layoutY="18.0" prefHeight="235.0" prefWidth="350.0" spacing="25.0">
                            <children>
-                              <Button mnemonicParsing="false" text="Print the Fleet">
+                              <Button fx:id="printFleetB" mnemonicParsing="false" text="Print the Fleet">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Button>
-                              <ComboBox prefWidth="250.0" promptText="Print Reservations By:" />
-                              <ComboBox prefWidth="250.0" promptText="Print Completed Trips By:" />
+                              <ComboBox fx:id="printResCB" prefWidth="250.0" promptText="Print Reservations By:" />
+                              <ComboBox fx:id="printTripCB" prefWidth="250.0" promptText="Print Completed Trips By:" />
                            </children>
                         </VBox>
                      </children>
