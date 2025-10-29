@@ -2,9 +2,11 @@ package org.example.project3softwaremetho;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import org.example.project3softwaremetho.entities.*;
 import org.example.project3softwaremetho.collections.*;
 import org.example.project3softwaremetho.util.Date;
@@ -21,7 +23,7 @@ public class Controller {
 
     //Vehicle Management Tab
     @FXML
-    private TextField plateTF;
+    private TextField plateTF, mileTF;
 
     @FXML
     private DatePicker vmDP; //Vehicle Management Date Picker
@@ -117,79 +119,99 @@ public class Controller {
         }
     }
 
+    @FXML
     /**
-     * Loads vehicle.txt file into fileScanner
+     * Import the FileChooser from javafx packages.
+     * When loading the data from a file, FileChooser is a good way of allowing user to choose
+     * the file from any folder. So, you don't have to hard-code the file name in the program.
+     * Use the showOpenDialog method from the FileChooser.
      */
-    private void handleLoad() {
-        try (Scanner fileScanner = new Scanner(new File("vehicles.txt"))) {
+    void importFile(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select Vehicle Text File");
+        chooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Text Files", "*.txt"),
+                new FileChooser.ExtensionFilter("All Files", "*.*"));
+        Stage stage = new Stage();
+        File sourceFile = chooser.showOpenDialog(stage); //get the reference of the source file
+        if (sourceFile == null) {
+            outputTA.setText("No text file selected.");
+            return;
+        }
+        try (Scanner fileScanner = new Scanner(sourceFile)) {
             int count = fleet.load(fileScanner);
-            System.out.println(count + " vehicles loaded into the fleet.");
+            outputTA.appendText(count + " vehicles loaded into the fleet.\n");
+            //load vehicles into ComboBox
+            ObservableList<Vehicle> vehiclesList = FXCollections.observableArrayList();
+            for (Vehicle v : fleet) {
+                if (!vehiclesList.contains(v)) {
+                    vehiclesList.add(v);
+                }
+            }
+            vehicleCB.setItems(vehiclesList);
+            vehicleCB2.setItems(vehiclesList);
+
         } catch (FileNotFoundException e) {
-            System.out.println("vehicles.txt not found");
+            outputTA.appendText(sourceFile.getName() + " not found\n");
         }
     }
 
-    /**
-     * adds a vehicle into fleet collection
-     * @param t user input from terminal
-     */
-    private void handleAdd(String[] t) {
-        if (t.length < 6) {
-            System.out.println("Invalid input!");
+    private void addVehicle(ActionEvent event) {
+        String plate = plateTF.getText().trim();
+        if (plate.length() != 6) {
+            outputTA.appendText("license plate is too short or too long. Needs to be 6 characters\n");
             return;
         }
-
-        String plate = plateTF.getText();
-        String obtainedStr = vmDP.getValue().toString();
-        String makeStr = ((Make) makeGroup.getUserData()).name();
-        String mileageStr = t[4];
-        String campusStr = t[5];
-
+        if (plate.isBlank()) {
+            outputTA.appendText("plate is empty\n");
+            return;
+        }
         if (!Vehicle.isValidPlate(plate)) {
-            System.out.println(plate + " - invalid license plate.");
+            outputTA.appendText(plate + " - invalid license plate.\n");
             return;
         }
 
         int mileage;
         try {
-            mileage = Integer.parseInt(mileageStr);
+            mileage = Integer.parseInt(mileTF.getText());
             if (mileage <= 0)
                 throw new NumberFormatException();
         } catch (NumberFormatException e) {
-            System.out.println(mileageStr + " - invalid mileage.");
+            outputTA.appendText(mileTF.getText() + " - invalid mileage.\n");
             return;
         }
 
         Make make;
         try {
-            make = Make.valueOf(makeStr);
+            make = (Make) makeGroup.getSelectedToggle().getUserData();
+            if (make == null) throw new IllegalArgumentException();
         } catch (IllegalArgumentException e) {
-            System.out.println(t[3] + " - invalid make.");
+            outputTA.appendText( "invalid make.\n");
             return;
         }
 
         Campus campus;
         try {
-            campus = Campus.fromString(campusStr);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            campus = campusCB.getSelectionModel().getSelectedItem();
+            if (campus == null) throw new IllegalArgumentException();
+        } catch (Exception e) {
+            outputTA.appendText("Select a campus.\n");
             return;
         }
 
-        Date obtained = null;
-        try {
-            obtained = Date.fromString(obtainedStr);
+        //Date
+        if (vmDP.getValue() == null) {
+            outputTA.appendText("Select a date.\n");
+            return;
+        }
+        Date obtained = Date.fromString(vmDP.getValue().toString());
             if (!obtained.isValid()) {
-                System.out.println(obtainedStr + " - invalid calendar date.");
+                outputTA.appendText(obtained + " - invalid calendar date.\n");
                 return;
             }
             if (!obtained.isPastDate()) {
-                System.out.println(obtainedStr + " - is today or a futu=re date.");
+                outputTA.appendText(obtained + " - is today or a future date.\n");
                 return;
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println(obtainedStr + " - invalid calendar date.");
-        }
 
         char type = Character.toUpperCase(plate.charAt(5));
         Vehicle v;
@@ -201,16 +223,16 @@ public class Controller {
             case 'X': v = new Truck(plate, obtained, make, mileage, campus);
                 break;
             default:
-                System.out.println(plate + " - invalid license plate.");
+                outputTA.appendText(plate + " - invalid license plate type.\n");
                 return;
         }
 
         if (fleet.contains(v)) {
-            System.out.println(v + " is already in the fleet.");
+            outputTA.appendText(v + " is already in the fleet.\n");
             return;
         }
         fleet.add(v);
-        System.out.println(v + " has been added to the fleet.");
+        outputTA.appendText(v + " has been added to the fleet.\n");
     }
 
     /**
@@ -219,19 +241,19 @@ public class Controller {
      */
     public void handleDelete(String[] t) {
         if (t.length < 2) {
-            System.out.println("Invalid input!");
+            outputTA.appendText("Invalid input!\n");
             return;
         }
 
         String plate = t[1];
         Vehicle vehicle = fleet.findVehicle(plate);
         if (vehicle == null) {
-            System.out.println(plate + " is not in the fleet.");
+            outputTA.appendText(plate + " is not in the fleet.\n");
             return;
         }
 
         if (bookings.hasBookingForVehicle(vehicle)) {
-            System.out.println(vehicle + " cannot be deleted, booked.");
+            outputTA.appendText(vehicle + " cannot be deleted, booked.\n");
             return;
         }
         fleet.remove(vehicle);
@@ -243,7 +265,7 @@ public class Controller {
      */
     private void handleBook(String[] t) {
         if (t.length < 6) {
-            System.out.println("Invalid input!");
+            outputTA.appendText("Invalid input!\n");
             return;
         }
 
@@ -252,38 +274,38 @@ public class Controller {
             begin = Date.fromString(t[1]);
             end = Date.fromString(t[2]);
             if (!begin.isValid()) {
-                System.out.println(t[1] + " is not a valid calendar date.");
+                outputTA.appendText(t[1] + " is not a valid calendar date.\n");
                 return;
             }
             if (!end.isValid()) {
-                System.out.println(t[2] + " is not a valid calendar date.");
+                outputTA.appendText(t[2] + " is not a valid calendar date.\n");
                 return;
             }
             if (!begin.isFutureDate()) {
-                System.out.println(t[1] + " Beginning date is not today or a future date.");
+                outputTA.appendText(t[1] + " Beginning date is not today or a future date.\n");
                 return;
             }
             if (end.compareTo(begin) < 0) {
-                System.out.println(t[2] + " ending date must be equal or after the beginning date.");
+                outputTA.appendText(t[2] + " ending date must be equal or after the beginning date.\n");
                 return;
             }
             if (begin.beyondDate()) {
-                System.out.println(t[1] + " beginning date beyond 3 months");
+                outputTA.appendText(t[1] + " beginning date beyond 3 months\n");
                 return;
             }
             if (begin.durationExceedsWeek(end)) {
-                System.out.println(t[1] + " ~ " + t[2] + " duration is more than a week");
+                outputTA.appendText(t[1] + " ~ " + t[2] + " duration is more than a week\n");
                 return;
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid date input");
+            outputTA.appendText("Invalid date input\n");
             return;
         }
 
         String plate = t[3];
         Vehicle vehicle = fleet.findVehicle(plate);
         if (vehicle == null) {
-            System.out.println(plate + " is not in the fleet.");
+            outputTA.appendText(plate + " is not in the fleet.\n");
             return;
         }
 
@@ -291,7 +313,7 @@ public class Controller {
         try {
             emp = Employee.valueOf(t[4].toUpperCase());
         } catch (IllegalArgumentException e) {
-            System.out.println(t[4].toUpperCase() + " not an eligible employee to book.");
+            outputTA.appendText(t[4].toUpperCase() + " not an eligible employee to book.\n");
             return;
         }
 
@@ -299,22 +321,22 @@ public class Controller {
         try {
             dropoff = Campus.fromString(t[5]);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            outputTA.appendText(e.getMessage());
             return;
         }
 
         if (!bookings.isAvailable(vehicle, begin, end)) {
-            System.out.println(vehicle.getPlate() + " - booking with " + begin + " ~ " + end + " not available");
+            outputTA.appendText(vehicle.getPlate() + " - booking with " + begin + " ~ " + end + " not available\n");
             return;
         }
         if (!bookings.isEmpAvailable(emp, begin, end)) {
-            System.out.println(emp + " - has an existing booking conflicting with the beginning date " + begin);
+            outputTA.appendText(emp + " - has an existing booking conflicting with the beginning date " + begin + "\n");
             return;
         }
 
         Booking b = new Booking(begin, end, emp, vehicle, dropoff);
         bookings.add(b);
-        System.out.println(b + " booked.");
+        outputTA.appendText(b + " booked.\n");
     }
 
     /**
@@ -323,32 +345,32 @@ public class Controller {
      */
     private void handleCancel(String[] t) {
         if (t.length < 3) {
-            System.out.println("Invalid input!");
+            outputTA.appendText("Invalid input!\n");
             return;
         }
         Date end;
         try {
             end = Date.fromString(t[1]);
             if (!end.isValid()) {
-                System.out.println(t[1] + " is not a valid date.");
+                outputTA.appendText(t[1] + " is not a valid date.\n");
                 return;
             }
         } catch (IllegalArgumentException e) {
-            System.out.println(t[1] + "Invalid date input");
+            outputTA.appendText(t[1] + "Invalid date input\n");
             return;
         }
         Vehicle v = fleet.findVehicle(t[2]);
         if (v == null) {
-            System.out.println(t[3] + ":" + t[1] + " ~ " + t[2] + " - Cannot find the booking");
+            outputTA.appendText(t[3] + ":" + t[1] + " ~ " + t[2] + " - Cannot find the booking\n");
             return;
         }
         Booking b = bookings.getBooking(end, v);
         if (b == null) {
-            System.out.println(v.getPlate() + " booked with ending date " + end + " - cannot find the booking.");
+            outputTA.appendText(v.getPlate() + " booked with ending date " + end + " - cannot find the booking.\n");
             return;
         }
         bookings.remove(b);
-        System.out.println("Booking canceled: " + b);
+        outputTA.appendText("Booking canceled: " + b + "\n");
     }
 
     /**
@@ -357,24 +379,24 @@ public class Controller {
      */
     private void handleReturn(String[] t) {
         if (t.length < 4) {
-            System.out.println( "Invalid input!");
+            outputTA.appendText( "Invalid input!\n");
             return;
         }
         Date end;
         try {
             end = Date.fromString(t[1]);
             if (!end.isValid()) {
-                System.out.println(t[1] + " is not a valid date.");
+                outputTA.appendText(t[1] + " is not a valid date.\n");
                 return;
             }
         } catch (IllegalArgumentException e) {
-            System.out.println("Invalid date input.");
+            outputTA.appendText("Invalid date input.\n");
             return;
         }
 
         Vehicle v = fleet.findVehicle(t[2]);
         if (v == null) {
-            System.out.println("Vehicle not found in fleet.");
+            outputTA.appendText("Vehicle not found in fleet.\n");
             return;
         }
 
@@ -382,25 +404,25 @@ public class Controller {
         try {
             newMileage = Integer.parseInt(t[3]);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid mileage - current mileage: " + v.getMileage() + " entered mileage" + t[3]);
+            outputTA.appendText("Invalid mileage - current mileage: " + v.getMileage() + " entered mileage" + t[3]);
             return;
         }
 
         Booking b = bookings.getBooking(end, v);
         if (b == null) {
-            System.out.println(v.getPlate() + " booked with ending date " + end + " - cannot find booking");
+            outputTA.appendText(v.getPlate() + " booked with ending date " + end + " - cannot find booking\n");
             return;
         }
         if (!bookings.isEarliestEndingDate(b)) {
-            System.out.println(b.getVehicle().getPlate() + " booked with ending date " + b.getEnd() + " - returning not in order of ending date");
+            outputTA.appendText(b.getVehicle().getPlate() + " booked with ending date " + b.getEnd() + " - returning not in order of ending date\n");
             return;
         }
         if (newMileage == 0) {
-            System.out.println(newMileage + " - invalid mileage");
+            outputTA.appendText(newMileage + " - invalid mileage\n");
             return;
         }
         if (newMileage <= v.getMileage()) {
-            System.out.println("Invalid mileage - current mileage: " + v.getMileage() + " entered mileage: " + newMileage);
+            outputTA.appendText("Invalid mileage - current mileage: " + v.getMileage() + " entered mileage: " + newMileage);
             return;
         }
 
@@ -415,7 +437,7 @@ public class Controller {
             v.setCampus(b.getDropoff());
 
         bookings.remove(b);
-        System.out.println(trip.toString());
+        outputTA.appendText(trip.toString());
     }
 
     /**
@@ -423,14 +445,14 @@ public class Controller {
      */
     private void handlePF() {
         if (fleet.isEmpty()) {
-            System.out.println("There is no vehicle in the fleet.");
+            outputTA.appendText("There is no vehicle in the fleet.\n");
             return;
         }
-        System.out.println("*List of vehicles in the fleet, ordered by city, make, then date obtained.");
+        outputTA.appendText("*List of vehicles in the fleet, ordered by city, make, then date obtained.\n");
         Sort.sortFleetByLocationMakeDate(fleet);
         fleet.printByMake();
-        System.out.println("*end of list.");
-        System.out.println();
+        outputTA.appendText("*end of list.\n");
+        outputTA.appendText();
     }
 
     /**
@@ -438,14 +460,14 @@ public class Controller {
      */
     private void handlePR() {
         if (bookings.isEmpty()) {
-            System.out.println("There is no booking record.");
+            outputTA.appendText("There is no booking record.\n");
             return;
         }
-        System.out.println("*List reservations ordered by city, license plate, then beginning date.");
+        outputTA.appendText("*List reservations ordered by city, license plate, then beginning date.\n");
         Sort.sortBookingsByLocationPlateBegin(bookings);
         bookings.printByVehicle();
-        System.out.println("*end of list.");
-        System.out.println();
+        outputTA.appendText("*end of list.\n");
+        outputTA.appendText();
     }
 
     /**
@@ -453,13 +475,13 @@ public class Controller {
      */
     private void handlePD() {
         if (bookings.isEmpty()) {
-            System.out.println("There is no booking record.");
+            outputTA.appendText("There is no booking record.\n");
             return;
         }
-        System.out.println("*List of reservations ordered by Department then employee.");
+        outputTA.appendText("*List of reservations ordered by Department then employee.\n");
         bookings.printByDept();
-        System.out.println("*end of list.");
-        System.out.println();
+        outputTA.appendText("*end of list.\n");
+        outputTA.appendText();
     }
 
     /**
@@ -467,13 +489,13 @@ public class Controller {
      */
     private void handlePT() {
         if (completedTrips.isEmpty()) {
-            System.out.println("There is no archived trips.");
+            outputTA.appendText("There is no archived trips.\n");
             return;
         }
-        System.out.println("*List of completed trips ordered by ending date.");
+        outputTA.appendText("*List of completed trips ordered by ending date.\n");
         completedTrips.print();
-        System.out.println("*end of list.");
-        System.out.println();
+        outputTA.appendText("*end of list.\n");
+
     }
 
     /**
@@ -481,13 +503,13 @@ public class Controller {
      */
     private void handlePC() {
         if (completedTrips.isEmpty()) {
-            System.out.println("There is no archived trips.");
+            outputTA.appendText("There is no archived trips.\n");
             return;
         }
-        System.out.println("*Cost report by department*");
+        outputTA.appendText("*Cost report by department*\n");
         completedTrips.printCharges();
-        System.out.println("*end of list.");
-        System.out.println();
+        outputTA.appendText("*end of list.\n");
+        outputTA.appendText();
     }
 
 
