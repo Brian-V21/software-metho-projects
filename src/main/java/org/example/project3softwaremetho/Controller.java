@@ -175,7 +175,10 @@ public class Controller {
 
     @FXML
     void vehicleSelected() {
-
+        Vehicle v = vehicleCB.getValue();
+        if (v != null) {
+            outputTA.appendText("Selected vehicle: " + v.getPlate() + "\n");
+        }
     }
 
     @FXML
@@ -185,32 +188,50 @@ public class Controller {
 
     @FXML
     void vrBeginSelected() {
-
+        
     }
 
     @FXML
     void campusSelected() {
-
+        Campus c = campusCB2.getValue();
+        if (c != null) {
+            outputTA.appendText("Drop-off campus:" + c + "\n");
+        }
     }
 
     @FXML
     void employeeSelected() {
-
+        if (employeeCB2.getValue() != null) {
+            outputTA.appendText("Employee: " + employeeCB2.getValue().name() + "\n");
+        }
     }
 
     @FXML
     void dateSelected() {
-
+        if (vmDP.getValue() == null)
+            return;
+        Date obtained = Date.fromString(vmDP.getValue().toString());
+        if (!obtained.isValid()) {
+            outputTA.appendText(obtained + " - invalid calendar date.\n");
+        } else if (!obtained.isPastDate()) {
+            outputTA.appendText(obtained + " - is today or a future date.");
+        }    
     }
+    
 
     @FXML
     void removeFleet() {
-
+        String plate = plateTF.getText() == null ? "" : plateTF.getText().trim();
+        if (plate.isEmpty()) {
+            outputTA.appendText("Enter a license plate to remove.\n");
+            return;
+        }
+        handleDelete(new String[]{"D", plate});
     }
 
     @FXML
     void addFleet() {
-
+        addVehicle(null);
     }
 
     @FXML
