@@ -123,28 +123,45 @@ public class Controller {
     }
 
     @FXML
-    void printResBySelected
+    void printResBySelected() {
+        handlePR();
+    }
 
     @FXML
-    void printTripBySelected
+    void printTripBySelected() {
+        handlePT();
+    }
 
     @FXML
-    void printFleet
+    void printFleet() {
+        handlePF();
+    }
 
     @FXML
-    void completedTrip
+    void completedTrip() {
+        String plate = vehicleCB2.getValue().getPlate();
+        String end = vrEndTripP2.getValue().toString();
+        String miles = newMileTF.getText();
+        handleReturn(new String[] {"R", end, plate, miles});
+    }
 
     @FXML
-    void endTripSelected
+    void endTripSelected() {
+    }
 
     @FXML
-    void vehicleCBSelected
+    void vehicleCBSelected() {
+
+    }
 
     @FXML
-    void cancelBooking
+    void cancelBooking() {
+    }
 
     @FXML
-    void bookTrip
+    void bookTrip() {
+
+    }
 
     @FXML
     void vehicleSelected
