@@ -88,6 +88,10 @@ public class Controller {
     //Fleet for vehicles
     private Fleet fleet = new Fleet();
 
+    private final Reservation bookings = new Reservation();
+
+    private final TripList completedTrips = new TripList();
+
     //Initialize
     public void initialize() {
         //RadioButton
