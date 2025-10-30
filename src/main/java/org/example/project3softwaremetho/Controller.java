@@ -183,12 +183,12 @@ public class Controller {
 
     @FXML
     void vrEndSelected() {
-
+        bookingDatesPicker();
     }
 
     @FXML
     void vrBeginSelected() {
-        
+        bookingDatesPicker();
     }
 
     @FXML
@@ -623,7 +623,38 @@ public class Controller {
         outputTA.appendText("*end of list.\n");
     }
 
+    private boolean bookingDatesPicker() {
+        if (vrBeginDP.getValue() == null || vrEndDP.getValue() == null)
+            return true;
+        Date begin = Date.fromString(vrBeginDP.getValue().toString());
+        Date end = Date.fromString(vrEndDP.getValue().toString());
 
+        if (!begin.isValid()) {
+            outputTA.appendText(vrBeginDP.getValue() + " is not a valid calendar date.\n");
+                return false;
+        }
+        if (!end.isValid()) {
+            outputTA.appendText(vrEndDP.getValue() + " is not a valid calendar date.\n");
+                return false;
+        }
+        if (!begin.isFutureDate()) {
+            outputTA.appendText(begin + " Beginning date is not today or a futre date");
+                return false;
+        }
+        if (end.compareTo(begin) < 0) {
+            outputTA.appendText(end + " ending date must be equal or after the beginning date.\n");
+                return false;
+        }
+        if (begin.beyondDate()) {
+            outputTA.appendText(begin + " beginning date is beyond 3 months.\n");
+                return false;
+        }
+        if (begin.durationExceedsWeek(end)) {
+            outputTA.appendText(begin + " ~ " + end + " duration is more than a week.\n");
+                return false;
+        }
+        return true;
+    }
 
 
 }
