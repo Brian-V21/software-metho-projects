@@ -156,38 +156,64 @@ public class Controller {
 
     @FXML
     void cancelBooking() {
+        String plate = vehicleCB2.getValue().getPlate();
+        String end = vrEndDP.getValue().toString();
+        handleCancel(new String[]{"C", end, plate});
     }
 
     @FXML
     void bookTrip() {
+        Vehicle v = vehicleCB.getValue();
+        Employee emp = employeeCB2.getValue();
+        Campus drop = campusCB2.getValue();
+
+        String begin = vrBeginDP.getValue().toString();
+        String end = vrEndDP.getValue().toString();
+
+        handleBook(new String[]{"B", begin, end, v.getPlate(), emp.name(), drop.displayName()});
+    }
+
+    @FXML
+    void vehicleSelected() {
 
     }
 
     @FXML
-    void vehicleSelected
+    void vrEndSelected() {
+
+    }
 
     @FXML
-    void vrEndSelected
+    void vrBeginSelected() {
+
+    }
 
     @FXML
-    void vrBeginSelected
+    void campusSelected() {
+
+    }
 
     @FXML
-    void campusSelected
+    void employeeSelected() {
+
+    }
 
     @FXML
-    void employeeSelected
+    void dateSelected() {
+
+    }
 
     @FXML
-    void dateSelected
+    void removeFleet() {
+
+    }
 
     @FXML
-    void removeFleet
+    void addFleet() {
+
+    }
 
     @FXML
-    void addFleet
-
-    er@FXML
     /**
      * Import the FileChooser from javafx packages.
      * When loading the data from a file, FileChooser is a good way of allowing user to choose
