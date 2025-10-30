@@ -13,6 +13,7 @@ import org.example.project3softwaremetho.util.Date;
 import org.example.project3softwaremetho.util.Sort;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Controller {
@@ -224,7 +225,7 @@ public class Controller {
         if (!obtained.isValid()) {
             outputTA.appendText(obtained + " - invalid calendar date.\n");
         } else if (!obtained.isPastDate()) {
-            outputTA.appendText(obtained + " - is today or a future date.");
+            outputTA.appendText(obtained + " - is today or a future date.\n");
         }
     }
     
@@ -281,13 +282,13 @@ public class Controller {
     }
 
     private void addVehicle(ActionEvent event) {
-        String plate = plateTF.getText().trim();
-        if (plate.length() != 6) {
-            outputTA.appendText("license plate is too short or too long. Needs to be 6 characters\n");
-            return;
-        }
+        String plate = plateTF.getText().toUpperCase().trim();
         if (plate.isBlank()) {
             outputTA.appendText("plate is empty\n");
+            return;
+        }
+        if (plate.length() != 6) {
+            outputTA.appendText("license plate is too short or too long. Needs to be 6 characters\n");
             return;
         }
         if (!Vehicle.isValidPlate(plate)) {
@@ -305,10 +306,19 @@ public class Controller {
             return;
         }
 
+        Toggle selected = makeGroup.getSelectedToggle();
+        if (selected == null) {
+            outputTA.appendText("Please select a Make\n");
+            return;
+        }
+
         Make make;
         try {
             make = (Make) makeGroup.getSelectedToggle().getUserData();
-            if (make == null) throw new IllegalArgumentException();
+            if (make == null) {
+                outputTA.appendText("Invalid make.\n");
+                return;
+            }
         } catch (IllegalArgumentException e) {
             outputTA.appendText( "invalid make.\n");
             return;
@@ -317,7 +327,10 @@ public class Controller {
         Campus campus;
         try {
             campus = campusCB.getSelectionModel().getSelectedItem();
-            if (campus == null) throw new IllegalArgumentException();
+            if (campus == null) {
+                outputTA.appendText("select a campus.\n");
+                return;
+            }
         } catch (Exception e) {
             outputTA.appendText("Select a campus.\n");
             return;
@@ -328,6 +341,7 @@ public class Controller {
             outputTA.appendText("Select a date.\n");
             return;
         }
+
         Date obtained = Date.fromString(vmDP.getValue().toString());
             if (!obtained.isValid()) {
                 outputTA.appendText(obtained + " - invalid calendar date.\n");
@@ -575,7 +589,7 @@ public class Controller {
         }
         outputTA.appendText("*List of vehicles in the fleet, ordered by city, make, then date obtained.\n");
         Sort.sortFleetByLocationMakeDate(fleet);
-        fleet.printByMake();
+        outputTA.appendText(fleet.printByMake());
         outputTA.appendText("*end of list.\n");
     }
 
