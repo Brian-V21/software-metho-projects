@@ -124,12 +124,22 @@ public class Controller {
 
     @FXML
     void printResBySelected() {
-        handlePR();
+        Reservation reservation = printResCB.getSelectionModel().getSelectedItem();
+        if (reservation == null) {
+            outputTA.setText("Please select a reservation");
+            return;
+        }
+        handlePR(reservation);
     }
 
     @FXML
     void printCTripBySelected() {
-        handlePT();
+        Trip trip = printTripCB.getSelectionModel().getSelectedItem();
+        if (trip == null) {
+            outputTA.setText("Please select a trip");
+            return;
+        }
+        handlePT(trip);
     }
 
     @FXML
@@ -215,7 +225,7 @@ public class Controller {
             outputTA.appendText(obtained + " - invalid calendar date.\n");
         } else if (!obtained.isPastDate()) {
             outputTA.appendText(obtained + " - is today or a future date.");
-        }    
+        }
     }
     
 
@@ -572,7 +582,7 @@ public class Controller {
     /**
      * Displays list of reservations based off city, license plate, then beginning date
      */
-    private void handlePR() {
+    private void handlePR(Reservation bookings) {
         if (bookings.isEmpty()) {
             outputTA.appendText("There is no booking record.\n");
             return;
@@ -586,7 +596,7 @@ public class Controller {
     /**
      * Display list of reservations based off department then employee
      */
-    private void handlePD() {
+    private void handlePD(Reservation bookings) {
         if (bookings.isEmpty()) {
             outputTA.appendText("There is no booking record.\n");
             return;
@@ -599,7 +609,7 @@ public class Controller {
     /**
      * Display list of completed trips based off ending date
      */
-    private void handlePT() {
+    private void handlePT(Trip bookings) {
         if (completedTrips.isEmpty()) {
             outputTA.appendText("There is no archived trips.\n");
             return;
