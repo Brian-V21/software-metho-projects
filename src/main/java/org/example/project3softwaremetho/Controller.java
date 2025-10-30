@@ -40,7 +40,7 @@ public class Controller {
     private ComboBox<Campus> campusCB;
 
     @FXML
-    private Button addFleet, removeFleet;
+    private Button addFleetB, removeFleetB;
 
     //Vehicle Register Tab
     @FXML
@@ -63,7 +63,7 @@ public class Controller {
 
     //Vehicle Return Tab
     @FXML
-    private DatePicker vrEndTripP2; //vehicle return date
+    private DatePicker vrEndTripDP2; //vehicle return date
 
     @FXML
     private ComboBox<Vehicle> vehicleCB2;
@@ -128,7 +128,7 @@ public class Controller {
     }
 
     @FXML
-    void printTripBySelected() {
+    void printCTripBySelected() {
         handlePT();
     }
 
@@ -138,9 +138,9 @@ public class Controller {
     }
 
     @FXML
-    void completedTrip() {
+    void completeTrip() {
         String plate = vehicleCB2.getValue().getPlate();
-        String end = vrEndTripP2.getValue().toString();
+        String end = vrEndTripDP2.getValue().toString();
         String miles = newMileTF.getText();
         handleReturn(new String[] {"R", end, plate, miles});
     }
@@ -170,7 +170,7 @@ public class Controller {
         String begin = vrBeginDP.getValue().toString();
         String end = vrEndDP.getValue().toString();
 
-        handleBook(new String[]{"B", begin, end, v.getPlate(), emp.name(), drop.displayName()});
+        handleBook(new String[]{"B", begin, end, v.getPlate(), emp.name(), drop.name()});
     }
 
     @FXML

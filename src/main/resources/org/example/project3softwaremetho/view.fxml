@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:controller="org.example.project3softwaremetho.Controller" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.project3softwaremetho.Controller">
    <center>
       <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
         <tabs>
@@ -72,8 +72,8 @@
                                  </font>
                               </Label>
                               <TextField fx:id="plateTF" promptText="input license plate" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                              <ComboBox fx:id="employeesCB" onAction="#employeeSelected" prefWidth="150.0" promptText="Employees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                              <ComboBox fx:id="campusCB" onAction="#CampusSelected" prefWidth="150.0" promptText="Campuses" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                              <ComboBox fx:id="employeeCB" onAction="#employeeSelected" prefWidth="150.0" promptText="Employees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="campusCB" onAction="#campusSelected" prefWidth="150.0" promptText="Campuses" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                  <children>
                                     <RadioButton fx:id="chevyRB" mnemonicParsing="false" text="CHEVY">
@@ -112,7 +112,7 @@
                                     <Insets top="10.0" />
                                  </GridPane.margin>
                               </HBox>
-                              <DatePicker fx:id="vehicleManageDP" onAction="#dateSelected" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <DatePicker fx:id="vmDP" onAction="#dateSelected" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                               <Label text="Mileage:" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                                  <font>
                                     <Font name="System Bold" size="12.0" />
@@ -186,7 +186,7 @@
                                     <Insets right="10.0" />
                                  </GridPane.margin>
                               </Label>
-                              <ComboBox fx:id="employeesCB2" onAction="#employeeSelected" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                              <ComboBox fx:id="employeeCB2" onAction="#employeeSelected" prefWidth="200.0" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                                  <GridPane.margin>
                                     <Insets left="10.0" />
                                  </GridPane.margin>
@@ -267,7 +267,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <DatePicker fx:id="vrendTripDP2" onAction="#endTripSelected" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <DatePicker fx:id="vrEndTripDP2" onAction="#endTripSelected" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                               <ComboBox fx:id="vehicleCB2" onAction="#vehicleCBSelected" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                               <TextField fx:id="newMileTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                               <Button fx:id="completeTripB" mnemonicParsing="false" onAction="#completeTrip" prefWidth="150.0" text="Complete Trip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
