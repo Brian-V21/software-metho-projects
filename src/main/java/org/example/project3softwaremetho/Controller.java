@@ -92,7 +92,9 @@ public class Controller {
 
     private final TripList completedTrips = new TripList();
 
-    //Initialize
+    /**
+     * Initializes GUI components after FXML loading
+     */
     public void initialize() {
         //RadioButton
         makeGroup = new ToggleGroup();
@@ -122,7 +124,10 @@ public class Controller {
             vehicleCB2.setItems(vehiclesList);
         }
     }
-
+    
+    /**
+     * Prints reservations sorted by city/plate/date based on selection in GUI.
+     */
     @FXML
     void printResBySelected() {
         Reservation reservation = printResCB.getSelectionModel().getSelectedItem();
@@ -133,6 +138,9 @@ public class Controller {
         handlePR(reservation);
     }
 
+    /**
+     * Prints completed trip information for selected trip in GUI.
+     */
     @FXML
     void printCTripBySelected() {
         Trip trip = printTripCB.getSelectionModel().getSelectedItem();
@@ -143,11 +151,17 @@ public class Controller {
         handlePT(trip);
     }
 
+    /**
+     * Prints all fleet vehicles to output.
+     */
     @FXML
     void printFleet() {
         handlePF();
     }
 
+    /**
+     * Completes a vehicle trip return using user-provided GUI input.
+     */
     @FXML
     void completeTrip() {
         String plate = vehicleCB2.getValue().getPlate();
@@ -157,14 +171,13 @@ public class Controller {
     }
 
     @FXML
-    void endTripSelected() {
-    }
-
+    void endTripSelected() {}
     @FXML
-    void vehicleCBSelected() {
+    void vehicleCBSelected() {}
 
-    }
-
+    /**
+     * Cancels a booking selected via GUI input fields.
+     */
     @FXML
     void cancelBooking() {
         String plate = vehicleCB2.getValue().getPlate();
@@ -172,6 +185,9 @@ public class Controller {
         handleCancel(new String[]{"C", end, plate});
     }
 
+    /**
+     * Books a new trip based on user GUI selections.
+     */
     @FXML
     void bookTrip() {
         Vehicle v = vehicleCB.getValue();
@@ -184,6 +200,9 @@ public class Controller {
         handleBook(new String[]{"B", begin, end, v.getPlate(), emp.name(), drop.name()});
     }
 
+    /**
+     * Displays the currently selected vehicle.
+     */
     @FXML
     void vehicleSelected() {
         Vehicle v = vehicleCB.getValue();
@@ -202,6 +221,9 @@ public class Controller {
         bookingDatesPicker();
     }
 
+    /**
+     * Handles campus selection for booking tab.
+     */
     @FXML
     void campusSelected() {
         Campus c = campusCB2.getValue();
@@ -210,6 +232,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Displayed selected employee on the screen
+     */
     @FXML
     void employeeSelected() {
         if (employeeCB2.getValue() != null) {
@@ -217,6 +242,9 @@ public class Controller {
         }
     }
 
+    /**
+     * Validates vehicle management date selection.
+     */
     @FXML
     void dateSelected() {
         if (vmDP.getValue() == null)
@@ -229,7 +257,9 @@ public class Controller {
         }
     }
     
-
+    /**
+     * Removes a vehicle from the fleet based on plate text field
+     */
     @FXML
     void removeFleet() {
         String plate = plateTF.getText() == null ? "" : plateTF.getText().trim();
@@ -240,18 +270,19 @@ public class Controller {
         handleDelete(new String[]{"D", plate});
     }
 
+    /**
+     * Adds a vehicle to the fleet.
+     */
     @FXML
     void addFleet() {
         addVehicle(null);
     }
-
-    @FXML
     /**
-     * Import the FileChooser from javafx packages.
-     * When loading the data from a file, FileChooser is a good way of allowing user to choose
-     * the file from any folder. So, you don't have to hard-code the file name in the program.
-     * Use the showOpenDialog method from the FileChooser.
+     * Loads vehicles from a text file via FileChooser
+     * 
+     * @param event triggered by pressing the "Load" button
      */
+    @FXML
     void importFile(ActionEvent event) {
         FileChooser chooser = new FileChooser();
         chooser.setTitle("Select Vehicle Text File");
@@ -281,6 +312,10 @@ public class Controller {
         }
     }
 
+    /**
+     * Adds a vehicle to fleet
+     * @param event input from user terminal
+     */
     private void addVehicle(ActionEvent event) {
         String plate = plateTF.getText().toUpperCase().trim();
         if (plate.isBlank()) {
@@ -647,6 +682,10 @@ public class Controller {
         outputTA.appendText("*end of list.\n");
     }
 
+    /**
+     * Validates date selections for booking tab.
+     * @return true if dates are valid, otherwise false
+     */
     private boolean bookingDatesPicker() {
         if (vrBeginDP.getValue() == null || vrEndDP.getValue() == null)
             return true;
