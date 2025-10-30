@@ -54,9 +54,6 @@ public class Controller {
     private Button loadTextB; //Load file button
 
     @FXML
-    private ComboBox<Employee> employeeCB2;
-
-    @FXML
     private ComboBox<Campus> campusCB2;
 
     @FXML
@@ -111,7 +108,6 @@ public class Controller {
         //ComboBoxes
         employeeCB.getItems().addAll(Employee.values()); //in VM
         campusCB.getItems().addAll(Campus.values()); // in VM
-        employeeCB2.getItems().addAll(Employee.values()); // in V Register
         campusCB2.getItems().addAll(Campus.values()); // in V Register
 
         //Fill Vehicle ComboBoxes & avoid null pointer
@@ -191,7 +187,7 @@ public class Controller {
     @FXML
     void bookTrip() {
         Vehicle v = vehicleCB.getValue();
-        Employee emp = employeeCB2.getValue();
+        Employee emp = employeeCB.getValue();
         Campus drop = campusCB2.getValue();
 
         String begin = vrBeginDP.getValue().toString();
@@ -237,8 +233,8 @@ public class Controller {
      */
     @FXML
     void employeeSelected() {
-        if (employeeCB2.getValue() != null) {
-            outputTA.appendText("Employee: " + employeeCB2.getValue().name() + "\n");
+        if (employeeCB.getValue() != null) {
+            outputTA.appendText("Employee: " + employeeCB.getValue().name() + "\n");
         }
     }
 
@@ -431,6 +427,7 @@ public class Controller {
             return;
         }
         fleet.remove(vehicle);
+        outputTA.appendText(vehicle + " has been deleted from the fleet.\n");
     }
 
     /**

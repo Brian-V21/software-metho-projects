@@ -16,12 +16,13 @@ public class Fleet extends List<Vehicle> {
      * Constructor for an empty Fleet
      */
     public Fleet() {
-       super();
+        super();
     }
 
     /**
      * Add vehicle to fleet collection
      * If the vehicle already exists, nothing happens
+     *
      * @param vehicle Vehicle Object
      */
     public void add(Vehicle vehicle) {
@@ -32,6 +33,7 @@ public class Fleet extends List<Vehicle> {
     /**
      * Remove vehicle from fleet collection
      * The vehicle at the removed index is replaces with the last vehicle
+     *
      * @param vehicle Vehicle Object
      */
     public void remove(Vehicle vehicle) {
@@ -39,13 +41,13 @@ public class Fleet extends List<Vehicle> {
             System.out.println(vehicle + " not found in the fleet");
         }
         super.remove(vehicle);
-        System.out.println(vehicle + " has been removed from the fleet.");
     }
 
     /**
      * Print collection by make then date
      */
-    public void printByMake() {
+    public String printByMake() {
+        StringBuilder sb = new StringBuilder();
         int n = size();
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
@@ -75,8 +77,9 @@ public class Fleet extends List<Vehicle> {
             }
         }
         for (int i = 0; i < n; i++) {
-            System.out.println(get(i));
+            sb.append(super.get(i).toString());
         }
+        return sb.toString();
     }
 
     /**
