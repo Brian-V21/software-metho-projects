@@ -40,6 +40,7 @@
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <Label text="License Plate:" GridPane.halignment="RIGHT">
@@ -70,7 +71,7 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="plateTB" scaleX="0.5" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <TextField fx:id="plateTF" promptText="input license plate" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                               <ComboBox fx:id="employeesCB" onAction="#employeeSelected" prefWidth="150.0" promptText="Employees" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                               <ComboBox fx:id="campusCB" onAction="#CampusSelected" prefWidth="150.0" promptText="Campuses" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
@@ -80,12 +81,15 @@
                                           <ToggleGroup fx:id="make" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="fordRB" mnemonicParsing="false" text="FORD" toggleGroup="$make" />
+                                    <RadioButton fx:id="fordRB" mnemonicParsing="false" text="FORD">
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="makeGroup" />
+                                       </toggleGroup></RadioButton>
                                     <RadioButton fx:id="hondaRB" mnemonicParsing="false" text="HONDA" toggleGroup="$make" />
                                     <RadioButton fx:id="toyotaRB" mnemonicParsing="false" text="TOYOTA" toggleGroup="$make" />
                                  </children>
                               </HBox>
-                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                              <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
                                  <children>
                                     <Button fx:id="addFleetB" alignment="CENTER" mnemonicParsing="false" onAction="#addFleet" text="Add to Fleet">
                                        <opaqueInsets>
@@ -95,7 +99,7 @@
                                           <Insets bottom="10.0" left="60.0" right="60.0" top="10.0" />
                                        </padding>
                                     </Button>
-                                    <Button fx:id="removeFleet" mnemonicParsing="false" onAction="#removeFleet" text="Remove from Fleet">
+                                    <Button fx:id="removeFleetB" mnemonicParsing="false" onAction="#removeFleet" text="Remove from Fleet">
                                        <padding>
                                           <Insets bottom="10.0" left="50.0" right="50.0" top="10.0" />
                                        </padding>
@@ -109,6 +113,12 @@
                                  </GridPane.margin>
                               </HBox>
                               <DatePicker fx:id="vehicleManageDP" onAction="#dateSelected" prefWidth="300.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Label text="Mileage:" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <TextField fx:id="mileTF" prefWidth="150.0" promptText="Input current mileage" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                            </children>
                            <opaqueInsets>
                               <Insets />
@@ -257,10 +267,10 @@
                                     <Font name="System Bold" size="12.0" />
                                  </font>
                               </Label>
-                              <DatePicker fx:id="endTrip2" onAction="#endTripSelected" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <DatePicker fx:id="vrendTripDP2" onAction="#endTripSelected" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                               <ComboBox fx:id="vehicleCB2" onAction="#vehicleCBSelected" prefWidth="150.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                              <TextField fx:id="newMileTB" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                              <Button fx:id="completeTripB" mnemonicParsing="false" prefWidth="150.0" text="Complete Trip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                              <TextField fx:id="newMileTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                              <Button fx:id="completeTripB" mnemonicParsing="false" onAction="#completeTrip" prefWidth="150.0" text="Complete Trip" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                            </children>
                         </GridPane>
                      </children>
@@ -279,7 +289,7 @@
                                  </font>
                               </Button>
                               <ComboBox fx:id="printResCB" onAction="#printResBySelected" prefWidth="250.0" promptText="Print Reservations By:" />
-                              <ComboBox fx:id="printTripCB" onAction="#Print" prefWidth="250.0" promptText="Print Completed Trips By:" />
+                              <ComboBox fx:id="printTripCB" onAction="#printCTripBySelected" prefWidth="250.0" promptText="Print Completed Trips By:" />
                            </children>
                         </VBox>
                      </children>
@@ -290,6 +300,6 @@
       </TabPane>
    </center>
    <bottom>
-      <TextArea prefHeight="100.0" prefWidth="200.0" promptText="Output " BorderPane.alignment="CENTER" />
+      <TextArea fx:id="outputTA" prefHeight="100.0" prefWidth="200.0" promptText="Output " BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
