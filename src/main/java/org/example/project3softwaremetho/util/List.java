@@ -1,6 +1,5 @@
 package org.example.project3softwaremetho.util;
 import java.util.Iterator;
-//hello
 /** 
 import java.util.ListIterator;
 */

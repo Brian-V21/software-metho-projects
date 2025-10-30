@@ -4,9 +4,8 @@ import org.example.project3softwaremetho.collections.Fleet;
 import org.example.project3softwaremetho.collections.Reservation;
 import org.example.project3softwaremetho.entities.Booking;
 import org.example.project3softwaremetho.entities.Campus;
-import org.example.project3softwaremetho.util.*;
 import org.example.project3softwaremetho.entities.Vehicle;
-//hello
+
 /**
  * *@author Brian V and Travis F;
  */

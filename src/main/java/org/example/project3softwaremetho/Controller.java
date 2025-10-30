@@ -11,7 +11,6 @@ import org.example.project3softwaremetho.entities.*;
 import org.example.project3softwaremetho.collections.*;
 import org.example.project3softwaremetho.util.Date;
 import org.example.project3softwaremetho.util.Sort;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -124,6 +123,54 @@ public class Controller {
     }
 
     @FXML
+    void printResBySelected
+
+    @FXML
+    void printTripBySelected
+
+    @FXML
+    void printFleet
+
+    @FXML
+    void completedTrip
+
+    @FXML
+    void endTripSelected
+
+    @FXML
+    void vehicleCBSelected
+
+    @FXML
+    void cancelBooking
+
+    @FXML
+    void bookTrip
+
+    @FXML
+    void vehicleSelected
+
+    @FXML
+    void vrEndSelected
+
+    @FXML
+    void vrBeginSelected
+
+    @FXML
+    void campusSelected
+
+    @FXML
+    void employeeSelected
+
+    @FXML
+    void dateSelected
+
+    @FXML
+    void removeFleet
+
+    @FXML
+    void addFleet
+
+    er@FXML
     /**
      * Import the FileChooser from javafx packages.
      * When loading the data from a file, FileChooser is a good way of allowing user to choose
@@ -456,7 +503,6 @@ public class Controller {
         Sort.sortFleetByLocationMakeDate(fleet);
         fleet.printByMake();
         outputTA.appendText("*end of list.\n");
-        outputTA.appendText();
     }
 
     /**
@@ -471,7 +517,6 @@ public class Controller {
         Sort.sortBookingsByLocationPlateBegin(bookings);
         bookings.printByVehicle();
         outputTA.appendText("*end of list.\n");
-        outputTA.appendText();
     }
 
     /**
@@ -485,7 +530,6 @@ public class Controller {
         outputTA.appendText("*List of reservations ordered by Department then employee.\n");
         bookings.printByDept();
         outputTA.appendText("*end of list.\n");
-        outputTA.appendText();
     }
 
     /**
@@ -513,7 +557,6 @@ public class Controller {
         outputTA.appendText("*Cost report by department*\n");
         completedTrips.printCharges();
         outputTA.appendText("*end of list.\n");
-        outputTA.appendText();
     }
 
 

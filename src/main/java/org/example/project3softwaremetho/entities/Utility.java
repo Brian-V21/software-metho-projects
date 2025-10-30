@@ -1,6 +1,5 @@
 package org.example.project3softwaremetho.entities;
 import org.example.project3softwaremetho.util.Date;
-/hello
 /**
  * *@author Brian V and Travis F;
  */

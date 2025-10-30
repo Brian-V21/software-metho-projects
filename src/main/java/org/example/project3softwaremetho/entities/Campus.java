@@ -1,5 +1,5 @@
 package org.example.project3softwaremetho.entities;
-//hello
+
 /**
  * *@author Brian V and Travis F;
  */
