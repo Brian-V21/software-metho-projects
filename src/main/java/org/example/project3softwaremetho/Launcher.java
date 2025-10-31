@@ -1,5 +1,7 @@
 package org.example.project3softwaremetho;
-
+/**
+ * @author Travis F and Brian V
+ */
 import javafx.application.Application;
 
 public class Launcher {

@@ -179,16 +179,26 @@ public class Date implements Comparable<Date> {
      * @return dateString into Date type
      */
     public static Date fromString(String dateString) {
-        String[] parts = dateString.split("-");
-        if (parts.length != 3) {
-            throw new IllegalArgumentException("Invalid date string: " + dateString);
-        } try {
+        try {
+            if (dateString.contains("/")) {
+            String[] parts = dateString.split("/");
+            if (parts.length != 3) throw new IllegalArgumentException("Invalid date string: " + dateString);
             int month = Integer.parseInt(parts[0]);
             int day = Integer.parseInt(parts[1]);
             int year = Integer.parseInt(parts[2]);
             return new Date(month, day, year);
-        } catch (NumberFormatException e) {
+        } else if (dateString.contains("-")) {
+            String[] parts = dateString.split("-");
+            if (parts.length != 3) throw new IllegalArgumentException("Invalid date string: " + dateString);
+            int month = Integer.parseInt(parts[0]);
+            int day = Integer.parseInt(parts[1]);
+            int year = Integer.parseInt(parts[2]);
+            return new Date(month, day, year);
+        } else {
             throw new IllegalArgumentException("Invalid date string: " + dateString);
+        }
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid date string: " + dateString);
         }
     }
 

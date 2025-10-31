@@ -21,7 +21,8 @@ public class Reservation extends List<Booking> {
     /**
      * Prints all active bookings ordered by city, license plate, beginning date.
      */
-    public void printByVehicle() {
+    public String printByVehicle() {
+        StringBuilder sb = new StringBuilder();
         int n = size();
         for (int i = 0; i < n - 1; i++) {
             int min = i;
@@ -55,16 +56,18 @@ public class Reservation extends List<Booking> {
             }
         }
         for (int i = 0; i < n; i++) {
-            System.out.println(get(i));
+            sb.append(get(i)).append("\n");
         }
+        return sb.toString();
     }
 
 
     /**
      * Prints the list of bookings ordered by department, then employee.
      */
-    public void printByDept() {
-            int n = size();
+    public String printByDept() {
+        StringBuilder sb = new StringBuilder();
+        int n = size();
             for (int i = 0; i < n - 1; i++) {
                 int min = i;
                 for (int j = i + 1; j < n; j++) {
@@ -98,10 +101,11 @@ public class Reservation extends List<Booking> {
 
                 if (currentDept != dept) {
                     currentDept = dept;
-                    System.out.println("--" + dept.displayName() + "--");
+                    sb.append("--").append(dept.displayName()).append("--\n");
                 }
-                System.out.println(b);
+                sb.append(b).append("\n");
             }
+        return sb.toString();
     }
 
     /**

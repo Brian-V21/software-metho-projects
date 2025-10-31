@@ -8,16 +8,17 @@ import java.text.DecimalFormat;
  */
 
 public class TripList  extends List<Trip> {
-   
+
 
     /**
      * Adds a trip to the List, maintaining ascending order based on the booking's end date.
+     *
      * @param trip the trip to add
      */
     @Override
     public void add(Trip trip) {
         if (trip == null)
-        return;
+            return;
         super.add(trip);
 
         int i = size() - 1;
@@ -27,29 +28,33 @@ public class TripList  extends List<Trip> {
             int cmp = curr.getBooking().getEnd().compareTo(prev.getBooking().getEnd());
             if (cmp < 0) {
                 set(i, prev);
-                set(i-1, curr);
+                set(i - 1, curr);
                 i--;
             } else {
                 break;
             }
         }
     }
+
     /**
      * Prints all trips in the list in order.
      * If the list is empty, a message is displayed instead.
      */
-    public void print() {
+    public String print() {
+        StringBuilder sb = new StringBuilder();
         if (isEmpty()) {
-            System.out.println("There is no archived trips");
-            return;
+            sb.append("There is no archived trips\n");
+            return sb.toString();
         }
         for (Trip t : this) {
-            System.out.println(t);
+            sb.append(t);
         }
+        return sb.toString();
     }
 
     /**
      * Removes the trip associated with the booking
+     *
      * @param booking the booking whose trip should be removed
      * @return true if the trip was found and removed, otherwise false
      */
@@ -69,13 +74,14 @@ public class TripList  extends List<Trip> {
     /**
      * Print charges based off department and displays total charge per department
      */
-    public void printCharges() {
+    public String printCharges() {
+        StringBuilder sb = new StringBuilder();
         if (this.isEmpty()) {
-            System.out.println("There is no archived trips");
-            return;
+            sb.append("There is no archived trips\n");
+            return sb.toString();
         }
 
-        DecimalFormat money = new DecimalFormat ("$#,##0.00");
+        DecimalFormat money = new DecimalFormat("$#,##0.00");
 
         Department[] order = Department.values();
         for (int d = 0; d < order.length; d++) {
@@ -89,14 +95,14 @@ public class TripList  extends List<Trip> {
                 }
             }
             if (!hasAny)
-            continue;
+                continue;
 
-            System.out.println("--" + dept.toString() + "--");
+            sb.append("--" + dept.toString() + "--\n");
 
             double deptTotal = 0.0;
             for (Trip t : this) {
                 if (t.getBooking().getEmployee().getDept() != dept)
-                continue;
+                    continue;
 
                 int miles = t.milesUsed();
                 double charge = t.getCharge();
@@ -104,14 +110,18 @@ public class TripList  extends List<Trip> {
                 double total = charge + surcharge;
                 deptTotal += total;
 
-                System.out.println(t.getBooking().getVehicle().getPlate() + " " +
-                    t.getBooking().getBegin().toString() + " ~ " +
-                    t.getBooking().getEnd().toString() + " " +
-                    "charge: " + money.format(charge) + " " +
-                    "surcharge: " + money.format(surcharge) + " " +
-                    "total: " + money.format(total));
+                sb.append(t.getBooking().getVehicle().getPlate())
+                        .append(" ")
+                        .append(t.getBooking().getBegin().toString())
+                        .append(" ~ ")
+                        .append(t.getBooking().getEnd().toString())
+                        .append(" charge: ").append(money.format(charge))
+                        .append(" surcharge: ").append(money.format(surcharge))
+                        .append(" total: ").append(money.format(total))
+                        .append("\n");
             }
-            System.out.println("Department total: " + money.format(deptTotal));
+            sb.append("Department total: ").append(money.format(deptTotal));
         }
+        return sb.toString();
     }
 }

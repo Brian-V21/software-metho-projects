@@ -1,5 +1,7 @@
 package org.example.project3softwaremetho;
-
+/**
+ * @author Travis F and Brian V
+ */
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,7 +15,6 @@ import org.example.project3softwaremetho.util.Date;
 import org.example.project3softwaremetho.util.Sort;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Controller {
@@ -77,10 +78,10 @@ public class Controller {
     private Button printFleetB;
 
     @FXML
-    private ComboBox<Reservation> printResCB;
+    private ComboBox<ResReportOption> printResCB;
 
     @FXML
-    private ComboBox<Trip> printTripCB;
+    private ComboBox<TripReportOption> printTripCB;
 
     //Fleet for vehicles
     private Fleet fleet = new Fleet();
@@ -151,7 +152,7 @@ public class Controller {
         printTripCB.setButtonCell(printTripCB.getCellFactory().call(null));
 
     }
-    
+
     /**
      * Prints reservations sorted by city/plate/date based on selection in GUI.
      */
@@ -179,8 +180,8 @@ public class Controller {
             return;
         }
         switch (opt) {
-            case BY_ENDING_DATE -> handlePT(null);
-            case COST_REPORT -> handlePC();
+            case BY_ENDING_DATE -> handlePT(completedTrips);
+            case COST_REPORT -> handlePC(completedTrips);
         }
     }
 
@@ -213,8 +214,26 @@ public class Controller {
      */
     @FXML
     void cancelBooking() {
-        String plate = vehicleCB2.getValue().getPlate();
+        // If nothing is selected but ComboBox has items, auto-select the first
+        if (vehicleCB2.getValue() == null) {
+            if (!vehicleCB2.getItems().isEmpty()) {
+                vehicleCB2.getSelectionModel().selectFirst();
+            } else {
+                outputTA.setText("No vehicle selected\n");
+                return;
+            }
+        }
+
+        Vehicle vehicle = vehicleCB2.getValue();
+
+        if (vrEndDP.getValue() == null) {
+            outputTA.setText("Please select a vr end trip\n");
+            return;
+        }
+
+        String plate = vehicle.getPlate();
         String end = vrEndDP.getValue().toString();
+
         handleCancel(new String[]{"C", end, plate});
     }
 
@@ -261,7 +280,7 @@ public class Controller {
     void campusSelected() {
         Campus c = campusCB2.getValue();
         if (c != null) {
-            outputTA.appendText("Drop-off campus:" + c + "\n");
+            outputTA.appendText("Drop-off campus: " + c + "\n");
         }
     }
 
@@ -439,6 +458,12 @@ public class Controller {
             return;
         }
         fleet.add(v);
+        if (!vehicleCB.getItems().contains(v)) {
+            vehicleCB.getItems().add(v);
+        }
+        if (!vehicleCB2.getItems().contains(v)) {
+            vehicleCB2.getItems().add(v);
+        }
         outputTA.appendText(v + " has been added to the fleet.\n");
     }
 
@@ -612,7 +637,7 @@ public class Controller {
         try {
             newMileage = Integer.parseInt(t[3]);
         } catch (NumberFormatException e) {
-            outputTA.appendText("Invalid mileage - current mileage: " + v.getMileage() + " entered mileage" + t[3]);
+            outputTA.appendText("Invalid mileage - current mileage: " + v.getMileage() + ", entered mileage" + t[3] + "\n");
             return;
         }
 
@@ -630,7 +655,7 @@ public class Controller {
             return;
         }
         if (newMileage <= v.getMileage()) {
-            outputTA.appendText("Invalid mileage - current mileage: " + v.getMileage() + " entered mileage: " + newMileage);
+            outputTA.appendText("Invalid mileage - current mileage: " + v.getMileage() + ", entered mileage: " + newMileage + "\n");
             return;
         }
 
@@ -645,7 +670,7 @@ public class Controller {
             v.setCampus(b.getDropoff());
 
         bookings.remove(b);
-        outputTA.appendText(trip.toString());
+        outputTA.appendText(trip.toString() + "\n");
     }
 
     /**
@@ -658,7 +683,7 @@ public class Controller {
         }
         outputTA.appendText("*List of vehicles in the fleet, ordered by city, make, then date obtained.\n");
         Sort.sortFleetByLocationMakeDate(fleet);
-        outputTA.appendText(fleet.printByMake());
+        outputTA.appendText(fleet.printByMake() + "\n");
         outputTA.appendText("*end of list.\n");
     }
 
@@ -672,7 +697,7 @@ public class Controller {
         }
         outputTA.appendText("*List reservations ordered by city, license plate, then beginning date.\n");
         Sort.sortBookingsByLocationPlateBegin(bookings);
-        bookings.printByVehicle();
+        outputTA.appendText(bookings.printByVehicle());
         outputTA.appendText("*end of list.\n");
     }
 
@@ -685,20 +710,20 @@ public class Controller {
             return;
         }
         outputTA.appendText("*List of reservations ordered by Department then employee.\n");
-        bookings.printByDept();
+        outputTA.appendText(bookings.printByDept());
         outputTA.appendText("*end of list.\n");
     }
 
     /**
      * Display list of completed trips based off ending date
      */
-    private void handlePT(Trip bookings) {
+    private void handlePT(TripList bookings) {
         if (completedTrips.isEmpty()) {
             outputTA.appendText("There is no archived trips.\n");
             return;
         }
         outputTA.appendText("*List of completed trips ordered by ending date.\n");
-        completedTrips.print();
+        outputTA.appendText(completedTrips.print() + "\n");
         outputTA.appendText("*end of list.\n");
 
     }
@@ -706,13 +731,13 @@ public class Controller {
     /**
      * Display cost based off department
      */
-    private void handlePC() {
+    private void handlePC(TripList bookings) {
         if (completedTrips.isEmpty()) {
             outputTA.appendText("There is no archived trips.\n");
             return;
         }
         outputTA.appendText("*Cost report by department*\n");
-        completedTrips.printCharges();
+        outputTA.appendText(completedTrips.printCharges() + "\n");
         outputTA.appendText("*end of list.\n");
     }
 
@@ -735,7 +760,7 @@ public class Controller {
                 return false;
         }
         if (!begin.isFutureDate()) {
-            outputTA.appendText(begin + " Beginning date is not today or a futre date");
+            outputTA.appendText(begin + " Beginning date is not today or a future date\n");
                 return false;
         }
         if (end.compareTo(begin) < 0) {

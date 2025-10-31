@@ -1,5 +1,7 @@
 package org.example.project3softwaremetho;
-
+/**
+ * @author Travis F and Brian V
+ */
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
