@@ -89,6 +89,9 @@ public class Controller {
 
     private final TripList completedTrips = new TripList();
 
+    private enum ResReportOption { BY_LOCATION_PLATE_BEGIN, BY_DEPT_EMPLOYEE }
+    private enum TripReportOption { BY_ENDING_DATE, COST_REPORT }
+
     /**
      * Initializes GUI components after FXML loading
      */
@@ -119,6 +122,34 @@ public class Controller {
             vehicleCB.setItems(vehiclesList);
             vehicleCB2.setItems(vehiclesList);
         }
+        
+        // Populate report option ComboBoxes
+        printResCB.setItems(FXCollections.observableArrayList(ResReportOption.BY_LOCATION_PLATE_BEGIN, ResReportOption.BY_DEPT_EMPLOYEE));
+
+        printResCB.setCellFactory(cb -> new ListCell<>() {
+            @Override protected void updateItem(ResReportOption opt, boolean empty) {
+                super.updateItem(opt, empty);
+                if (empty || opt == null) { setText(""); return; }
+                setText(opt == ResReportOption.BY_LOCATION_PLATE_BEGIN
+                    ? "Reservations by city / plate / begin"
+                    : "Reservations by department / employee");
+            }
+        });
+        printResCB.setButtonCell(printResCB.getCellFactory().call(null));
+
+        printTripCB.setItems(FXCollections.observableArrayList(TripReportOption.BY_ENDING_DATE, TripReportOption.COST_REPORT));
+
+        printTripCB.setCellFactory(cb -> new ListCell<>() {
+            @Override protected void updateItem(TripReportOption opt, boolean empty) {
+                super.updateItem(opt, empty);
+                if (empty || opt == null) { setText(""); return; }
+                setText(opt == TripReportOption.BY_ENDING_DATE
+                    ? "Completed trips by ending date"
+                    : "Cost report by department");
+            }
+        });
+        printTripCB.setButtonCell(printTripCB.getCellFactory().call(null));
+
     }
     
     /**
@@ -126,12 +157,15 @@ public class Controller {
      */
     @FXML
     void printResBySelected() {
-        Reservation reservation = printResCB.getSelectionModel().getSelectedItem();
-        if (reservation == null) {
-            outputTA.setText("Please select a reservation");
+        ResReportOption opt = printResCB.getSelectionModel().getSelectedItem();
+        if (opt == null) {
+            outputTA.setText("Please select a reservation option");
             return;
         }
-        handlePR(reservation);
+        switch(opt) {
+            case BY_LOCATION_PLATE_BEGIN -> handlePR(bookings);
+            case BY_DEPT_EMPLOYEE -> handlePD(bookings);
+        }
     }
 
     /**
@@ -139,12 +173,15 @@ public class Controller {
      */
     @FXML
     void printCTripBySelected() {
-        Trip trip = printTripCB.getSelectionModel().getSelectedItem();
-        if (trip == null) {
-            outputTA.setText("Please select a trip");
+        TripReportOption opt = printTripCB.getSelectionModel().getSelectedItem();
+        if (opt == null) {
+            outputTA.setText("Please select a trip option");
             return;
         }
-        handlePT(trip);
+        switch (opt) {
+            case BY_ENDING_DATE -> handlePT(null);
+            case COST_REPORT -> handlePC();
+        }
     }
 
     /**
